@@ -30,7 +30,10 @@
       "@organizer/generated-server-teacher": [
         "libs/backend/generated-server-teacher/src/index.ts"
       ],
-      "@organizer/teacher-api": ["libs/frontend/api/teacher-api/src/index.ts"]
+      "@organizer/teacher-api": ["libs/frontend/api/teacher-api/src/index.ts"],
+      "@school-organizer/teacher-management-feature": [
+        "libs/frontend/config/teacher-management-feature/src/index.ts"
+      ]
     }
   }
 }
