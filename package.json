@@ -1,8 +1,10 @@
 {
-  "name": "@angular-and-nest-api-first-base-project/source",
+  "name": "@organizer/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "generate:teacher": "openapi-generator-cli generate -g typescript-nestjs-server -i apps/backend/api/teacher.yaml -o libs/backend/generated-server-teacher/src --additional-properties=supportsES6=true"
+  },
   "private": true,
   "overrides": {
     "ora": "5.4.1"
