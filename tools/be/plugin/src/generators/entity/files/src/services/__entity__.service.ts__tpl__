@@ -1,0 +1,71 @@
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { <%= entityClassName %>Entity } from '../entities/<%= entity %>.entity';
+import { 
+  <%= entityClassName %>,
+  Update<%= entityClassName %>Dto,
+  Create<%= entityClassName %>Dto,
+  Paginated<%= entityClassName %>Response,
+} from '@organizer/generated-server-<%= entity %>';
+
+@Injectable()
+export class <%= entityClassName %>Service {
+  constructor(
+    @InjectRepository(<%= entityClassName %>Entity)
+    private <%= entity %>Repository: Repository<<%= entityClassName %>Entity>,
+  ) {}
+
+  async <%= entity %>Get(page: number, limit: number): Promise<Paginated<%=entityClassName %>Response> {
+    return this.<%= entity %>Repository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+      order: {
+        id: 'DESC',
+      },
+    }).then(([<%= entity %>s, total]) => {
+      return {
+        data: <%= entity %>s.map(this.entityToModel),
+        meta: {
+          page: page,
+          limit: limit,
+          total: total,
+        },
+      }
+    });
+  }
+
+  <%= entity %>IdDelete(id: number, request: Request): Promise<void> {
+    return this.<%= entity %>Repository.delete(id).then(() => {
+      return;
+    });
+  }
+
+  <%= entity %>IdGet(id: number, request: Request): Promise<<%=entityClassName %>> {
+    return this.<%= entity %>Repository.findOne({ where: { id } }).then(<%= entity %> => {
+      return this.entityToModel(<%= entity %> as <%=entityClassName %>Entity);
+    });
+  }
+
+  <%= entity %>IdPut(id: number, update<%=entityClassName %>Dto: Update<%=entityClassName %>Dto, request: Request): Promise<<%=entityClassName %>> {
+    return this.<%= entity %>Repository.update(id, update<%=entityClassName %>Dto).then(() => {
+    return this.<%= entity %>Repository.findOne({ where: { id } }).then(<%= entity %> => {
+      return this.entityToModel(<%= entity %> as <%=entityClassName %>Entity);
+    });
+  });
+}
+
+  <%= entity %>Post(create<%=entityClassName %>Dto: Create<%=entityClassName %>Dto, request: Request): Promise<<%=entityClassName %>> {
+    return this.<%= entity %>Repository.save(create<%=entityClassName %>Dto).then(<%= entity %> => {
+      return this.entityToModel(<%= entity %> as <%=entityClassName %>Entity);
+    });
+  }
+
+
+  private entityToModel(entity: <%=entityClassName %>Entity): <%=entityClassName %> {
+    return {
+      id: entity.id,
+      name: entity.name,
+    };
+  }
+}

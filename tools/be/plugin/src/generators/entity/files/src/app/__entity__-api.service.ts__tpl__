@@ -1,0 +1,32 @@
+import { Injectable } from "@nestjs/common";
+import { 
+  <%= entityClassName %>Api,
+  Paginated<%= entityClassName %>Response,
+  Update<%= entityClassName %>Dto,
+  Create<%= entityClassName %>Dto,
+  <%= entityClassName %>,
+} from "@organizer/generated-server-<%= entity %>"; 
+import { Observable } from "rxjs";
+import { <%= entityClassName %>Service } from "../services/<%= entity %>.service";
+
+@Injectable()
+export class <%= entityClassName %>ApiService extends <%= entityClassName %>Api {
+  override <%= entity %>Get(page: number, limit: number, request: Request): Paginated<%= entityClassName %>Response | Promise<Paginated<%= entityClassName %>Response> | Observable<Paginated<%= entityClassName %>Response> {
+    return this.<%= entity %>Service.<%= entity %>Get(page, limit);
+  }
+  override <%= entity %>IdDelete(id: number, request: Request): void | Promise<void> | Observable<void> {
+    return this.<%= entity %>Service.<%= entity %>IdDelete(id, request);
+  }
+  override <%= entity %>IdGet(id: number, request: Request): <%= entityClassName %> | Promise<<%= entityClassName %>> | Observable<<%= entityClassName %>> {
+    return this.<%= entity %>Service.<%= entity %>IdGet(id, request);
+  }
+  override <%= entity %>IdPut(id: number, update<%= entityClassName %>Dto: Update<%= entityClassName %>Dto, request: Request): <%= entityClassName %> | Promise<<%= entityClassName %>> | Observable<<%= entityClassName %>> {
+    return this.<%= entity %>Service.<%= entity %>IdPut(id, update<%= entityClassName %>Dto, request);
+  }
+  override <%= entity %>Post(create<%= entityClassName %>Dto: Create<%= entityClassName %>Dto, request: Request): <%= entityClassName %> | Promise<<%= entityClassName %>> | Observable<<%= entityClassName %>> {
+    return this.<%= entity %>Service.<%= entity %>Post(create<%= entityClassName %>Dto, request);
+  }
+  constructor(private readonly <%= entity %>Service: <%= entityClassName %>Service) {
+    super();
+  }
+}

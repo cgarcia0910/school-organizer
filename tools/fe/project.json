@@ -1,0 +1,41 @@
+{
+  "name": "fe",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "tools/fe/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/tools/fe",
+        "main": "tools/fe/src/index.ts",
+        "tsConfig": "tools/fe/tsconfig.lib.json",
+        "assets": [
+          "tools/fe/*.md",
+          {
+            "input": "./tools/fe/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./tools/fe/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./tools/fe",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./tools/fe",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    }
+  }
+}

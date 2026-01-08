@@ -1,0 +1,12 @@
+import { Global, Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { <%= entityClassName %>Entity } from '../entities/<%= entity %>.entity';
+import { <%= entityClassName %>Service } from '../services/<%= entity %>.service';
+import { <%= entityClassName %>DataSeederService } from '../services/<%= entity %>-data-seeder.service';
+@Global()
+@Module({
+  imports: [TypeOrmModule.forFeature([<%= entityClassName %>Entity])],
+  providers: [<%= entityClassName %>Service, <%= entityClassName %>DataSeederService],
+  exports: [<%= entityClassName %>Service],
+})
+export class <%= entityClassName %>Module {}

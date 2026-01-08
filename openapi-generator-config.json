@@ -1,0 +1,8 @@
+{
+    "apis": true,
+    "models": true,
+    "supportingFiles": true,
+    "controllerSuffix": "Controller",
+    "serviceSuffix": "Service",
+    "useTags": true
+  }

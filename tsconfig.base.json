@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "declarationMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "importHelpers": true,
+    "isolatedModules": true,
+    "lib": ["es2022", "dom"],
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es2022",
+    "paths": {
+      
+      "@organizer/plugin": ["tools/be/plugin/src/index.ts"],
+      "@organizer/fe": ["tools/fe/src/index.ts"],
+
+      "config/Routes": [
+        "apps/frontend/config/config/src/app/remote-entry/entry.routes.ts"
+      ],
+      "planning/Routes": [
+        "apps/frontend/planning/planning/src/app/remote-entry/entry.routes.ts"
+      ],
+      "@organizer/ui-material": ["apps/frontend/ui/ui-material/src/index.ts"],
+      
+      "@organizer/api-config": ["libs/frontend/api/api-config/src/index.ts"],
+    }
+  }
+}
