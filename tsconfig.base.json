@@ -26,13 +26,13 @@
         "apps/frontend/planning/planning/src/app/remote-entry/entry.routes.ts"
       ],
       "@organizer/ui-material": ["apps/frontend/ui/ui-material/src/index.ts"],
-      "@organizer/api-config": ["libs/frontend/api/api-config/src/index.ts"],
+      "@organizer/api-config": ["libs/frontend/infrastructure/api/api-config/src/index.ts"],
       "@organizer/generated-server-teacher": [
         "libs/backend/generated-server-teacher/src/index.ts"
       ],
-      "@organizer/teacher-api": ["libs/frontend/api/teacher-api/src/index.ts"],
+      "@organizer/teacher-api": ["libs/frontend/infrastructure/api/teacher-api/src/lib/index.ts"],
       "@school-organizer/teacher-management-feature": [
-        "libs/frontend/config/teacher-management-feature/src/index.ts"
+        "libs/frontend/domain/config/teacher-management-feature/src/index.ts"
       ]
     }
   }

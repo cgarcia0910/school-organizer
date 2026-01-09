@@ -1,6 +1,6 @@
 <div class="toolbar">
   <h2>Gestión de profesores</h2>
-  <button matButton aria-label="Add teacher" class="toolbar__action-button">
+  <button matButton aria-label="Add teacher" class="toolbar__action-button" (click)="addTeacher()">
     <mat-icon>add</mat-icon>Nuevo profesor
   </button>
 </div>
@@ -14,6 +14,6 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<mat-paginator [length]="dataSource.total$ | async" [pageSize]="2" aria-label="Select page"
+<mat-paginator [length]="dataSource.total$ | async" [pageSize]="5" aria-label="Select page"
   (page)="dataSource.fetch($event.pageIndex)">
 </mat-paginator>

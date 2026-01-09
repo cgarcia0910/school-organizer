@@ -1,8 +1,8 @@
 export default {
-  displayName: 'teacher-api',
+  displayName: 'api-config',
   preset: '../../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../../../coverage/libs/frontend/api/teacher-api',
+  coverageDirectory: '../../../../coverage/libs/frontend/infrastructure/api/api-config',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
