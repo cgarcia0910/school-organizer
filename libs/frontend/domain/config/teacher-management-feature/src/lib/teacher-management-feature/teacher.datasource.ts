@@ -8,15 +8,11 @@ export class TeacherDataSource extends DataSource<any> {
     total$: Subject<number> = new Subject<number>();
     private refresh$ = new BehaviorSubject<Boolean>(true);
     override connect(collectionViewer: CollectionViewer): Observable<readonly Teacher[]> {
-        console.log('TeacherDataSource connect');
-        return this.page$.pipe(
-            tap(page => console.log('TeacherDataSource connect', page)),
-        );
+        return this.page$
     }
     override disconnect(collectionViewer: CollectionViewer): void {}
     constructor(private teacherService: TeacherService) {
         super();
-        console.log('TeacherDataSource constructor');
         this.page$ = combineLatest({page: this.pageNumber, refresh: this.refresh$}).pipe(
             switchMap(({page}) => this.teacherService.teacherGet(page, 5)),
             tap(response => this.total$.next(response.meta.total)),
@@ -24,7 +20,6 @@ export class TeacherDataSource extends DataSource<any> {
         );
     }
     fetch(page: number): void {
-        console.log('TeacherDataSource fetch', page);
         this.pageNumber.next(page+1);
     }
     refresh(): void {

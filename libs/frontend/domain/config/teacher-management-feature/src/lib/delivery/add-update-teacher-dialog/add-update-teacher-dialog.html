@@ -1,16 +1,5 @@
   <h2 mat-dialog-title>Nuevo profesor</h2>
 <mat-dialog-content>
-    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-        @for (field of userFormFields; track field.key) {
-            <mat-form-field >
-                <input matInput  [type]="field.type" [formControlName]="field.key" [placeholder]="field.label">
-            </mat-form-field>
-            <div *ngIf="userForm.get(field.key)?.touched && userForm.get(field.key)?.invalid">
-                Name is required
-            </div>
-        }
-        <button matButton type="submit" [disabled]="userForm.invalid">
-          Submit
-        </button>
-      </form>
+  <lib-form></lib-form>
+  <button matButton type="submit" [disabled]="formController.form.invalid" (click)="formController.onSubmit()">Submit</button>
 </mat-dialog-content>

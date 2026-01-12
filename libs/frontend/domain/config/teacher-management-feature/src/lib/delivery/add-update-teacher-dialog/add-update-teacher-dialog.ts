@@ -1,39 +1,34 @@
-import { NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
-import { CreateTeacherDto, TeacherService } from '@organizer/teacher-api';
-import { MatInput } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { FormComponent, FormController } from '@organizer/devkit/forms';
+import { AddTeacherFormController, UPDATE_TEACHER, UpdateTeacherFormController } from '../../application';
+
+function provideFormController(): FormController {
+  console.log('provideFormController', inject(UPDATE_TEACHER, { optional: true }));
+  return inject(UPDATE_TEACHER, { optional: true })
+    ? inject(UpdateTeacherFormController)
+    : inject(AddTeacherFormController)
+}
 
 @Component({
   selector: 'lib-add-update-teacher-dialog',
-  imports: [ReactiveFormsModule, FormsModule, NgIf,   MatDialogTitle,
-    MatDialogContent, MatInput, MatFormFieldModule, MatButtonModule],
+  imports: [ReactiveFormsModule, FormsModule,   MatDialogTitle,
+    MatDialogContent, MatFormFieldModule, MatButtonModule, FormComponent],
   templateUrl: './add-update-teacher-dialog.html',
   styleUrl: './add-update-teacher-dialog.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    UpdateTeacherFormController,
+    AddTeacherFormController,
+    {
+      provide: FormController, 
+      useFactory: provideFormController,
+    },
+  ]
 })
 export class AddUpdateTeacherDialog {
-  private teacherService = inject(TeacherService);
-  private dialogRef = inject(MatDialogRef<AddUpdateTeacherDialog>);
-  userForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-  });
-  userFormFields = [
-    {
-      label: 'Nombre',
-      key: 'name',
-      type: 'text',
-      required: true,
-    },
-  ];
-  onSubmit(): void {
-    this.teacherService.teacherPost(this.userForm.value as CreateTeacherDto).subscribe((response) => {
-      this.dialogRef.close(true);
-    }, (error) => {
-      this.dialogRef.close(false);
-    });
-  }
+  protected readonly formController = inject(FormController);
 }
