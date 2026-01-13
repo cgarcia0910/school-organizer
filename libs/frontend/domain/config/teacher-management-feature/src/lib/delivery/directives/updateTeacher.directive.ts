@@ -2,7 +2,7 @@ import { Directive, HostListener, inject, Injector, Input } from '@angular/core'
 import { TeacherDataSource } from '../../teacher-management-feature/teacher.datasource';
 import { MatDialog } from '@angular/material/dialog';
 import { AddUpdateTeacherDialog } from '../components/add-update-teacher-dialog/add-update-teacher-dialog';
-import { UPDATE_TEACHER } from '../../application';
+import { UPDATE_TEACHER } from '../../domain';
 import { Teacher } from '@organizer/generated-server-teacher';
 
 @Directive({

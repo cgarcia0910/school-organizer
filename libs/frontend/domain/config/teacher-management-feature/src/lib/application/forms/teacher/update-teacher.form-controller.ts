@@ -1,8 +1,8 @@
 import {  UpdateTeacherDto, Teacher } from '@organizer/generated-server-teacher';
 import { TeacherFormController } from "./teacher.form-controller";
 import { inject, Injectable, InjectionToken } from '@angular/core';
+import { UPDATE_TEACHER } from '../../../domain';
 
-export const UPDATE_TEACHER = new InjectionToken<Teacher>('UPDATE_TEACHER');
 
 @Injectable()
 export class UpdateTeacherFormController extends TeacherFormController {

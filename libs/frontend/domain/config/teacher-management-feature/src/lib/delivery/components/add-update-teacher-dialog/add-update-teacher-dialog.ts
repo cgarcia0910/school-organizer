@@ -4,7 +4,8 @@ import { MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/mat
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { FormComponent, FormController } from '@organizer/devkit/forms';
-import { AddTeacherFormController, UPDATE_TEACHER, UpdateTeacherFormController } from '../../../application';
+import { AddTeacherFormController, UpdateTeacherFormController } from '../../../application';
+import { UPDATE_TEACHER } from '../../../domain';
 
 function provideFormController(): FormController {
   console.log('provideFormController', inject(UPDATE_TEACHER, { optional: true }));
