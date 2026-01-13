@@ -3,7 +3,7 @@ import { FormController, FormModel } from "@organizer/devkit/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { inject, Injectable } from "@angular/core";
 import { TeacherService } from '@organizer/teacher-api';
-import { AddUpdateTeacherDialog } from "../../../delivery/add-update-teacher-dialog/add-update-teacher-dialog";
+import { AddUpdateTeacherDialog } from "../../../delivery/components/add-update-teacher-dialog/add-update-teacher-dialog";
 
 @Injectable()
 export class TeacherFormController extends FormController {

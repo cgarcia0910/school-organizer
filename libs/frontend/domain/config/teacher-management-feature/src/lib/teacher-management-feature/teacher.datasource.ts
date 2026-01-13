@@ -1,7 +1,9 @@
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { Teacher, TeacherService } from "@organizer/teacher-api";
 import { map, Observable, switchMap, tap, BehaviorSubject, Subject, filter, combineLatest } from "rxjs";
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class TeacherDataSource extends DataSource<any> {
     private pageNumber = new BehaviorSubject<number>(1);
     page$: Observable<Teacher[]>;

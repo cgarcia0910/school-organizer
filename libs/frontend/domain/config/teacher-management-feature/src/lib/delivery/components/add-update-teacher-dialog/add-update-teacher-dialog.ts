@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
+import { MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { FormComponent, FormController } from '@organizer/devkit/forms';
-import { AddTeacherFormController, UPDATE_TEACHER, UpdateTeacherFormController } from '../../application';
+import { AddTeacherFormController, UPDATE_TEACHER, UpdateTeacherFormController } from '../../../application';
 
 function provideFormController(): FormController {
   console.log('provideFormController', inject(UPDATE_TEACHER, { optional: true }));
@@ -15,7 +15,7 @@ function provideFormController(): FormController {
 
 @Component({
   selector: 'lib-add-update-teacher-dialog',
-  imports: [ReactiveFormsModule, FormsModule,   MatDialogTitle,
+  imports: [ReactiveFormsModule, FormsModule,   MatDialogTitle, MatDialogActions,
     MatDialogContent, MatFormFieldModule, MatButtonModule, FormComponent],
   templateUrl: './add-update-teacher-dialog.html',
   styleUrl: './add-update-teacher-dialog.scss',
