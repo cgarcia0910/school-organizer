@@ -13,5 +13,16 @@
     "src/**/*.spec.ts",
     "jest.config.cts"
   ],
-  "files": ["src/app/remote-entry/entry.routes.ts"]
+  "files": ["src/app/remote-entry/entry.routes.ts"],
+  "references": [
+    {
+      "path": "../../ui/ui-material"
+    },
+    {
+      "path": "../../../../libs/frontend/domain/config/teacher-management-feature"
+    },
+    {
+      "path": "../../../../libs/frontend/infrastructure/api/api-config"
+    }
+  ]
 }

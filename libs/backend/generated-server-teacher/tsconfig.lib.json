@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../../dist/out-tsc",
+    "outDir": "../../../dist/libs/backend/generated-server-teacher",
     "declaration": true,
     "types": [
       "node"
@@ -10,7 +10,9 @@
     "emitDecoratorMetadata": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "isolatedModules": false
+    "isolatedModules": false,
+    "composite": true,
+    "declarationMap": true
   },
   "include": [
     "src/**/*.ts"

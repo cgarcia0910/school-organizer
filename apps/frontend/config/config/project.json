@@ -73,8 +73,7 @@
           "buildTarget": "config:build:development"
         }
       },
-      "defaultConfiguration": "development",
-      "dependsOn": ["shell:serve"]
+      "defaultConfiguration": "development"
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",

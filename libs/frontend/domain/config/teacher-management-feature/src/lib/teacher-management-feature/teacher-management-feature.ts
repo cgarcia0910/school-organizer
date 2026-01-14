@@ -11,7 +11,16 @@ import { DeleteTeacherDirective } from '../delivery/directives/deleteTeacher.dir
 
 @Component({
   selector: 'lib-teacher-management-feature',
-  imports: [MatTableModule, MatPaginatorModule, AsyncPipe, MatIconModule, MatButtonModule, AddTeacherDirective, UpdateTeacherDirective, DeleteTeacherDirective], 
+  imports: [
+    MatTableModule,
+    MatPaginatorModule,
+    AsyncPipe,
+    MatIconModule,
+    MatButtonModule,
+    AddTeacherDirective,
+    UpdateTeacherDirective,
+    DeleteTeacherDirective,
+  ],
   templateUrl: './teacher-management-feature.html',
   styleUrl: './teacher-management-feature.scss',
   providers: [TeacherDataSource],

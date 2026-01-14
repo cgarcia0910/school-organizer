@@ -5,7 +5,14 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": []
+    "sourceMap": true,
+    "types": [],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "target": "es2022",
+    "lib": ["es2022", "dom"],
+    "module": "es2022",
+    "isolatedModules": false
   },
   "exclude": [
     "src/**/*.spec.ts",

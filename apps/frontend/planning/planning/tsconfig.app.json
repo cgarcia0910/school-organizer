@@ -13,5 +13,10 @@
     "src/**/*.spec.ts",
     "jest.config.cts"
   ],
-  "files": ["src/app/remote-entry/entry.routes.ts"]
+  "files": ["src/app/remote-entry/entry.routes.ts"],
+  "references": [
+    {
+      "path": "../../../../libs/frontend/infrastructure/api/api-config"
+    }
+  ]
 }

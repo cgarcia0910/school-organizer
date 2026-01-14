@@ -4,17 +4,8 @@
   "files": [],
   "compilerOptions": {
     "paths": {
-      "@organizer/group-api": [
-        "./dist/group-api"
-      ]
+      "@organizer/group-api": ["./dist/group-api"]
     }
   },
-  "references": [
-    {
-      "path": "./libs/frontend/api/group-api/tsconfig.lib.json"
-    },
-    {
-      "path": "./libs/frontend/api/group-api/tsconfig.spec.json"
-    }
-  ]
+  "references": []
 }
