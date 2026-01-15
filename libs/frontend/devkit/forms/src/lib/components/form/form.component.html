@@ -1,0 +1,7 @@
+<form [formGroup]="formController.form" (ngSubmit)="formController.onSubmit()">
+    @for (field of formController.getFields(); track field.key) {
+        <mat-form-field >
+            <input matInput  [type]="field.type" [formControlName]="field.key" [placeholder]="field.label">
+        </mat-form-field>
+    }
+  </form>

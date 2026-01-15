@@ -17,10 +17,8 @@
     "strict": true,
     "target": "es2022",
     "paths": {
-      
       "@organizer/plugin": ["tools/be/plugin/src/index.ts"],
       "@organizer/fe": ["tools/fe/src/index.ts"],
-
       "config/Routes": [
         "apps/frontend/config/config/src/app/remote-entry/entry.routes.ts"
       ],
@@ -28,8 +26,19 @@
         "apps/frontend/planning/planning/src/app/remote-entry/entry.routes.ts"
       ],
       "@organizer/ui-material": ["apps/frontend/ui/ui-material/src/index.ts"],
-      
-      "@organizer/api-config": ["libs/frontend/api/api-config/src/index.ts"],
+      "@organizer/api-config": [
+        "libs/frontend/infrastructure/api/api-config/src/index.ts"
+      ],
+      "@organizer/generated-server-teacher": [
+        "libs/backend/generated-server-teacher/src/index.ts"
+      ],
+      "@organizer/teacher-api": [
+        "libs/frontend/infrastructure/api/teacher-api/src/lib/index.ts"
+      ],
+      "@school-organizer/teacher-management-feature": [
+        "libs/frontend/domain/config/teacher-management-feature/src/index.ts"
+      ],
+      "@organizer/devkit/forms": ["libs/frontend/devkit/forms/src/index.ts"]
     }
   }
 }

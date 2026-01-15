@@ -1,0 +1,7 @@
+  <h2 mat-dialog-title>Nuevo profesor</h2>
+<mat-dialog-content>
+  <lib-form></lib-form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton type="submit" [disabled]="formController.form.invalid" (click)="formController.onSubmit()">Submit</button>
+</mat-dialog-actions>

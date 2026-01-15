@@ -1,0 +1,17 @@
+.gitignore
+.openapi-generator-ignore
+README.md
+api-implementations.ts
+api.module.ts
+api/TeacherApi.ts
+api/index.ts
+controllers/TeacherApi.controller.ts
+controllers/index.ts
+index.ts
+models/create-teacher-dto.ts
+models/index.ts
+models/paginated-teacher-response.ts
+models/pagination-meta.ts
+models/teacher.ts
+models/update-teacher-dto.ts
+tsconfig.json
