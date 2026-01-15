@@ -1,6 +1,6 @@
 <div class="toolbar">
   <h2>Gestión de profesores</h2>
-  <button matButton aria-label="Add teacher" class="toolbar__action-button" libAddTeacher>
+  <button data-testid="add-teacher-button" matButton aria-label="Add teacher" class="toolbar__action-button" libAddTeacher>
     <mat-icon>add</mat-icon>Nuevo profesor
   </button>
 </div>
@@ -16,7 +16,7 @@
       <button mat-icon-button [libUpdateTeacher]="element">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button [libDeleteTeacher]="element">
+      <button [attr.data-testid]="'delete-button-'+ element.name" mat-icon-button [libDeleteTeacher]="element">
         <mat-icon>delete</mat-icon>
       </button>
     </td>
