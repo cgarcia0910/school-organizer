@@ -1,8 +1,15 @@
 {
+<<<<<<< HEAD
+  "extends": "../../../../../tsconfig.base.json",
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "es2022"
+=======
   "extends": "../../../../tsconfig.base.json",
   "compilerOptions": {
     "moduleResolution": "bundler",
     "module": "preserve"
+>>>>>>> main
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false

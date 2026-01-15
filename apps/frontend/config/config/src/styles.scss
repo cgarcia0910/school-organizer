@@ -1,1 +1,47 @@
-/* You can add global styles to this file, and also import other style files */
+// Las reglas @use deben ir primero
+@use '@angular/material' as mat;
+
+// Luego los @import
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+@include mat.core();
+
+// Definir el tema usando la nueva API de Material Design 3
+// Usando valores de color directos (equivalentes a indigo y pink)
+$theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+    tertiary: mat.$magenta-palette,
+  ),
+));
+
+@include mat.all-component-themes($theme);
+
+// Estilos globales para asegurar que la fuente Roboto se aplique
+html, body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+// Asegurar que los iconos de Material usen la fuente correcta
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
+}

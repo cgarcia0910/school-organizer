@@ -6,7 +6,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "importHelpers": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "lib": ["es2022", "dom"],
     "moduleResolution": "node",
     "noEmitOnError": true,
