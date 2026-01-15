@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Post, Put, Param, Query, Req } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { TeacherApi } from '../api';
-import { CreateTeacherDto, PaginatedTeacherResponse, Teacher, UpdateTeacherDto } from '../models';
+import { CreateTeacherDto, PaginatedTeacherResponse, Teacher, UpdateTeacherDto,  } from '../models';
 
 @Controller()
 export class TeacherApiController {
