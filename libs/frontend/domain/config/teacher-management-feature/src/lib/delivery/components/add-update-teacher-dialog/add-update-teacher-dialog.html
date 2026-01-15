@@ -3,5 +3,5 @@
   <lib-form></lib-form>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button matButton type="submit" [disabled]="formController.form.invalid" (click)="formController.onSubmit()">Submit</button>
+  <button data-testid="submit-button" matButton type="submit" [disabled]="formController.form.invalid" (click)="formController.onSubmit()">Submit</button>
 </mat-dialog-actions>
