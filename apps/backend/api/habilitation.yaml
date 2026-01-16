@@ -1,0 +1,172 @@
+openapi: 3.0.3
+info:
+  title: My API
+  version: 1.0.0
+
+paths:
+  /habilitation:
+    get:
+      tags:
+        - Habilitation
+      summary: Obtener lista paginada de habilitation
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+      responses:
+        '200':
+          description: Lista paginada de habilitation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedHabilitationResponse'
+
+    post:
+      tags:
+        - Habilitation
+      summary: Crear un teacher
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateHabilitationDto'
+      responses:
+        '201':
+          description: Habilitation creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Habilitation'
+
+  /habilitation/{id}:
+    get:
+      tags:
+        - Habilitation
+      summary: Obtener un teacher por id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Habilitation encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Habilitation'
+        '404':
+          description: Habilitation no encontrado
+
+    put:
+      tags:
+        - Habilitation
+      summary: Reemplazar un teacher
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateHabilitationDto'
+      responses:
+        '200':
+          description: Habilitation actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Habilitation'
+
+    delete:
+      tags:
+        - Habilitation
+      summary: Eliminar un teacher
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Habilitation eliminado correctamente
+
+components:
+  schemas:
+    Habilitation:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Juan Pérez
+
+    CreateHabilitationDto:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: Juan Pérez
+
+    UpdateHabilitationDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Juan Pérez
+
+    PaginationMeta:
+      type: object
+      required:
+        - page
+        - limit
+        - total
+      properties:
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          example: 42
+
+    PaginatedHabilitationResponse:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Habilitation'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'

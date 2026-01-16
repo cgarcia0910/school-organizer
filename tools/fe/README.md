@@ -9,3 +9,5 @@ Run `nx build fe` to build the library.
 ## Execution
 
 npx nx g @organizer/fe:fe-api --name=subject
+
+npx nx g @organizer/fe:refresh-yaml --name=subject
