@@ -4,6 +4,11 @@
       "factory": "./src/generators/fe-api/fe-api",
       "schema": "./src/generators/fe-api/schema.json",
       "description": "fe-api generator"
+    },
+    "refresh-yaml": {
+      "factory": "./src/generators/refresh-yaml/refresh-yaml",
+      "schema": "./src/generators/refresh-yaml/schema.json",
+      "description": "refresh-yaml generator"
     }
   }
 }

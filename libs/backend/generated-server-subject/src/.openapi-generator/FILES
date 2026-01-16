@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 README.md
 api-implementations.ts
 api.module.ts
@@ -12,6 +11,7 @@ models/create-subject-dto.ts
 models/index.ts
 models/paginated-subject-response.ts
 models/pagination-meta.ts
+models/subject-courses-inner.ts
 models/subject.ts
 models/update-subject-dto.ts
 tsconfig.json
