@@ -38,6 +38,12 @@
       "@organizer/devkit/forms": ["libs/frontend/devkit/forms/src/index.ts"],
       "@organizer/teacher-api": [
         "libs/frontend/infrastructure/api/teacher-api/src/index.ts"
+      ],
+      "@organizer/generated-server-subject": [
+        "libs/backend/generated-server-subject/src/index.ts"
+      ],
+      "@organizer/subject-api": [
+        "libs/frontend/infrastructure/api/subject-api/src/index.ts"
       ]
     }
   }
