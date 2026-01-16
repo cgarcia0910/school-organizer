@@ -66,6 +66,7 @@ export class TeacherService {
     return {
       id: entity.id,
       name: entity.name,
+      habilities: entity.habilities,
     };
   }
 }

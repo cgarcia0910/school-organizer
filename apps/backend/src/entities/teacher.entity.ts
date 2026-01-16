@@ -7,4 +7,7 @@ export class TeacherEntity {
 
   @Column({ type: 'varchar', length: 255 })
   name!: string;
+
+  @Column({ type: 'json'})
+  habilities!: Array<string>;
 }

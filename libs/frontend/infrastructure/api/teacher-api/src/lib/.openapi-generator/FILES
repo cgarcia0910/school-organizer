@@ -15,6 +15,9 @@ model/paginatedTeacherResponse.ts
 model/paginationMeta.ts
 model/teacher.ts
 model/updateTeacherDto.ts
+ng-package.json
+package.json
 param.ts
 provide-api.ts
+tsconfig.json
 variables.ts
