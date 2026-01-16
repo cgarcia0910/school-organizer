@@ -36,7 +36,7 @@ paths:
     post:
       tags:
         - Subject
-      summary: Crear un teacher
+      summary: Crear un subject
       requestBody:
         required: true
         content:
@@ -55,7 +55,7 @@ paths:
     get:
       tags:
         - Subject
-      summary: Obtener un teacher por id
+      summary: Obtener un subject por id
       parameters:
         - name: id
           in: path
@@ -75,7 +75,7 @@ paths:
     put:
       tags:
         - Subject
-      summary: Reemplazar un teacher
+      summary: Reemplazar un subject
       parameters:
         - name: id
           in: path
@@ -99,7 +99,7 @@ paths:
     delete:
       tags:
         - Subject
-      summary: Eliminar un teacher
+      summary: Eliminar un subject
       parameters:
         - name: id
           in: path
@@ -123,7 +123,19 @@ components:
           example: 1
         name:
           type: string
-          example: Juan Pérez
+          example: Matemáticas
+        courses:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: 1
+          example: [{id: 1, name: '1'}, {id: 2, name: '2'}, {id: 3, name: '3'}]
 
     CreateSubjectDto:
       type: object
@@ -132,14 +144,14 @@ components:
       properties:
         name:
           type: string
-          example: Juan Pérez
+          example: Matemáticas
 
     UpdateSubjectDto:
       type: object
       properties:
         name:
           type: string
-          example: Juan Pérez
+          example: Matemáticas
 
     PaginationMeta:
       type: object
