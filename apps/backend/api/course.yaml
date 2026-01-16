@@ -124,6 +124,11 @@ components:
         name:
           type: string
           example: Juan Pérez
+        subjects:
+          type: array
+          items:
+            type: integer
+            example: 1
 
     CreateCourseDto:
       type: object
@@ -133,6 +138,11 @@ components:
         name:
           type: string
           example: Juan Pérez
+        subjects:
+          type: array
+          items:
+            type: integer
+            example: 1
 
     UpdateCourseDto:
       type: object
@@ -140,6 +150,11 @@ components:
         name:
           type: string
           example: Juan Pérez
+        subjects:
+          type: array
+          items:
+            type: integer
+            example: 1
 
     PaginationMeta:
       type: object
