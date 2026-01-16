@@ -32,13 +32,13 @@
       "@organizer/generated-server-teacher": [
         "libs/backend/generated-server-teacher/src/index.ts"
       ],
-      "@organizer/teacher-api": [
-        "libs/frontend/infrastructure/api/teacher-api/src/lib/index.ts"
-      ],
       "@school-organizer/teacher-management-feature": [
         "libs/frontend/domain/config/teacher-management-feature/src/index.ts"
       ],
-      "@organizer/devkit/forms": ["libs/frontend/devkit/forms/src/index.ts"]
+      "@organizer/devkit/forms": ["libs/frontend/devkit/forms/src/index.ts"],
+      "@organizer/teacher-api": [
+        "libs/frontend/infrastructure/api/teacher-api/src/index.ts"
+      ]
     }
   }
 }

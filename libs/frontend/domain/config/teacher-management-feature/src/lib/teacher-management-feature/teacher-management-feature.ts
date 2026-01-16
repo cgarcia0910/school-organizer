@@ -26,6 +26,6 @@ import { DeleteTeacherDirective } from '../delivery/directives/deleteTeacher.dir
   providers: [TeacherDataSource],
 })
 export class TeacherManagementFeature {
-  displayedColumns: string[] = ['name', 'actions'];
+  displayedColumns: string[] = ['name', 'habilities', 'actions'];
   dataSource = inject(TeacherDataSource);
 }

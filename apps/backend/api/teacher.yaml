@@ -124,6 +124,11 @@ components:
         name:
           type: string
           example: Juan Pérez
+        habilities:
+          type: array
+          items:
+            type: string
+            example: 'Matemáticas'
 
     CreateTeacherDto:
       type: object
@@ -133,6 +138,11 @@ components:
         name:
           type: string
           example: Juan Pérez
+        habilities:
+          type: array
+          items:
+            type: string
+            example: 'Matemáticas'
 
     UpdateTeacherDto:
       type: object
@@ -140,6 +150,11 @@ components:
         name:
           type: string
           example: Juan Pérez
+        habilities:
+          type: array
+          items:
+            type: string
+            example: 'Matemáticas'
 
     PaginationMeta:
       type: object

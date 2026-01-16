@@ -16,31 +16,33 @@ export async function feApiGenerator(
   tree: Tree,
   options: FeApiGeneratorSchema,
 ) {
+  const apiPath = options.apiPath || 'libs/frontend/infrastructure/api';
+  const importPath = `@organizer/${options.name}-api`;
   await libraryGenerator(tree, {
     name: `${options.name}-api`,
-    directory: `libs/frontend/api/${options.name}-api`,
-    importPath: `@organizer/${options.name}-api`,
+    directory: `${apiPath}/${options.name}-api`,
+    importPath,
   })
   // 2️⃣ Limpiar archivos generados
-  tree.delete(`libs/frontend/api/${options.name}-api/src/index.ts`);
+  tree.delete(`${apiPath}/${options.name}-api/src/index.ts`);
   
-  tree.write(`libs/frontend/api/${options.name}-api/src/index.ts`, `export * from './lib';`);
+  tree.write(`${apiPath}/${options.name}-api/src/index.ts`, `export * from './lib';`);
   
   await formatFiles(tree);
   // 3️⃣ Ejecutar OpenAPI generator
   flushChanges(tree.root, tree.listChanges());
-  execSync(`openapi-generator-cli generate   -i apps/backend/api/${options.name}.yaml   -g typescript-angular   -o libs/frontend/api/${options.name}-api/src/lib   --additional-properties=providedInRoot=true,stringEnums=true`, {
+  execSync(`openapi-generator-cli generate   -i apps/backend/api/${options.name}.yaml   -g typescript-angular   -o ${apiPath}/${options.name}-api/src/lib   --additional-properties=providedInRoot=true,stringEnums=true`, {
     stdio: 'inherit',
   });
   addImport(
     tree,
-    'libs/frontend/api/api-config/src/lib/api.config.ts',
+    `${apiPath}/api-config/src/lib/api.config.ts`,
     `provideApi as provideApi${options.name.charAt(0).toUpperCase() + options.name.slice(1)}`,
-    `@organizer/${options.name}-api`
+    importPath
   );
   addToArray(
     tree,
-    'libs/frontend/api/api-config/src/lib/api.config.ts',
+      `${apiPath}/api-config/src/lib/api.config.ts`,
     'apiProviderConfig',
     `provideApi${options.name.charAt(0).toUpperCase() + options.name.slice(1)}('/api')`
   );
