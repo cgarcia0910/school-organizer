@@ -7,12 +7,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { SubjectCoursesInner } from './subjectCoursesInner';
 
 
-export interface Subject { 
-    id: number;
-    name: string;
-    courses?: Array<SubjectCoursesInner>;
+export interface SubjectCoursesInner { 
+    id?: number;
+    name?: string;
 }
 

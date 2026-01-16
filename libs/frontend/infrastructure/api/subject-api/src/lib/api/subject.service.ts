@@ -102,7 +102,7 @@ export class SubjectService extends BaseService {
     }
 
     /**
-     * Eliminar un teacher
+     * Eliminar un subject
      * @endpoint delete /subject/{id}
      * @param id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -156,7 +156,7 @@ export class SubjectService extends BaseService {
     }
 
     /**
-     * Obtener un teacher por id
+     * Obtener un subject por id
      * @endpoint get /subject/{id}
      * @param id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -211,7 +211,7 @@ export class SubjectService extends BaseService {
     }
 
     /**
-     * Reemplazar un teacher
+     * Reemplazar un subject
      * @endpoint put /subject/{id}
      * @param id 
      * @param updateSubjectDto 
@@ -280,7 +280,7 @@ export class SubjectService extends BaseService {
     }
 
     /**
-     * Crear un teacher
+     * Crear un subject
      * @endpoint post /subject
      * @param createSubjectDto 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
