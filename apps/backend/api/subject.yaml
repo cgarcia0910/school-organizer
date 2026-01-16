@@ -1,0 +1,184 @@
+openapi: 3.0.3
+info:
+  title: My API
+  version: 1.0.0
+
+paths:
+  /subject:
+    get:
+      tags:
+        - Subject
+      summary: Obtener lista paginada de subject
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+      responses:
+        '200':
+          description: Lista paginada de subject
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedSubjectResponse'
+
+    post:
+      tags:
+        - Subject
+      summary: Crear un subject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSubjectDto'
+      responses:
+        '201':
+          description: Subject creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subject'
+
+  /subject/{id}:
+    get:
+      tags:
+        - Subject
+      summary: Obtener un subject por id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Subject encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subject'
+        '404':
+          description: Subject no encontrado
+
+    put:
+      tags:
+        - Subject
+      summary: Reemplazar un subject
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSubjectDto'
+      responses:
+        '200':
+          description: Subject actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subject'
+
+    delete:
+      tags:
+        - Subject
+      summary: Eliminar un subject
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Subject eliminado correctamente
+
+components:
+  schemas:
+    Subject:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Matemáticas
+        courses:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: 1
+          example: [{id: 1, name: '1'}, {id: 2, name: '2'}, {id: 3, name: '3'}]
+
+    CreateSubjectDto:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: Matemáticas
+
+    UpdateSubjectDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Matemáticas
+
+    PaginationMeta:
+      type: object
+      required:
+        - page
+        - limit
+        - total
+      properties:
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          example: 42
+
+    PaginatedSubjectResponse:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subject'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'

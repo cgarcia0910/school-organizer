@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "generate:teacher": "openapi-generator-cli generate -g typescript-nestjs-server -i apps/backend/api/teacher.yaml -o libs/backend/generated-server-teacher/src --additional-properties=supportsES6=true",
-    "generate:teacher-client": "openapi-generator-cli generate -i apps/backend/api/teacher.yaml -g typescript-angular -o libs/frontend/infrastructure/api/teacher-api/src/lib --additional-properties=ngVersion=20.3.0,providedInRoot=true,stringEnums=true,npmName=@organizer/teacher-api"
+    "generate:teacher-client": "openapi-generator-cli generate -i apps/backend/api/teacher.yaml -g typescript-angular -o libs/frontend/infrastructure/api/teacher-api/src/lib --additional-properties=ngVersion=20.3.0,providedInRoot=true,stringEnums=true,npmName=@organizer/teacher-api",
+    "generate:subject": "openapi-generator-cli generate -g typescript-nestjs-server -i apps/backend/api/subject.yaml -o libs/backend/generated-server-subject/src --additional-properties=supportsES6=true"
   },
   "private": true,
   "overrides": {

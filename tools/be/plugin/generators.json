@@ -4,6 +4,11 @@
       "factory": "./src/generators/entity/entity",
       "schema": "./src/generators/entity/schema.json",
       "description": "entity generator"
+    },
+    "refresh-yaml": {
+      "factory": "./src/generators/refresh-yaml/refresh-yaml",
+      "schema": "./src/generators/refresh-yaml/schema.json",
+      "description": "refresh-yaml generator"
     }
   }
 }

@@ -1,6 +1,6 @@
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { Teacher, TeacherService } from "@organizer/teacher-api";
-import { map, Observable, switchMap, tap, BehaviorSubject, Subject, filter, combineLatest } from "rxjs";
+import { map, Observable, switchMap, tap, BehaviorSubject, Subject, combineLatest } from "rxjs";
 import { Injectable } from "@angular/core";
 
 @Injectable()
