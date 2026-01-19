@@ -3,7 +3,7 @@ import { MatDialogActions, MatDialogContent, MatDialogModule, MatDialogRef } fro
 import { MatButtonModule } from '@angular/material/button';
 import { DELETE_TEACHER } from '../../../domain';
 import { TeacherService } from '@organizer/teacher-api';
-import { TeacherDataSource } from '../../../teacher-management-feature/teacher.datasource';
+import { TeacherDataSource } from '../../../application';
 
 
 @Component({

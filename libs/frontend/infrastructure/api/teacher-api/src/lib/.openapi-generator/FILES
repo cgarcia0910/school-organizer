@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 README.md
 api.base.service.ts
 api.module.ts
@@ -10,14 +9,13 @@ encoder.ts
 git_push.sh
 index.ts
 model/createTeacherDto.ts
+model/habilitation.ts
 model/models.ts
 model/paginatedTeacherResponse.ts
 model/paginationMeta.ts
+model/subjectDto.ts
 model/teacher.ts
 model/updateTeacherDto.ts
-ng-package.json
-package.json
 param.ts
 provide-api.ts
-tsconfig.json
 variables.ts

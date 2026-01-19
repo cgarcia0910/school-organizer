@@ -1,10 +1,10 @@
 import { Directive, HostListener, inject, Injector, Input } from '@angular/core';
-import { TeacherDataSource } from '../../teacher-management-feature/teacher.datasource';
 import { TeacherService } from '@organizer/teacher-api';
 import { MatDialog } from '@angular/material/dialog';
 import { Teacher } from '@organizer/generated-server-teacher';
 import { ConfirmDeleteTeacherDialogComponent } from '../components/confirm-delete-teacher-dialog/confirm-delete-teacher-dialog.component';
 import { DELETE_TEACHER } from '../../domain/tokens/delete-teacher.token';
+import { TeacherDataSource } from '../../application';
 
 @Directive({
   selector: '[libDeleteTeacher]',

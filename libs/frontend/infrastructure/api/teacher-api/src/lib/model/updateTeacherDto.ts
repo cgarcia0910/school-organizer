@@ -7,10 +7,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Habilitation } from './habilitation';
 
 
 export interface UpdateTeacherDto { 
     name?: string;
-    habilities?: Array<string>;
+    habilitations?: Array<Habilitation>;
 }
 

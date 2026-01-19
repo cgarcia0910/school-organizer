@@ -1,7 +1,7 @@
 import { Directive, HostListener, inject } from '@angular/core';
 import { AddUpdateTeacherDialog } from '../components/add-update-teacher-dialog/add-update-teacher-dialog';
 import { MatDialog } from '@angular/material/dialog';
-import { TeacherDataSource } from '../../teacher-management-feature/teacher.datasource';
+import { TeacherDataSource } from '../../application';
 
 @Directive({
   selector: '[libAddTeacher]',

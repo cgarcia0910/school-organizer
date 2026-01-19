@@ -7,10 +7,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { SubjectDto } from './subjectDto';
 
 
 export interface Course { 
     id: number;
     name: string;
+    subjects?: Array<SubjectDto>;
 }
 

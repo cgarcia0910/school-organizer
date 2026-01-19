@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 README.md
 api.base.service.ts
 api.module.ts
@@ -14,6 +13,7 @@ model/createCourseDto.ts
 model/models.ts
 model/paginatedCourseResponse.ts
 model/paginationMeta.ts
+model/subjectDto.ts
 model/updateCourseDto.ts
 param.ts
 provide-api.ts

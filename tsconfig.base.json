@@ -56,6 +56,9 @@
       ],
       "@organizer/habilitation-api": [
         "libs/frontend/infrastructure/api/habilitation-api/src/index.ts"
+      ],
+      "@school-organizer/subject-management-feature": [
+        "libs/frontend/domain/config/subject-management-feature/src/index.ts"
       ]
     }
   }
