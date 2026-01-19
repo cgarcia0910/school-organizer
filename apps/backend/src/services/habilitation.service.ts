@@ -23,8 +23,11 @@ export class HabilitationService {
       order: {
         id: 'DESC',
       },
+      relations: ['course'],
     }).then(([habilitations, total]) => {
+      console.log(habilitations);
       return {
+        // data: [],
         data: habilitations.map(this.entityToModel),
         meta: {
           page: page,
@@ -42,21 +45,41 @@ export class HabilitationService {
   }
 
   habilitationIdGet(id: number, request: Request): Promise<Habilitation> {
-    return this.habilitationRepository.findOne({ where: { id } }).then(habilitation => {
+    return this.habilitationRepository.findOne({ 
+      where: { id },
+      relations: ['course'],
+    }).then(habilitation => {
       return this.entityToModel(habilitation as HabilitationEntity);
     });
   }
 
   habilitationIdPut(id: number, updateHabilitationDto: UpdateHabilitationDto, request: Request): Promise<Habilitation> {
-    return this.habilitationRepository.update(id, updateHabilitationDto).then(() => {
-    return this.habilitationRepository.findOne({ where: { id } }).then(habilitation => {
+    return this.habilitationRepository.update(id, {
+      name: updateHabilitationDto.name,
+      course: {id: updateHabilitationDto.course as number},
+      subjects: JSON.parse(updateHabilitationDto.subjects as unknown as string),
+      // TODO: complete
+    }).then(() => {
+    return this.habilitationRepository.findOne({ 
+      where: { id },
+      relations: ['course'],
+    }).then(habilitation => {
       return this.entityToModel(habilitation as HabilitationEntity);
     });
   });
 }
 
   habilitationPost(createHabilitationDto: CreateHabilitationDto, request: Request): Promise<Habilitation> {
-    return this.habilitationRepository.save(createHabilitationDto).then(habilitation => {
+    console.log({
+      name: createHabilitationDto.name,
+      course: {id: createHabilitationDto.course},
+      subjects: JSON.parse(createHabilitationDto.subjects as unknown as string),
+    });
+    return this.habilitationRepository.save({
+      name: createHabilitationDto.name,
+      course: {id: createHabilitationDto.course as number},
+      subjects: JSON.parse(createHabilitationDto.subjects as unknown as string),
+    }).then(habilitation => {
       return this.entityToModel(habilitation as HabilitationEntity);
     });
   }
@@ -66,6 +89,11 @@ export class HabilitationService {
     return {
       id: entity.id,
       name: entity.name,
+      course: entity.course?.id,
+      subjects: (entity.subjects || []).map(subject => ({
+        id: subject.id,
+        name: subject.name,
+      })),
     };
   }
 }

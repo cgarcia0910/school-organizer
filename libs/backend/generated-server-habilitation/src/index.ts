@@ -1,4 +1,5 @@
-export * from './lib/generated-server-habilitation';
+export * from './api.module'
+export * from './api-implementations'
 export * from './controllers'
 export * from './models'
 export * from './api'

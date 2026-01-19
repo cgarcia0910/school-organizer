@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 README.md
 api-implementations.ts
 api.module.ts
@@ -13,5 +12,6 @@ models/habilitation.ts
 models/index.ts
 models/paginated-habilitation-response.ts
 models/pagination-meta.ts
+models/subject-dto.ts
 models/update-habilitation-dto.ts
 tsconfig.json

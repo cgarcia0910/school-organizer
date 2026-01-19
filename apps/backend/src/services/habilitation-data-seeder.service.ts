@@ -21,23 +21,8 @@ export class HabilitationDataSeederService implements OnModuleInit {
       const users = [
         {
           name: 'John Doe',
-          email: 'john.doe@example.com',
-          phone: '+1234567890',
-          bio: 'Software developer with 5 years of experience',
-          isActive: true,
-        },
-        {
-          name: 'Jane Smith',
-          email: 'jane.smith@example.com',
-          phone: '+0987654321',
-          bio: 'Product manager passionate about user experience',
-          isActive: true,
-        },
-        {
-          name: 'Bob Johnson',
-          email: 'bob.johnson@example.com',
-          bio: 'Designer focused on creating beautiful interfaces',
-          isActive: false,
+          course: {id: 1},
+          subjects: [{id: 1, name: 'Matemáticas'}, {id: 2, name: 'Historia'}, {id: 3, name: 'Ciencias'}],
         },
       ];
 
