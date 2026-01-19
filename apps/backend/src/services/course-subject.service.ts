@@ -25,4 +25,10 @@ export class CourseSubjectService {
       return courseSubjects;
     });
   }
+
+  courseSubjectDeleteByCourseId(courseId: number): Promise<void> {
+    return this.courseSubjectRepository.delete({ course: { id: courseId } }).then(() => {
+      return;
+    });
+  }
 }

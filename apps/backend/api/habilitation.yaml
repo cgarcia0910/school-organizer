@@ -124,6 +124,14 @@ components:
         name:
           type: string
           example: Juan Pérez
+        course:
+          type: integer
+          example: 1
+        subjects:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubjectDto'
+            example: [{id: 1, name: 'Matemáticas'}, {id: 2, name: 'Historia'}]
 
     CreateHabilitationDto:
       type: object
@@ -133,6 +141,19 @@ components:
         name:
           type: string
           example: Juan Pérez
+
+    SubjectDto:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Matemáticas
 
     UpdateHabilitationDto:
       type: object
