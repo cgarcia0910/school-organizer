@@ -8,6 +8,8 @@ import { appRoutes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { apiProviderConfig } from '@organizer/api-config';
 import { provideHttpClient } from '@angular/common/http';
+import { translocoConfiguration } from '../../transloco.config';
+import { provideTransloco } from '@ngneat/transloco';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,5 +19,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideHttpClient(),
     ...apiProviderConfig,
+    provideTransloco(translocoConfiguration),
   ],
 };

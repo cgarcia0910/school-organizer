@@ -1,0 +1,13 @@
+{
+    "lang": {
+        "es": "Spanish",
+        "en": "English"
+    },
+    "config": {
+        "subject": {
+            "management": {
+                "title": "Subject Management"
+            }
+        }
+    }
+}

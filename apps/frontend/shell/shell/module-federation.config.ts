@@ -15,6 +15,16 @@ const config: ModuleFederationConfig = {
    *
    */
   remotes: ['config', 'planning'],
+  shared: (libraryName, defaultConfig) => {
+    if (libraryName === '@ngneat/transloco') {
+      return {
+        singleton: true,
+        strictVersion: true,
+        requiredVersion: 'auto'
+      };
+    }
+    return defaultConfig;
+  }
 };
 
 /**
