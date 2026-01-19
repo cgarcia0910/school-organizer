@@ -16,14 +16,12 @@ export class CourseSubjectService {
     });
   }
 
-  courseSubjectPost(course: number, subject: number, request: Request): Promise<void> {
-    return this.courseSubjectRepository.save({ course: {id: course}, subject: {id: subject} }).then(() => {
-      return;
-    });
+  courseSubjectPost(courseSubject: Array<CourseSubjectEntity>, request: Request): Promise<Array<CourseSubjectEntity>> {
+    return this.courseSubjectRepository.save(courseSubject)
   }
 
-  courseSubjectGet(course: Array<number>, request: Request): Promise<CourseSubjectEntity[]> {
-    return this.courseSubjectRepository.find({ where: { course: {id: In(course)} } }).then(courseSubjects => {
+  courseSubjectGetByCourseIds(courseIds: Array<number>, request: Request): Promise<CourseSubjectEntity[]> {
+    return this.courseSubjectRepository.find({ where: { course: {id: In(courseIds)} }, relations: ['course', 'subject'] }).then(courseSubjects => {
       return courseSubjects;
     });
   }

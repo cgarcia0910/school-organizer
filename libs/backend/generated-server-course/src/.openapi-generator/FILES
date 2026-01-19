@@ -12,5 +12,6 @@ models/create-course-dto.ts
 models/index.ts
 models/paginated-course-response.ts
 models/pagination-meta.ts
+models/subject-dto.ts
 models/update-course-dto.ts
 tsconfig.json

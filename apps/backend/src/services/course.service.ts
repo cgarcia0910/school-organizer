@@ -11,14 +11,15 @@ import {
 import { CourseSubjectEntity } from '../entities/course-subject.entity';
 import { SubjectService } from './subject.service';
 import { SubjectEntity } from '../entities/subject.entity';
+import { CourseSubjectService } from './course-subject.service';
 
 @Injectable()
 export class CourseService {
   constructor(
     @InjectRepository(CourseEntity)
     private courseRepository: Repository<CourseEntity>,
-    @InjectRepository(CourseSubjectEntity)
-    private courseSubjectRepository: Repository<CourseSubjectEntity>,
+    @Inject(CourseSubjectService)
+    private courseSubjectService: CourseSubjectService,
     @Inject(SubjectService)
     private subjectService: SubjectService,
   ) {}
@@ -31,18 +32,10 @@ export class CourseService {
         id: 'DESC',
       },
     });
-  
-    // Filtrar courseSubjects solo para los cursos en esta página
+    
     const courseIds = courses.map(course => course.id);
-    const courseSubjects = await this.courseSubjectRepository.find({ 
-      where: { 
-        course: { id: In(courseIds) }
-      },
-      relations: ['course', 'subject']
-    });
+    const courseSubjects = await this.courseSubjectService.courseSubjectGetByCourseIds(courseIds, request);
     const subjects = await this.subjectService.subjectIdsGet(courseSubjects.map(cs => cs.subject.id), request);
-    console.log(JSON.stringify(subjects));
-    console.log(JSON.stringify(courseSubjects));
   
     return {
       data: courses.map(course => this.entityToModel(course, courseSubjects.filter(courseSubject => courseSubject.course.id === course.id), subjects)),
@@ -52,34 +45,6 @@ export class CourseService {
         total: total,
       },
     };
-    // await this.courseSubjectRepository.find({relations: ['course', 'subject']}).then(e => console.log(JSON.stringify(e)));
-    // return this.courseRepository.findAndCount({
-    //   skip: (page - 1) * limit,
-    //   take: limit,
-    //   order: {
-    //     id: 'DESC',
-    //   },
-    // }).then(([courses, total]) => {
-    //   this.courseSubjectRepository.find({ where: { course: {id: In(courses.map(course => course.id))} } }).then(courseSubjects => {
-    //     // console.log(courseSubjects.map(courseSubject => JSON.stringify(courseSubject)));
-    //     return {
-    //       data: courses.map(this.entityToModel),
-    //       meta: {
-    //         page: page,
-    //         limit: limit,
-    //         total: total,
-    //       },
-    //     }
-    //   });
-    //   return {
-    //     data: courses.map(this.entityToModel),
-    //     meta: {
-    //       page: page,
-    //       limit: limit,
-    //       total: total,
-    //     },
-    //   }
-    // });
   }
 
   courseIdDelete(id: number, request: Request): Promise<void> {
@@ -104,17 +69,11 @@ export class CourseService {
 
   async coursePost(createCourseDto: CreateCourseDto, request: Request): Promise<Course> {
     const course = await this.courseRepository.save(createCourseDto);
-    // this.courseRepository.save(createCourseDto).then(course => {
-    //   return this.entityToModel(course as CourseEntity);
-    // });
-    // console.log(course.subjects, course);
     const courseSubjects: CourseSubjectEntity[] = JSON.parse(course.subjects as unknown as string)?.map((subject: number) => ({ 
       course: { id: course.id }, 
       subject: { id: subject } 
     })) as CourseSubjectEntity[];
-    console.log(courseSubjects);
-    await this.courseSubjectRepository.save(courseSubjects);
-    // await this.courseSubjectRepository.save(JSON.parse(course.subjects as unknown as string)?.map((subject: number) => ({ course: {id: course.id}, subject: {id: subject} })) as CourseSubjectEntity[]);
+    await this.courseSubjectService.courseSubjectPost(courseSubjects, request);
     return this.entityToModel(course as CourseEntity);
   }
 
