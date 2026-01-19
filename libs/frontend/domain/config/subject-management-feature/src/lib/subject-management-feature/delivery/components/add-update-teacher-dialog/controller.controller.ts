@@ -3,10 +3,10 @@ import { FormController, FormModel } from "@organizer/devkit/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { AddUpdateTeacherDialog } from "./add-update-teacher-dialog";
 import { inject } from "@angular/core";
-import { CreateTeacherDto, TeacherService } from '@organizer/teacher-api';
+import { CreateSubjectDto, SubjectService } from '@organizer/subject-api';
 
 export class TeacherFormController extends FormController {
-  private teacherService = inject(TeacherService);
+  private subjectService = inject(SubjectService);
   private dialogRef = inject(MatDialogRef<AddUpdateTeacherDialog>);
     public getFields(): FormModel[] {
         return [
@@ -20,7 +20,7 @@ export class TeacherFormController extends FormController {
         ];
     }
     public onSubmit(): void {
-        this.teacherService.teacherPost(this.form.value as CreateTeacherDto).subscribe((response) => {
+        this.subjectService.subjectPost(this.form.value as CreateSubjectDto).subscribe((response) => {
             this.dialogRef.close(true);
           }, (error) => {
             this.dialogRef.close(false);

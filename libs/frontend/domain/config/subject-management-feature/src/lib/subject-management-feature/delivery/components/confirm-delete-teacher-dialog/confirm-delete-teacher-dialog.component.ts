@@ -3,7 +3,7 @@ import { MatDialogActions, MatDialogContent, MatDialogModule, MatDialogRef } fro
 import { MatButtonModule } from '@angular/material/button';
 import { DELETE_TEACHER } from '../../../domain';
 import { TeacherService } from '@organizer/teacher-api';
-import { SubjectDatasource } from '../../../application';
+import { SubjectDataSource } from '../../../application';
 
 
 @Component({
@@ -15,7 +15,7 @@ import { SubjectDatasource } from '../../../application';
 export class ConfirmDeleteTeacherDialogComponent {
   private dialogRef = inject(MatDialogRef<ConfirmDeleteTeacherDialogComponent>);
   private teacherService = inject(TeacherService);
-  private dataSource = inject(SubjectDatasource);
+  private dataSource = inject(SubjectDataSource);
   private teacher = inject(DELETE_TEACHER);
   deleteTeacher() {
     this.teacherService.teacherIdDelete(this.teacher.id).subscribe((result) => {

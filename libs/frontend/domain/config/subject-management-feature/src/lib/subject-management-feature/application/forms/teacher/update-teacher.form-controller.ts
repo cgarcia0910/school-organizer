@@ -1,14 +1,15 @@
-import {  UpdateTeacherDto, Teacher } from '@organizer/generated-server-teacher';
+
 import { TeacherFormController } from "./teacher.form-controller";
 import { inject, Injectable, InjectionToken } from '@angular/core';
 import { UPDATE_TEACHER } from '../../../domain';
+import { Subject as SubjectModel, UpdateSubjectDto } from "@organizer/subject-api";
 
 
 @Injectable()
 export class UpdateTeacherFormController extends TeacherFormController {
-  private teacher = inject(UPDATE_TEACHER, { optional: true }) as Teacher;
+  private teacher = inject(UPDATE_TEACHER, { optional: true }) as SubjectModel;
     public override onSubmit(): void {
-        this.teacherService.teacherIdPut(this.teacher.id, this.form.value as UpdateTeacherDto).subscribe((response) => {
+        this.teacherService.subjectIdPut(this.teacher.id, this.form.value as UpdateSubjectDto).subscribe((response) => {
             this.dialogRef.close(true);
           }, (error) => {
             this.dialogRef.close(false);

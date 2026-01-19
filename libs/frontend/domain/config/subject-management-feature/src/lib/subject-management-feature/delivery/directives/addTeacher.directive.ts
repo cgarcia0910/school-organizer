@@ -1,14 +1,14 @@
 import { Directive, HostListener, inject } from '@angular/core';
 import { AddUpdateTeacherDialog } from '../components/add-update-teacher-dialog/add-update-teacher-dialog';
 import { MatDialog } from '@angular/material/dialog';
-import { SubjectDatasource } from '../../application';
+import { SubjectDataSource } from '../../application';
 
 @Directive({
   selector: '[libAddTeacher]',
 })
 export class AddTeacherDirective {
   private dialog = inject(MatDialog);
-  private dataSource = inject(SubjectDatasource);
+  private dataSource = inject(SubjectDataSource);
   @HostListener('click')
   addTeacher(): void {
     this.dialog.open(AddUpdateTeacherDialog, {

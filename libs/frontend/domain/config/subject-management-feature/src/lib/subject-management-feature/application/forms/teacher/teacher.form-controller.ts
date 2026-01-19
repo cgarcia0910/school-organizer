@@ -2,12 +2,12 @@ import { FormControl } from "@angular/forms";
 import { FormController, FormModel } from "@organizer/devkit/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { inject, Injectable } from "@angular/core";
-import { TeacherService } from '@organizer/teacher-api';
 import { AddUpdateTeacherDialog } from "../../../delivery/components/add-update-teacher-dialog/add-update-teacher-dialog";
+import { SubjectService } from "@organizer/subject-api";
 
 @Injectable()
 export class TeacherFormController extends FormController {
-  protected readonly teacherService = inject(TeacherService);
+  protected readonly teacherService = inject(SubjectService);
   protected readonly dialogRef = inject(MatDialogRef<AddUpdateTeacherDialog>);
     public getFields(): FormModel[] {
         return [

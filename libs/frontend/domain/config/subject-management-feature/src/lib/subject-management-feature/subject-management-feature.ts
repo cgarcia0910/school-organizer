@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { SubjectDatasource } from './application';
+import { SubjectDataSource } from './application';
 import { AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { AddTeacherDirective } from './delivery/directives/addTeacher.directive';
@@ -23,9 +23,9 @@ import { MatIconModule } from '@angular/material/icon';
   ],
   templateUrl: './subject-management-feature.html',
   styleUrl: './subject-management-feature.scss',
-  providers: [SubjectDatasource]
+  providers: [SubjectDataSource]
 })
 export class SubjectManagementFeature {
   displayedColumns: string[] = ['name', 'habilities', 'actions'];
-  dataSource = inject(SubjectDatasource);
+  dataSource = inject(SubjectDataSource);
 }
