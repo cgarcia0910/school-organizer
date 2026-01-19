@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Teacher } from '@organizer/generated-server-teacher';
 import { ConfirmDeleteTeacherDialogComponent } from '../components/confirm-delete-teacher-dialog/confirm-delete-teacher-dialog.component';
 import { DELETE_TEACHER } from '../../domain/tokens/delete-teacher.token';
-import { TeacherDataSource } from '../../application';
+import { SubjectDatasource } from '../../application';
 
 @Directive({
   selector: '[libDeleteTeacher]',
@@ -13,7 +13,7 @@ export class DeleteTeacherDirective {
   @Input({ alias: 'libDeleteTeacher', required: true }) teacher!: Teacher;
   private dialog = inject(MatDialog);
   private injector = inject(Injector);
-  private dataSource = inject(TeacherDataSource);
+  private dataSource = inject(SubjectDatasource);
   private readonly teacherService = inject(TeacherService);
   @HostListener('click')
   deleteTeacher(): void {
