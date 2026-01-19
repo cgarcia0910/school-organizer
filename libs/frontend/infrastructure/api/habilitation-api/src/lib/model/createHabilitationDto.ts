@@ -7,9 +7,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { SubjectDto } from './subjectDto';
 
 
 export interface CreateHabilitationDto { 
     name: string;
+    course?: number;
+    subjects?: Array<SubjectDto>;
 }
 
