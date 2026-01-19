@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { SubjectEntity } from '../entities/subject.entity';
 import { 
   Subject,
@@ -44,6 +44,12 @@ export class SubjectService {
   subjectIdGet(id: number, request: Request): Promise<Subject> {
     return this.subjectRepository.findOne({ where: { id } }).then(subject => {
       return this.entityToModel(subject as SubjectEntity);
+    });
+  }
+
+  subjectIdsGet(ids: Array<number>, request: Request): Promise<Subject[]> {
+    return this.subjectRepository.find({ where: { id: In(ids) } }).then(subjects => {
+      return subjects.map(this.entityToModel);
     });
   }
 

@@ -21,15 +21,12 @@ export class TeacherDataSeederService implements OnModuleInit {
       const users = [
         {
           name: 'John Doe',
-          habilities: ['Matemáticas', 'Física', 'Química'],
-        },
-        {
-          name: 'Jane Smith',
-          habilities: ['Matemáticas', 'Física', 'Química'],
-        },
-        {
-          name: 'Bob Johnson',
-          habilities: ['Matemáticas', 'Física'],
+          habilitations: [{
+            id: 1,
+            name: 'Matemáticas',
+            course: {id: 1},
+            subjects: [{id: 1, name: 'Matemáticas'}, {id: 2, name: 'Historia'}]
+          }],
         },
       ];
 

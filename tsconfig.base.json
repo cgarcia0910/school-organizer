@@ -44,6 +44,18 @@
       ],
       "@organizer/subject-api": [
         "libs/frontend/infrastructure/api/subject-api/src/index.ts"
+      ],
+      "@organizer/generated-server-course": [
+        "libs/backend/generated-server-course/src/index.ts"
+      ],
+      "@organizer/generated-server-habilitation": [
+        "libs/backend/generated-server-habilitation/src/index.ts"
+      ],
+      "@organizer/course-api": [
+        "libs/frontend/infrastructure/api/course-api/src/index.ts"
+      ],
+      "@organizer/habilitation-api": [
+        "libs/frontend/infrastructure/api/habilitation-api/src/index.ts"
       ]
     }
   }

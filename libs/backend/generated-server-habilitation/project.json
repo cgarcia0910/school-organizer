@@ -1,0 +1,26 @@
+{
+  "name": "generated-server-habilitation",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/backend/generated-server-habilitation/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/backend/generated-server-habilitation",
+        "main": "libs/backend/generated-server-habilitation/src/index.ts",
+        "tsConfig": "libs/backend/generated-server-habilitation/tsconfig.lib.json",
+        "assets": ["libs/backend/generated-server-habilitation/*.md"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/backend/generated-server-habilitation/jest.config.ts"
+      }
+    }
+  }
+}

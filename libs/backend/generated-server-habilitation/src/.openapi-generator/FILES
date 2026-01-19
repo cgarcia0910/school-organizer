@@ -1,0 +1,17 @@
+.gitignore
+README.md
+api-implementations.ts
+api.module.ts
+api/HabilitationApi.ts
+api/index.ts
+controllers/HabilitationApi.controller.ts
+controllers/index.ts
+index.ts
+models/create-habilitation-dto.ts
+models/habilitation.ts
+models/index.ts
+models/paginated-habilitation-response.ts
+models/pagination-meta.ts
+models/subject-dto.ts
+models/update-habilitation-dto.ts
+tsconfig.json

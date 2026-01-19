@@ -1,8 +1,9 @@
+import { Habilitation } from './habilitation';
 
 
 export interface Teacher { 
   id: number;
   name: string;
-  habilities?: Array<string>;
+  habilitations?: Array<Habilitation>;
 }
 
