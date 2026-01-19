@@ -12,7 +12,7 @@ import { CourseService } from "../services/course.service";
 @Injectable()
 export class CourseApiService extends CourseApi {
   override courseGet(page: number, limit: number, request: Request): PaginatedCourseResponse | Promise<PaginatedCourseResponse> | Observable<PaginatedCourseResponse> {
-    return this.courseService.courseGet(page, limit);
+    return this.courseService.courseGet(page, limit, request);
   }
   override courseIdDelete(id: number, request: Request): void | Promise<void> | Observable<void> {
     return this.courseService.courseIdDelete(id, request);

@@ -13,12 +13,9 @@ import { ApiModule as CourseApiModule } from "@organizer/generated-server-course
 import { HabilitationModule } from "../modules/habilitation.module";
 import { HabilitationApiService } from "./habilitation-api.service";
 import { ApiModule as HabilitationApiModule } from "@organizer/generated-server-habilitation";
-import { CourseSubjectService } from '../services/course-subject.service';
-import { CourseSubjectEntity } from '../entities/course-subject.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([CourseSubjectEntity]),
     TypeOrmModule.forRoot(databaseConfig),
         TeacherModule,
         TeacherApiModule.forRoot({
@@ -37,6 +34,6 @@ import { CourseSubjectEntity } from '../entities/course-subject.entity';
               habilitationApi: HabilitationApiService,
             })
     ],
-  providers: [TeacherApiService, SubjectApiService, CourseApiService, HabilitationApiService, CourseSubjectService],
+  providers: [TeacherApiService, SubjectApiService, CourseApiService, HabilitationApiService],
 })
 export class AppModule {}

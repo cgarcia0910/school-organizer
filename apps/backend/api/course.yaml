@@ -127,8 +127,8 @@ components:
         subjects:
           type: array
           items:
-            type: integer
-            example: 1
+            $ref: '#/components/schemas/SubjectDto'
+            example: [{id: 1, name: 'Matemáticas'}, {id: 2, name: 'Historia'}]
 
     CreateCourseDto:
       type: object
@@ -172,6 +172,19 @@ components:
         total:
           type: integer
           example: 42
+
+    SubjectDto:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Matemáticas
 
     PaginatedCourseResponse:
       type: object
