@@ -1,4 +1,5 @@
-export * from './lib/generated-server-teacher';
+export * from './api.module'
+export * from './api-implementations'
 export * from './controllers'
 export * from './models'
 export * from './api'

@@ -1,7 +1,8 @@
+import { Habilitation } from './habilitation';
 
 
 export interface CreateTeacherDto { 
   name: string;
-  habilities?: Array<string>;
+  habilitations?: Array<Habilitation>;
 }
 

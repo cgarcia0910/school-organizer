@@ -8,9 +8,11 @@ controllers/TeacherApi.controller.ts
 controllers/index.ts
 index.ts
 models/create-teacher-dto.ts
+models/habilitation.ts
 models/index.ts
 models/paginated-teacher-response.ts
 models/pagination-meta.ts
+models/subject-dto.ts
 models/teacher.ts
 models/update-teacher-dto.ts
 tsconfig.json

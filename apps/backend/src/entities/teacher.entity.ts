@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { HabilitationEntity } from './habilitation.entity';
 
 @Entity('teacher')
 export class TeacherEntity {
@@ -9,5 +10,5 @@ export class TeacherEntity {
   name!: string;
 
   @Column({ type: 'json'})
-  habilities!: Array<string>;
+  habilitations!: Array<HabilitationEntity>;
 }
