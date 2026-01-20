@@ -8,6 +8,7 @@ import { UpdateTeacherDirective } from './delivery/directives/updateTeacher.dire
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
   selector: 'lib-subject-management-feature',
@@ -20,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
     AddTeacherDirective,
     UpdateTeacherDirective,
     DeleteTeacherDirective,
+    TranslocoPipe,
   ],
   templateUrl: './subject-management-feature.html',
   styleUrl: './subject-management-feature.scss',

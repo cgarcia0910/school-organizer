@@ -26,6 +26,7 @@
     "@nestjs/core": "^11.0.0",
     "@nestjs/platform-express": "^11.0.0",
     "@nestjs/typeorm": "^11.0.0",
+    "@ngneat/transloco": "^6.0.4",
     "@nx/angular": "^22.2.0",
     "axios": "^1.6.0",
     "reflect-metadata": "^0.1.13",

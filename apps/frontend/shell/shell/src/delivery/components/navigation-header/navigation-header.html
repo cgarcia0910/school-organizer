@@ -7,6 +7,9 @@
         <button matIconButton aria-label="config" routerLink="/config">
             <mat-icon >settings</mat-icon>
         </button>
+        <button matIconButton aria-label="lang" (click)="changeLanguage()">
+            {{getLanguageIcon()}}
+        </button>
     </div>
     <div class="user-profile"></div>
 </div>

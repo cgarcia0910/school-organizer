@@ -20,6 +20,11 @@
           {
             "glob": "**/*",
             "input": "apps/frontend/shell/shell/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/frontend/shell/shell/src/assets",
+            "output": "/assets"
           }
         ],
         "styles": [
