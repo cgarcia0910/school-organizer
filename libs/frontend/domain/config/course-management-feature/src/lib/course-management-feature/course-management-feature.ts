@@ -1,14 +1,12 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { AddTeacherDirective } from '../delivery/directives/addTeacher.directive';
-import { DeleteTeacherDirective } from '../delivery/directives/deleteTeacher.directive';
-import { UpdateTeacherDirective } from '../delivery/directives/updateTeacher.directive';
 import { CourseDataSource } from '../application/datasources/course.datasource';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoPipe } from '@ngneat/transloco';
+import { AddCourseDirective, DeleteCourseDirective, UpdateCourseDirective } from '../delivery/directives';
 
 @Component({
   selector: 'lib-course-management-feature',
@@ -18,9 +16,9 @@ import { TranslocoPipe } from '@ngneat/transloco';
     AsyncPipe,
     MatIconModule,
     MatButtonModule,
-    AddTeacherDirective,
-    UpdateTeacherDirective,
-    DeleteTeacherDirective,
+    AddCourseDirective,
+    UpdateCourseDirective,
+    DeleteCourseDirective,
     TranslocoPipe,
   ],
   templateUrl: './course-management-feature.html',

@@ -1,4 +1,4 @@
 import { InjectionToken } from "@angular/core";
-import { Teacher } from "@organizer/generated-server-teacher";
+import { Course } from "@organizer/course-api";
 
-export const DELETE_COURSE = new InjectionToken<Teacher>('DELETE_COURSE');
+export const DELETE_COURSE = new InjectionToken<Course>('DELETE_COURSE');

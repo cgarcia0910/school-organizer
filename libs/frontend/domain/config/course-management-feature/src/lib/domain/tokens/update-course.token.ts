@@ -1,4 +1,4 @@
 import { InjectionToken } from "@angular/core";
-import { Teacher } from "@organizer/generated-server-teacher";
+import { Course } from "@organizer/course-api";
 
-export const UPDATE_COURSE = new InjectionToken<Teacher>('UPDATE_COURSE');
+export const UPDATE_COURSE = new InjectionToken<Course>('UPDATE_COURSE');
