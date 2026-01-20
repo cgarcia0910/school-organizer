@@ -14,7 +14,9 @@ model/models.ts
 model/paginatedCourseResponse.ts
 model/paginationMeta.ts
 model/subjectDto.ts
+model/subjectWorkLoad.ts
 model/updateCourseDto.ts
+model/workload.ts
 param.ts
 provide-api.ts
 variables.ts

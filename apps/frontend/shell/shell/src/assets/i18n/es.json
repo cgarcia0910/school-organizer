@@ -8,6 +8,20 @@
             "management": {
                 "title": "Gestión de Asignaturas"
             }
+        },
+        "course": {
+            "management": {
+                "title": "Gestión de Cursos",
+                "actions": {
+                    "add": "Agregar Curso"
+                },
+                "table": {
+                    "columns": {
+                        "name": "Nombre",
+                        "subjects": "Asignaturas"
+                    }
+                }
+            }
         }
     }
 }

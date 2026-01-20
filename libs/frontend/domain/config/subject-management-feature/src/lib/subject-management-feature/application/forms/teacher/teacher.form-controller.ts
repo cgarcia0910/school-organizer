@@ -9,16 +9,17 @@ import { SubjectService } from "@organizer/subject-api";
 export class TeacherFormController extends FormController {
   protected readonly teacherService = inject(SubjectService);
   protected readonly dialogRef = inject(MatDialogRef<AddUpdateTeacherDialog>);
+  private formModel: FormModel[] =  [
+    {
+        key: 'name',
+        label: 'Names',
+        type: 'text',
+        required: true,
+        formControl: new FormControl(''),
+    },
+  ];
     public getFields(): FormModel[] {
-        return [
-            {
-                key: 'name',
-                label: 'Names',
-                type: 'text',
-                required: true,
-                formControl: new FormControl(''),
-            },
-        ];
+        return this.formModel;
     }
     public override onSubmit(): void {}
     protected override getModel(): { [key: string]: unknown } {

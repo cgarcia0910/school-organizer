@@ -8,6 +8,20 @@
             "management": {
                 "title": "Subject Management"
             }
+        },
+        "course": {
+            "management": {
+                "title": "Course Management",
+                "actions": {
+                    "add": "Add Course"
+                },
+                "table": {
+                    "columns": {
+                        "name": "Name",
+                        "subjects": "Subjects"
+                    }
+                }
+            }
         }
     }
 }

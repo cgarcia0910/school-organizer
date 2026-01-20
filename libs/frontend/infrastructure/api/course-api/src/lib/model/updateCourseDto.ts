@@ -7,10 +7,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { SubjectWorkLoad } from './subjectWorkLoad';
 
 
 export interface UpdateCourseDto { 
     name?: string;
-    subjects?: Array<number>;
+    subjectWorkLoads?: Array<SubjectWorkLoad>;
 }
 
