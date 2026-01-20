@@ -8,6 +8,11 @@
             "management": {
                 "title": "Subject Management"
             }
+        },
+        "course": {
+            "management": {
+                "title": "Course Management"
+            }
         }
     }
 }

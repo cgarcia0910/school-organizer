@@ -8,6 +8,11 @@
             "management": {
                 "title": "Gestión de Asignaturas"
             }
+        },
+        "course": {
+            "management": {
+                "title": "Gestión de Cursos"
+            }
         }
     }
 }

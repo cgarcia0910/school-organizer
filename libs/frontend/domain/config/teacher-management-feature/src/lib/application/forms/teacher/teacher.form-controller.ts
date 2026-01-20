@@ -1,4 +1,4 @@
-import { FormControl } from "@angular/forms";
+import { FormArray, FormControl } from "@angular/forms";
 import { FormController, FormModel } from "@organizer/devkit/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { inject, Injectable } from "@angular/core";
@@ -9,16 +9,40 @@ import { AddUpdateTeacherDialog } from "../../../delivery/components/add-update-
 export class TeacherFormController extends FormController {
   protected readonly teacherService = inject(TeacherService);
   protected readonly dialogRef = inject(MatDialogRef<AddUpdateTeacherDialog>);
-    public getFields(): FormModel[] {
-        return [
+  private formModel: FormModel[] =  [
+    {
+        key: 'name',
+        label: 'Names',
+        type: 'text',
+        required: true,
+        formControl: new FormControl(''),
+    },
+    {
+        key: 'habilitations',
+        label: 'Habilitations',
+        type: 'array',
+        required: true,
+        formControl: new FormControl(''),
+        children: [
             {
                 key: 'name',
-                label: 'Names',
+                label: 'Name',
                 type: 'text',
                 required: true,
                 formControl: new FormControl(''),
             },
-        ];
+            {
+                key: 'prueba',
+                label: 'Prueba',
+                type: 'text',
+                required: true,
+                formControl: new FormControl(''),
+            },
+        ],
+    }
+    ];
+    public getFields(): FormModel[] {
+        return this.formModel;
     }
     public override onSubmit(): void {}
     protected override getModel(): { [key: string]: unknown } {

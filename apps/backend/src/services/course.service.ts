@@ -76,7 +76,7 @@ export class CourseService {
       await this.courseSubjectService.courseSubjectDeleteByCourseId(id);
       
       // Crear las nuevas relaciones
-      const subjectWorkLoads = JSON.parse(updateCourseDto.subjectWorkLoads as unknown as string) || [];
+      const subjectWorkLoads = updateCourseDto.subjectWorkLoads || [];
       const courseSubjects: CourseSubjectEntity[] = subjectWorkLoads.map((swl: any) => ({ 
         course: { id: id }, 
         subject: { id: swl.subject?.id },
@@ -98,7 +98,7 @@ export class CourseService {
   async coursePost(createCourseDto: CreateCourseDto, request: Request): Promise<Course> {
     console.log(createCourseDto)
     const course = await this.courseRepository.save(createCourseDto);
-    const subjectWorkLoads = JSON.parse(course.subjectWorkLoads as unknown as string) || [];
+    const subjectWorkLoads = createCourseDto.subjectWorkLoads || [];
     const courseSubjects: CourseSubjectEntity[] = subjectWorkLoads.map((swl: any) => ({ 
       course: { id: course.id }, 
       subject: { id: swl.subject?.id },

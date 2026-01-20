@@ -1,0 +1,11 @@
+<mat-form-field >
+    @if (field.type === 'select') {
+        <mat-select [formControl]="formControl">
+            @for (option of field.options | async; track option.value) {
+              <mat-option [value]="option.value">{{option.label}}</mat-option>
+            }
+        </mat-select>
+    } @else {
+        <input matInput [type]="field.type" [formControl]="formControl" [placeholder]="field.label" [attr.data-testid]="'input-' + field.key">
+    }
+</mat-form-field>

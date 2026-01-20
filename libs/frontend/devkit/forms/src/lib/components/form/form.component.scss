@@ -6,5 +6,10 @@
         mat-form-field {
             width: 100%;
         }
+        .array-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
     }
 }

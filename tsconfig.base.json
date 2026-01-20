@@ -59,6 +59,9 @@
       ],
       "@school-organizer/subject-management-feature": [
         "libs/frontend/domain/config/subject-management-feature/src/index.ts"
+      ],
+      "@school-organizer/course-management-feature": [
+        "libs/frontend/domain/config/course-management-feature/src/index.ts"
       ]
     }
   }
