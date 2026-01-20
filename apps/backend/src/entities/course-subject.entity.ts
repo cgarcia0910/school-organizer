@@ -1,4 +1,4 @@
-import { Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { CourseEntity } from './course.entity';
 import { SubjectEntity } from './subject.entity';
 
@@ -12,4 +12,10 @@ export class CourseSubjectEntity {
 
   @ManyToOne(() => SubjectEntity, (subject) => subject.id)
   subject!: SubjectEntity;
+
+  @Column({ type: 'integer' })
+  hoursPerWeek!: number;
+
+  @Column({ type: 'integer' })
+  maxDailyWorkload!: number;
 }

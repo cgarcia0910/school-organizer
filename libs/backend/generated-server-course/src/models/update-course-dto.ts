@@ -1,7 +1,8 @@
+import { SubjectWorkLoad } from './subject-work-load';
 
 
 export interface UpdateCourseDto { 
   name?: string;
-  subjects?: Array<number>;
+  subjectWorkLoads?: Array<SubjectWorkLoad>;
 }
 
