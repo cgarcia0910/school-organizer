@@ -11,7 +11,16 @@
         },
         "course": {
             "management": {
-                "title": "Gestión de Cursos"
+                "title": "Gestión de Cursos",
+                "actions": {
+                    "add": "Agregar Curso"
+                },
+                "table": {
+                    "columns": {
+                        "name": "Nombre",
+                        "subjects": "Asignaturas"
+                    }
+                }
             }
         }
     }

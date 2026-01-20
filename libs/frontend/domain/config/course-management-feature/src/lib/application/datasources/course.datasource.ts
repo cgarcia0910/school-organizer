@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
 import { Course, CourseService } from "@organizer/course-api";
 
 @Injectable()
-export class CourseDataSource extends DataSource<any> {
+export class CourseDataSource extends DataSource<Course> {
     private pageNumber = new BehaviorSubject<number>(1);
     page$: Observable<Course[]>;
     total$: Subject<number> = new Subject<number>();
