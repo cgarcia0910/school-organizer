@@ -127,7 +127,7 @@ components:
         subjects:
           type: array
           items:
-            $ref: '#/components/schemas/SubjectDto'
+            $ref: '#/components/schemas/SubjectWorkLoad'
             example: [{id: 1, name: 'Matemáticas'}, {id: 2, name: 'Historia'}]
 
     CreateCourseDto:
@@ -138,11 +138,10 @@ components:
         name:
           type: string
           example: Juan Pérez
-        subjects:
+        subjectWorkLoads:
           type: array
           items:
-            type: integer
-            example: 1
+            $ref: '#/components/schemas/SubjectWorkLoad'
 
     UpdateCourseDto:
       type: object
@@ -150,11 +149,11 @@ components:
         name:
           type: string
           example: Juan Pérez
-        subjects:
+        subjectWorkLoads:
           type: array
           items:
-            type: integer
-            example: 1
+            $ref: '#/components/schemas/SubjectWorkLoad'
+          
 
     PaginationMeta:
       type: object
@@ -172,6 +171,29 @@ components:
         total:
           type: integer
           example: 42
+
+    SubjectWorkLoad:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        subject:
+          $ref: '#/components/schemas/SubjectDto'
+        workload:
+          $ref: '#/components/schemas/Workload'
+    Workload:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        hoursPerWeek:
+          type: integer
+          example: 10
+        maxDailyWorkload:
+          type: integer
+          example: 2
 
     SubjectDto:
       type: object

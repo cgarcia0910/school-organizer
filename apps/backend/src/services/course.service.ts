@@ -35,6 +35,7 @@ export class CourseService {
 
     const courseIds = courses.map(course => course.id);
     const courseSubjects = await this.courseSubjectService.courseSubjectGetByCourseIds(courseIds, request);
+    console.log(courseSubjects)
     const subjects = await this.subjectService.subjectIdsGet(courseSubjects.map(cs => cs.subject.id), request);
   
     return {
@@ -70,15 +71,18 @@ export class CourseService {
     });
     console.log(updateCourseDto);
     // Si se enviaron subjects, actualizar las relaciones
-    if (updateCourseDto.subjects && updateCourseDto.subjects.length > 0) {
+    if (updateCourseDto.subjectWorkLoads && updateCourseDto.subjectWorkLoads.length > 0) {
       // Eliminar todas las relaciones anteriores
       await this.courseSubjectService.courseSubjectDeleteByCourseId(id);
       
       // Crear las nuevas relaciones
-      const courseSubjects: CourseSubjectEntity[] = JSON.parse(updateCourseDto.subjects as unknown as string).map((subjectId: number) => ({ 
+      const subjectWorkLoads = JSON.parse(updateCourseDto.subjectWorkLoads as unknown as string) || [];
+      const courseSubjects: CourseSubjectEntity[] = subjectWorkLoads.map((swl: any) => ({ 
         course: { id: id }, 
-        subject: { id: subjectId } 
-      })) as CourseSubjectEntity[];
+        subject: { id: swl.subject?.id },
+        hoursPerWeek: swl.workload?.hoursPerWeek,
+        maxDailyWorkload: swl.workload?.maxDailyWorkload
+})) as CourseSubjectEntity[];
       
       await this.courseSubjectService.courseSubjectPost(courseSubjects, request);
     }
@@ -92,11 +96,16 @@ export class CourseService {
   }
 
   async coursePost(createCourseDto: CreateCourseDto, request: Request): Promise<Course> {
+    console.log(createCourseDto)
     const course = await this.courseRepository.save(createCourseDto);
-    const courseSubjects: CourseSubjectEntity[] = JSON.parse(course.subjects as unknown as string)?.map((subject: number) => ({ 
+    const subjectWorkLoads = JSON.parse(course.subjectWorkLoads as unknown as string) || [];
+    const courseSubjects: CourseSubjectEntity[] = subjectWorkLoads.map((swl: any) => ({ 
       course: { id: course.id }, 
-      subject: { id: subject } 
+      subject: { id: swl.subject?.id },
+      hoursPerWeek: swl.workload?.hoursPerWeek,
+      maxDailyWorkload: swl.workload?.maxDailyWorkload
     })) as CourseSubjectEntity[];
+    console.log(courseSubjects)
     await this.courseSubjectService.courseSubjectPost(courseSubjects, request);
     return this.entityToModel(course as CourseEntity);
   }
@@ -106,7 +115,13 @@ export class CourseService {
     return {
       id: entity.id,
       name: entity.name,
-      subjects: courseSubjects?.map(courseSubject => subjects?.find(subjet => subjet.id === courseSubject.subject.id)) as {id: number, name: string}[],
+      subjects: courseSubjects?.map(courseSubject => ({
+        subject: courseSubject.subject,
+        workload: {
+          hoursPerWeek: courseSubject.hoursPerWeek,
+          maxDailyWorkload: courseSubject.maxDailyWorkload
+        }
+      }))
     };
   }
 }

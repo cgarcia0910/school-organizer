@@ -13,5 +13,7 @@ models/index.ts
 models/paginated-course-response.ts
 models/pagination-meta.ts
 models/subject-dto.ts
+models/subject-work-load.ts
 models/update-course-dto.ts
+models/workload.ts
 tsconfig.json
