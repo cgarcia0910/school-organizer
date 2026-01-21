@@ -1,8 +1,7 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { TeacherEntity } from './teacher.entity';
 import { ScenarioCourseGroupEntity } from './scenario-course-group.entity';
 import { SubjectEntity } from './subject.entity';
-import { CourseEntity } from './course.entity';
 
 @Entity('scenario-course-group-subject-teacher')
 export class ScenarioCourseGroupSubjectTeacherEntity {

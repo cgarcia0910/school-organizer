@@ -68,6 +68,12 @@
       ],
       "@organizer/scenario-api": [
         "libs/frontend/infrastructure/api/scenario-api/src/index.ts"
+      ],
+      "@school-organizer/planning/scenario-management-feature": [
+        "libs/frontend/domain/planning/scenario-management-feature/src/index.ts"
+      ],
+      "@school-organizer/planning/scenario-timetable-feature": [
+        "libs/frontend/domain/planning/scenario-timetable-feature/src/index.ts"
       ]
     }
   }
