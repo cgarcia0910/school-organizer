@@ -65,6 +65,9 @@
       ],
       "@organizer/generated-server-scenario": [
         "libs/backend/generated-server-scenario/src/index.ts"
+      ],
+      "@organizer/scenario-api": [
+        "libs/frontend/infrastructure/api/scenario-api/src/index.ts"
       ]
     }
   }
