@@ -7,7 +7,8 @@
     "generate:teacher-client": "openapi-generator-cli generate -i apps/backend/api/teacher.yaml -g typescript-angular -o libs/frontend/infrastructure/api/teacher-api/src/lib --additional-properties=ngVersion=20.3.0,providedInRoot=true,stringEnums=true,npmName=@organizer/teacher-api",
     "generate:subject": "openapi-generator-cli generate -g typescript-nestjs-server -i apps/backend/api/subject.yaml -o libs/backend/generated-server-subject/src --additional-properties=supportsES6=true",
     "generate:course": "openapi-generator-cli generate -g typescript-nestjs-server -i apps/backend/api/course.yaml -o libs/backend/generated-server-course/src --additional-properties=supportsES6=true",
-    "generate:habilitation": "openapi-generator-cli generate -g typescript-nestjs-server -i apps/backend/api/habilitation.yaml -o libs/backend/generated-server-habilitation/src --additional-properties=supportsES6=true"
+    "generate:habilitation": "openapi-generator-cli generate -g typescript-nestjs-server -i apps/backend/api/habilitation.yaml -o libs/backend/generated-server-habilitation/src --additional-properties=supportsES6=true",
+    "generate:scenario": "openapi-generator-cli generate -g typescript-nestjs-server -i apps/backend/api/scenario.yaml -o libs/backend/generated-server-scenario/src --additional-properties=supportsES6=true"
   },
   "private": true,
   "overrides": {
