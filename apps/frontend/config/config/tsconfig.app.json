@@ -19,6 +19,12 @@
       "path": "../../ui/ui-material"
     },
     {
+      "path": "../../../../libs/frontend/domain/config/course-management-feature"
+    },
+    {
+      "path": "../../../../libs/frontend/domain/config/subject-management-feature"
+    },
+    {
       "path": "../../../../libs/frontend/domain/config/teacher-management-feature"
     },
     {

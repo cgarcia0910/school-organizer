@@ -22,7 +22,19 @@
   ],
   "references": [
     {
-      "path": "../../libs/backend/generated-server-teacher"
+      "path": "../../libs/backend/generated-server-scenario"
+    },
+    {
+      "path": "../../libs/backend/generated-server-habilitation"
+    },
+    {
+      "path": "../../libs/backend/generated-server-course"
+    },
+    {
+      "path": "../../libs/backend/generated-server-subject"
+    },
+    {
+      "path": "../../libs/backend/generated-server-teacher/tsconfig.lib.json"
     }
   ]
 }

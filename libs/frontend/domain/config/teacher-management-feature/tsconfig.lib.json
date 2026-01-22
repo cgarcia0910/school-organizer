@@ -21,5 +21,10 @@
     "src/**/*.test.ts",
     "jest.config.cts"
   ],
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "references": [
+    {
+      "path": "../../../../backend/generated-server-teacher/tsconfig.lib.json"
+    }
+  ]
 }

@@ -14,5 +14,10 @@
     "src/**/*.test.ts",
     "jest.config.cts"
   ],
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "references": [
+    {
+      "path": "src/lib"
+    }
+  ]
 }

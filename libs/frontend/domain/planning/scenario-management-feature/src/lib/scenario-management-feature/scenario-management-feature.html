@@ -11,3 +11,5 @@
   <mat-paginator [length]="dataSource.total$ | async" [pageSize]="5" aria-label="Select page"
     (page)="dataSource.fetch($event.pageIndex)">
   </mat-paginator>
+
+<lib-form></lib-form>

@@ -6,17 +6,29 @@
                     <div [formGroupName]="i" class="array-group">
                         <div class="array-group-items">
                             @for (child of field.children; track child.key) {
-                                <mat-form-field>
-                                    @if (child.type === 'select') {
-                                        <mat-select [formControlName]="child.key" [placeholder]="child.label">
-                                            @for (option of child.options | async; track option.value) {
-                                            <mat-option [value]="option.value">{{option.label}}</mat-option>
+                                
+                                    @switch (child.type) {
+                                        @case ('select') {
+                                            <mat-form-field>
+                                            <mat-select [formControlName]="child.key" [placeholder]="child.label">
+                                                @for (option of asSelectType(child).options | async; track option.value) {
+                                                <mat-option [value]="option.value">{{option.label}}</mat-option>
+                                                }
+                                            </mat-select>
+                                            </mat-form-field>
+                                        }
+                                        @case ('filter') {
+                                            @if (asFilterType(child).options | async; as options) {
+                                            <lib-filter-control [formControlName]="child.key" [options]="options"></lib-filter-control>
                                             }
-                                        </mat-select>
-                                    } @else {
-                                        <input matInput [type]="child.type" [formControlName]="child.key" [placeholder]="child.label">
+                                        }
+                                        @default {
+                                            <mat-form-field>
+                                            <input matInput [type]="child.type" [formControlName]="child.key" [placeholder]="child.label">
+                                            </mat-form-field>
+                                        }
                                     }
-                                </mat-form-field>
+                                
                             }
                         </div>
                         <button 

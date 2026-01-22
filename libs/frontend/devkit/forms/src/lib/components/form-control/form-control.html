@@ -1,11 +1,30 @@
-<mat-form-field >
-    @if (field.type === 'select') {
+@switch (field.type) {
+    @case ('select') {
+            <mat-form-field >
+            <mat-select [formControl]="formControl" [placeholder]="field.label">
+                @for (option of asSelectType(field).options | async; track option.value) {
+                <mat-option [value]="option.value">{{option.label}}</mat-option>
+                }
+            </mat-select>
+            </mat-form-field>
+        }
+        @case ('filter') {
+            @if (asFilterType(field).options | async; as options) {
+            <lib-filter-control [formControl]="formControl" [options]="options"></lib-filter-control>
+            }
+        }
+        @default {
+            <mat-form-field >
+            <input matInput [type]="field.type" [formControl]="formControl" [placeholder]="field.label">
+            </mat-form-field>
+        }
+    }
+    <!-- @if (field.type === 'select') {
         <mat-select [formControl]="formControl">
-            @for (option of field.options | async; track option.value) {
+            @for (option of asSelectType(field).options | async; track option.value) {
               <mat-option [value]="option.value">{{option.label}}</mat-option>
             }
         </mat-select>
     } @else {
         <input matInput [type]="field.type" [formControl]="formControl" [placeholder]="field.label" [attr.data-testid]="'input-' + field.key">
-    }
-</mat-form-field>
+    } -->
