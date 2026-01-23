@@ -24,6 +24,14 @@ export class FormControl {
   protected readonly formController = inject(FormController);
 
   get formControl(): FormControlAngular {
+    // Si estamos dentro de un FormGroup context (en un array), obtener el control del contexto actual
+    if (this.form) {
+      const control = this.form.get(this.field.key);
+      if (control) {
+        return control as FormControlAngular;
+      }
+    }
+    // Si no hay form context, usar el formControl del field (caso normal)
     return this.field.formControl as unknown as FormControlAngular;
   }
      // Métodos helper para type guards

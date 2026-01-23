@@ -81,8 +81,14 @@ export class FilterControl implements ControlValueAccessor, OnInit {
     });
 
     this.form.valueChanges.subscribe(value => {
-      console.log('valueChanges', value);
-      this.onChange(value);
+      console.log('FilterControl valueChanges', value);
+      // Emitir solo los valores, incluyendo el tipo para referencia
+      const output = {
+        type: value.type,
+        ...value.values  // Expandir los valores al nivel superior
+      };
+      console.log('FilterControl emitting', output);
+      this.onChange(output);
     });
   }
 
@@ -95,8 +101,8 @@ export class FilterControl implements ControlValueAccessor, OnInit {
 
     this._selectedFields.forEach(field => {
       if (field.type === 'array') {
-        // Crear un FormArray para campos de tipo array
-        const formArray = this.fb.array([this.createFormGroupForArray(field.children || [])]);
+        // Crear un FormArray vacío - el usuario agregará elementos manualmente
+        const formArray = this.fb.array([]);
         valuesGroup.addControl(field.key, formArray);
       } else {
         valuesGroup.addControl(field.key, this.fb.control(null));
@@ -125,14 +131,36 @@ export class FilterControl implements ControlValueAccessor, OnInit {
   // ===== CVA =====
 
   writeValue(value: any): void {
-    console.log('writeValue', value);
+    console.log('FilterControl writeValue', value);
     if (!value) return;
 
-    this.form.patchValue({ type: value.type });
-    this.onTypeChange(value.type);
+    // Si el valor tiene una propiedad 'type', usarla
+    if (value.type) {
+      this.form.patchValue({ type: value.type });
+      this.onTypeChange(value.type);
+    }
 
+    // Parchear los valores después de crear los controles
     if (value.values) {
-      this.form.get('values')?.patchValue(value.values);
+      setTimeout(() => {  // Dar tiempo a que se creen los controles
+        const valuesGroup = this.form.get('values') as FormGroup;
+        
+        // Para cada campo, si es un array, reconstruir el FormArray
+        Object.keys(value.values).forEach(key => {
+          const control = valuesGroup?.get(key);
+          const fieldDef = this._selectedFields.find(f => f.key === key);
+          
+          if (control instanceof FormArray && Array.isArray(value.values[key])) {
+            control.clear();
+            value.values[key].forEach((item: any) => {
+              control.push(this.createFormGroupForArray(fieldDef?.children || []));
+            });
+            control.patchValue(value.values[key]);
+          } else {
+            control?.patchValue(value.values[key]);
+          }
+        });
+      });
     }
   }
 

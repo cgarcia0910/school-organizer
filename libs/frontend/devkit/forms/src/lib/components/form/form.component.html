@@ -4,12 +4,11 @@
   }
 </form>
 
-
-<ng-template #formControl let-field="field">
+<ng-template #formControl let-field="field" let-formGroup="formGroup">
     @switch (field.type) { 
         @case ('select') {
             <mat-form-field>
-                <mat-select [formControl]="field.formControl" [placeholder]="field.label">
+                <mat-select [formControl]="formGroup ? formGroup.get(field.key) : field.formControl" [placeholder]="field.label">
                     @for (option of asSelectType(field).options | async; track option.value) {
                         <mat-option [value]="option.value">{{option.label}}</mat-option>
                     }
@@ -19,7 +18,7 @@
         @case ('filter') { 
             <lib-filter-control 
                 #filterCtrl
-                [formControl]="field.formControl" 
+                [formControl]="formGroup ? formGroup.get(field.key) : field.formControl" 
                 [options]="(asFilterType(field).options | async) || []">
                 
                 <!-- Renderizar cada campo dinámico recursivamente -->
@@ -36,7 +35,7 @@
                         <!-- Definir el template para los items del array -->
                         <ng-template #arrayItemTemplate let-group let-index="index" let-arrayField="field">
                             @for(child of dynamicField.children; track child.key) {
-                                <ng-container *ngTemplateOutlet="formControl; context: { field: child }"></ng-container>
+                                <ng-container *ngTemplateOutlet="formControl; context: { field: child, formGroup: group }"></ng-container>
                             }
                         </ng-template>
                     } @else {
@@ -55,47 +54,16 @@
             <!-- Definir el template para los items del array principal -->
             <ng-template #mainArrayItemTemplate let-group let-index="index" let-arrayField="field">
                 @for(child of field.children; track child.key) {
-                    <ng-container *ngTemplateOutlet="formControl; context: { field: child }"></ng-container>
+                    <ng-container *ngTemplateOutlet="formControl; context: { field: child, formGroup: group }"></ng-container>
                 }
             </ng-template>
-            <!-- <div [formGroup]="formController.form">
-            <div [formArrayName]="field.key" class="array-group">
-                <h2>Array: {{ field.key }}</h2>
-                @for (group of getFormArray(field.key).controls; track $index; let i =
-                $index) {
-                <div [formGroupName]="i" class="array-item">
-                <div class="array-group-items" class="array-group-items">
-                    @for (child of field.children; track child.key) {
-                    <ng-container *ngTemplateOutlet="formControl; context: { field: child }"></ng-container>
-                    }
-                </div>
-                <button
-                    matMiniFab
-                    color="warn"
-                    type="button"
-                    (click)="removeArrayElement(field.key, i)"
-                >
-                    <mat-icon>delete</mat-icon>
-                </button>
-                </div>
-                }
-                <button
-                matMiniFab
-                color="primary"
-                type="button"
-                (click)="addArrayElement(field.key)"
-                >
-                <mat-icon>add</mat-icon>
-                </button>
-            </div>
-            </div> -->
         } 
         @default {
             <mat-form-field>
                 <input
                     matInput
                     [type]="field.type"
-                    [formControl]="field.formControl"
+                    [formControl]="formGroup ? formGroup.get(field.key) : field.formControl"
                     [placeholder]="field.label"
                 />
             </mat-form-field>
@@ -106,25 +74,3 @@
 <ng-template #prueba let-field="field">
     {{print(field)}}
 </ng-template>
-
-
-<!-- <ng-template #filterControl let-field="field">
-    {{field.formControl.value | json}}
-    @if (asFilterType(field).options | async; as options) {
-    <mat-form-field >
-        <mat-select [formControl]="field.formControl">
-            @for (option of options; track option.value) {
-          <mat-option
-            [value]="option.value"
-          >
-            {{ option.label }}
-          </mat-option>
-        }
-        </mat-select>
-    </mat-form-field>
-        @for (field of getOptionFields(options, field.formControl.value); track field.key) {
-            <ng-container *ngTemplateOutlet="formControl; context: { field }"></ng-container>
-        }
-    }
-    
-</ng-template> -->

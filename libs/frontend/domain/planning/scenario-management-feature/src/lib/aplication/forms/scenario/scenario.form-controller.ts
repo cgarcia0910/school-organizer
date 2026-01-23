@@ -78,6 +78,13 @@ export class ScenarioFormController extends FormController {
                   type: 'array',
                   required: true, formControl: new FormControl(''),
                   children: [
+                    {
+                      key: 'groupName',
+                      label: 'Group Name',
+                      type: 'text',
+                      required: true,
+                      formControl: new FormControl(''),
+                    },
                     { 
                       key: '1', label: 'Maths', type: 'select', formControl: new FormControl(''), options: of([
                         { label: 'Teacher 1', value: 1 },
@@ -90,6 +97,31 @@ export class ScenarioFormController extends FormController {
                         { label: 'Teacher 2', value: 2 },
                       ]) 
                     },
+                    {
+                      key: 'Course',
+                      label: 'Course',
+                      type: 'filter',
+                      required: true,
+                      formControl: new FormControl(''),
+                      options: of([
+                        { label: 'Course1', value: '1', fields: [
+                          {
+                            key: 'groups',
+                            type: 'array',
+                            required: true, formControl: new FormControl(''),
+                            children: [
+                              {
+                                key: 'groupName',
+                                label: 'Group Name',
+                                type: 'text',
+                                required: true,
+                                formControl: new FormControl(''),
+                              }
+                            ]
+                          }
+                        ]
+                      }])
+                    }
                   ]
                 },
               ] 
