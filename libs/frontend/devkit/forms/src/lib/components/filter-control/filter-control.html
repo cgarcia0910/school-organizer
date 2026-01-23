@@ -1,38 +1,17 @@
 <form [formGroup]="form">
-    <select formControlName="type">
-      <option value="">Seleccione</option>
-      <option
-        *ngFor="let option of options"
-        [value]="option.value"
-      >
-        {{ option.label }}
-      </option>
-    </select>
-  
-  <div
-    formGroupName="values"
-    *ngIf="selectedFields.length"
-  >
-    <div *ngFor="let field of selectedFields">
-      @if (field.type === 'select') {
-        <mat-form-field>
-          <mat-label>{{ field.label }}</mat-label>
-          <mat-select [formControlName]="field.key">
-            @for (option of asSelectType(field).options | async; track option.value) {
-              <mat-option [value]="option.value">{{ option.label }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-      } @else {
-        <mat-form-field>
-          <mat-label>{{ field.label }}</mat-label>
-          <input
-            matInput
-            [type]="field.type"
-            [formControlName]="field.key"
-          />
-        </mat-form-field>
+  <mat-form-field>
+    <mat-label>Seleccione una opción</mat-label>
+    <mat-select formControlName="type">
+      @for (option of options; track option.value) {
+        <mat-option [value]="option.value">
+          {{ option.label }}
+        </mat-option>
       }
-    </div>
+    </mat-select>
+  </mat-form-field>
+  
+  <div formGroupName="values" *ngIf="selectedFields.length">
+    <!-- Slot para contenido proyectado con la directiva -->
+    <ng-content></ng-content>
   </div>
-  </form>
+</form>

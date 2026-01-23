@@ -1,0 +1,17 @@
+:host {
+    display: block;
+    width: 100%;
+    .toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &__action-button {
+            display: flex;
+            gap: 8px;
+        }
+        h2 {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+        }
+    }
+}

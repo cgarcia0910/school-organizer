@@ -14,6 +14,8 @@ export abstract class FormController {
             fields.reduce((acc, curr: FormModel) => {
                 if (curr.type === 'array') {
                     acc[curr.key] = this.buildFormArray(curr.children || [], curr.key);
+                } else if (curr.type === 'filter') {
+                    acc[curr.key] = this.buildFormFilter(curr.children || []);
                 } else {
                     acc[curr.key] = curr.formControl;
                 }
@@ -36,6 +38,15 @@ export abstract class FormController {
         // Si no hay datos, crear un FormArray con un FormGroup vacío
         const formGroup = this.createFormGroupFromFields(fields);
         return new FormArray([formGroup]);
+    }
+
+    private buildFormFilter(fields: FormModel[]): FormGroup {
+        return new FormGroup(
+            fields.reduce((acc, curr: FormModel) => {
+                acc[curr.key] = new FormControl('');
+                return acc;
+            }, {} as { [key: string]: any })
+        );
     }
 
     private createFormGroupFromFields(fields: FormModel[]): FormGroup {

@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, forwardRef, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, ContentChild, forwardRef, Input, OnInit, TemplateRef, ChangeDetectorRef } from '@angular/core';
+import { ControlValueAccessor, FormArray, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { FormSelectType, FormInputType } from '../../types';
+import { FormSelectType, FormInputType, FormModel } from '../../types';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -12,7 +12,7 @@ import { AsyncPipe } from '@angular/common';
 export interface DynamicOption {
   label: string;
   value: string;
-  fields: Array<FormInputType | FormSelectType>;
+  fields: Array<FormModel>;
 }
 
 export interface DynamicField {
@@ -22,7 +22,7 @@ export interface DynamicField {
   label: string;
   type: 'text' | 'number' | 'select';
   required?: boolean;
-  options?: Observable<Array<{ label: string; value: number }>>;
+  options?: Observable<Array<DynamicOption>>;
 }
 
 @Component({
@@ -33,7 +33,7 @@ export interface DynamicField {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    AsyncPipe
+    AsyncPipe,
   ],
   templateUrl: './filter-control.html',
   styleUrl: './filter-control.scss',
@@ -50,7 +50,12 @@ export class FilterControl implements ControlValueAccessor, OnInit {
   @Input() options: DynamicOption[] = [];
 
   form!: FormGroup;
-  selectedFields: Array<FormInputType | FormSelectType> = [];
+  private _selectedFields: Array<FormInputType | FormSelectType> = [];
+  
+  // Getter público para que el template padre pueda acceder
+  get selectedFields(): Array<FormInputType | FormSelectType> {
+    return this._selectedFields;
+  }
 
   // Type guard helper
   asSelectType(field: FormInputType | FormSelectType): FormSelectType {
@@ -60,7 +65,10 @@ export class FilterControl implements ControlValueAccessor, OnInit {
   private onChange = (_: any) => {};
   private onTouched = () => {};
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -81,18 +89,37 @@ export class FilterControl implements ControlValueAccessor, OnInit {
   onTypeChange(type: string | null): void {
     const option = this.options.find(o => o.value === type);
 
-    this.selectedFields = option?.fields ?? [];
+    this._selectedFields = option?.fields ?? [];
 
     const valuesGroup = this.fb.group({});
 
-    this.selectedFields.forEach(field => {
-      valuesGroup.addControl(
-        field.key,
-        this.fb.control(null)
-      );
+    this._selectedFields.forEach(field => {
+      if (field.type === 'array') {
+        // Crear un FormArray para campos de tipo array
+        const formArray = this.fb.array([this.createFormGroupForArray(field.children || [])]);
+        valuesGroup.addControl(field.key, formArray);
+      } else {
+        valuesGroup.addControl(field.key, this.fb.control(null));
+      }
     });
 
     this.form.setControl('values', valuesGroup);
+    
+    // Notificar cambio para que Angular detecte los nuevos campos
+    this.cdr.markForCheck();
+  }
+
+  private createFormGroupForArray(children: FormModel[]): FormGroup {
+    const group: any = {};
+    children.forEach(child => {
+      if (child.type === 'array') {
+        // Soporte para arrays anidados
+        group[child.key] = this.fb.array([this.createFormGroupForArray(child.children || [])]);
+      } else {
+        group[child.key] = this.fb.control('');
+      }
+    });
+    return this.fb.group(group);
   }
 
   // ===== CVA =====

@@ -2,9 +2,13 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ScenarioDataSource } from '../datasources';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 import { FormComponent, FormController } from '@organizer/devkit/forms';
 import { AddScenarioFormController } from '../aplication';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { AddScenarioDirective } from '../delivery/directives/add-scenario.directive';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 
 @Component({
@@ -13,9 +17,11 @@ import { AddScenarioFormController } from '../aplication';
     MatTableModule,
     MatPaginatorModule,
     AsyncPipe,
-
-    // Forms
-    FormComponent,
+    MatIconModule,
+    MatButtonModule,
+    AddScenarioDirective,
+    TranslocoPipe,
+    JsonPipe,
   ],
   templateUrl: './scenario-management-feature.html',
   styleUrl: './scenario-management-feature.scss',
