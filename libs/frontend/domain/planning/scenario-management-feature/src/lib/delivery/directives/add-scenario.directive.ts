@@ -12,7 +12,8 @@ export class AddScenarioDirective {
   @HostListener('click')
   addCourse(): void {
     this.dialog.open(AddUpdateScenarioDialogComponent, {
-      width: '600px',
+      width: '1200px',
+      maxWidth: '95vw',
     })
     .afterClosed()
     .subscribe((result) => {

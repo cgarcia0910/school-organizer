@@ -7,7 +7,7 @@
 <ng-template #formControl let-field="field" let-formGroup="formGroup">
     @switch (field.type) { 
         @case ('select') {
-            <mat-form-field>
+            <mat-form-field class="full-width">
                 <mat-select [formControl]="formGroup ? formGroup.get(field.key) : field.formControl" [placeholder]="field.label">
                     @for (option of asSelectType(field).options | async; track option.value) {
                         <mat-option [value]="option.value">{{option.label}}</mat-option>
@@ -59,12 +59,13 @@
             </ng-template>
         } 
         @default {
-            <mat-form-field>
+            <mat-form-field class="full-width">
                 <input
                     matInput
                     [type]="field.type"
                     [formControl]="formGroup ? formGroup.get(field.key) : field.formControl"
                     [placeholder]="field.label"
+                    
                 />
             </mat-form-field>
         }

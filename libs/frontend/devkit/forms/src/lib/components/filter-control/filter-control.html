@@ -1,5 +1,5 @@
 <form [formGroup]="form">
-  <mat-form-field>
+  <mat-form-field class="full-width">
     <mat-label>Seleccione una opción</mat-label>
     <mat-select formControlName="type">
       @for (option of options; track option.value) {
@@ -11,7 +11,6 @@
   </mat-form-field>
   
   <div formGroupName="values" *ngIf="selectedFields.length">
-    <!-- Slot para contenido proyectado con la directiva -->
     <ng-content></ng-content>
   </div>
 </form>
