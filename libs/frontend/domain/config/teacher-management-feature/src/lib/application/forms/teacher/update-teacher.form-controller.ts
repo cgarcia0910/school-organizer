@@ -15,6 +15,6 @@ export class UpdateTeacherFormController extends TeacherFormController {
           });
     }
     protected override getModel(): { [key: string]: unknown } {
-      return inject(UPDATE_TEACHER, { optional: true }) as unknown as { [key: string]: unknown };
+      return this.teacher as unknown as { [key: string]: unknown };
     }
 }

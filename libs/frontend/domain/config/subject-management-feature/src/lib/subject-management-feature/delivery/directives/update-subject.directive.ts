@@ -1,28 +1,28 @@
 import { Directive, HostListener, inject, Injector, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AddUpdateTeacherDialog } from '../components/add-update-teacher-dialog/add-update-teacher-dialog';
-import { UPDATE_TEACHER } from '../../domain';
-import { Teacher } from '@organizer/generated-server-teacher';
+import { AddUpdateSubjectDialog } from '../components/add-update-subject-dialog/add-update-subject-dialog';
+import { UPDATE_SUBJECT } from '../../domain';
 import { SubjectDataSource } from '../../application';
+import { Subject } from '@organizer/subject-api';
 
 @Directive({
-  selector: '[libUpdateTeacher]',
+  selector: '[libUpdateSubject]',
 })
-export class UpdateTeacherDirective {
-  @Input({ alias: 'libUpdateTeacher', required: true }) teacher!: Teacher;
+export class UpdateSubjectDirective {
+  @Input({ alias: 'libUpdateSubject', required: true }) subject!: Subject;
   private dialog = inject(MatDialog);
   private injector = inject(Injector);
   private dataSource = inject(SubjectDataSource);
   @HostListener('click')
   updateTeacher(): void {
-    this.dialog.open(AddUpdateTeacherDialog, {
+    this.dialog.open(AddUpdateSubjectDialog, {
       width: '600px',
       injector: Injector.create({
         parent: this.injector,
         providers: [
           {
-            provide: UPDATE_TEACHER,
-            useValue: this.teacher,
+            provide: UPDATE_SUBJECT,
+            useValue: this.subject,
           },
         ],
       }),

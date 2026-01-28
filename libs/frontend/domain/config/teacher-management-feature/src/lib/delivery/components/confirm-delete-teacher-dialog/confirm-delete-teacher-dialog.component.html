@@ -1,8 +1,8 @@
-<h2 mat-dialog-title>Borrar profesor</h2>
+<h2 mat-dialog-title>{{'config.teacher.management.actions.delete.title' | transloco}}</h2>
 <mat-dialog-content>
-  <p>¿Estás seguro de querer borrar este profesor?</p>
+  <p>{{'config.teacher.management.actions.delete.confirm' | transloco}}</p>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button matButton (click)="cancel()">Cancelar</button>
-  <button data-testid="confirm-delete-button" matButton (click)="deleteTeacher()">Borrar</button>
+  <button matButton (click)="cancel()">{{'config.teacher.management.actions.delete.cancel' | transloco}}</button>
+  <button data-testid="confirm-delete-button" matButton (click)="deleteTeacher()">{{'config.teacher.management.actions.delete.delete' | transloco}}</button>
 </mat-dialog-actions>

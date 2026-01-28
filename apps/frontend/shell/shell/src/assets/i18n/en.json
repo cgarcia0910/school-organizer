@@ -6,19 +6,58 @@
     "config": {
         "subject": {
             "management": {
-                "title": "Subject Management"
+                "title": "Subject Management",
+                "actions": {
+                    "delete": {
+                        "confirm": "Are you sure you want to delete this subject?",
+                        "cancel": "Cancel",
+                        "delete": "Delete",
+                        "title": "Delete Subject"
+                    },
+                    "add": "Add Subject"
+                },
+                "table": {
+                    "columns": {
+                        "name": "Name"
+                    }
+                }
             }
         },
         "course": {
             "management": {
                 "title": "Course Management",
                 "actions": {
-                    "add": "Add Course"
+                    "add": "Add Course",
+                    "delete": {
+                        "confirm": "Are you sure you want to delete this course?",
+                        "cancel": "Cancel",
+                        "delete": "Delete",
+                        "title": "Delete Course"
+                    }
                 },
                 "table": {
                     "columns": {
                         "name": "Name",
                         "subjects": "Subjects"
+                    }
+                }
+            }
+        },
+        "teacher": {
+            "management": {
+                "title": "Teacher Management",
+                "actions": {
+                    "add": "Add Teacher",
+                    "delete": {
+                        "confirm": "Are you sure you want to delete this teacher?",
+                        "cancel": "Cancel",
+                        "delete": "Delete",
+                        "title": "Delete Teacher"
+                    }
+                },
+                "table": {
+                    "columns": {
+                        "name": "Name"
                     }
                 }
             }

@@ -4,12 +4,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { DELETE_COURSE } from '../../../domain';
 import { CourseDataSource } from '../../../application';
 import { CourseService } from '@organizer/course-api';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 
 
 @Component({
   selector: 'lib-confirm-delete-course-dialog',
-  imports: [MatDialogModule, MatButtonModule, MatDialogActions, MatDialogContent],
+  imports: [MatDialogModule, MatButtonModule, MatDialogActions, MatDialogContent, TranslocoPipe],
   templateUrl: './confirm-delete-course-dialog.component.html',
   styleUrl: './confirm-delete-course-dialog.component.scss',
 })

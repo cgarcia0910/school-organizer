@@ -1,5 +1,5 @@
 import { Directive, HostListener, inject, Injector, Input } from '@angular/core';
-import { Course, CourseService } from '@organizer/course-api';
+import { Course } from '@organizer/course-api';
 import { MatDialog } from '@angular/material/dialog';
 
 import { CourseDataSource } from '../../application';
@@ -14,12 +14,8 @@ export class DeleteCourseDirective {
   private dialog = inject(MatDialog);
   private injector = inject(Injector);
   private dataSource = inject(CourseDataSource);
-  private readonly courseService = inject(CourseService);
   @HostListener('click')
   deleteCourse(): void {
-    this.courseService.courseIdDelete(this.course.id).subscribe((result) => {
-      this.dataSource.refresh();
-    })
     this.dialog.open(ConfirmDeleteCourseDialogComponent, {
       width: '600px',
       injector: Injector.create({

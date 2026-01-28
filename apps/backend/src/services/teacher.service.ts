@@ -8,6 +8,7 @@ import {
   CreateTeacherDto,
   PaginatedTeacherResponse,
 } from '@organizer/generated-server-teacher';
+import { HabilitationEntity } from '../entities/habilitation.entity';
 
 @Injectable()
 export class TeacherService {
@@ -61,7 +62,7 @@ export class TeacherService {
   teacherPost(createTeacherDto: CreateTeacherDto, request: Request): Promise<Teacher> {
     return this.teacherRepository.save({
       name: createTeacherDto.name,
-      habilitations: JSON.parse(createTeacherDto.habilitations as unknown as string),
+      habilitations: createTeacherDto.habilitations as unknown as HabilitationEntity[],
     }).then(teacher => {
       return this.entityToModel(teacher as TeacherEntity);
     });
@@ -72,15 +73,15 @@ export class TeacherService {
     return {
       id: entity.id,
       name: entity.name,
-      habilitations: entity.habilitations.map(habilitation => ({
-        id: habilitation.id,
-        name: habilitation.name,
-        course: habilitation.course?.id,
-        subjects: habilitation.subjects.map(subject => ({
-          id: subject.id,
-          name: subject.name,
-        })),
-      })),
+      // habilitations: entity.habilitations.map(habilitation => ({
+      //   id: habilitation.id,
+      //   name: habilitation.name,
+      //   course: habilitation.course?.id,
+      //   subjects: habilitation.subjects.map(subject => ({
+      //     id: subject.id,
+      //     name: subject.name,
+      //   })),
+      // })),
     };
   }
 }
