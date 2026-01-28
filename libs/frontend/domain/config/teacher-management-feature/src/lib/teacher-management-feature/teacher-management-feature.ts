@@ -8,6 +8,7 @@ import { AddTeacherDirective } from '../delivery/directives/addTeacher.directive
 import { UpdateTeacherDirective } from '../delivery/directives/updateTeacher.directive';
 import { DeleteTeacherDirective } from '../delivery/directives/deleteTeacher.directive';
 import { TeacherDataSource } from '../application';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
   selector: 'lib-teacher-management-feature',
@@ -20,12 +21,13 @@ import { TeacherDataSource } from '../application';
     AddTeacherDirective,
     UpdateTeacherDirective,
     DeleteTeacherDirective,
+    TranslocoPipe,
   ],
   templateUrl: './teacher-management-feature.html',
   styleUrl: './teacher-management-feature.scss',
   providers: [TeacherDataSource],
 })
 export class TeacherManagementFeature {
-  displayedColumns: string[] = ['name', 'habilities', 'actions'];
+  displayedColumns: string[] = ['name', 'actions'];
   dataSource = inject(TeacherDataSource);
 }

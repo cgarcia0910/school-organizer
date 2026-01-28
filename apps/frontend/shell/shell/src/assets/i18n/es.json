@@ -6,19 +6,58 @@
     "config": {
         "subject": {
             "management": {
-                "title": "Gestión de Asignaturas"
+                "title": "Gestión de Asignaturas",
+                "actions": {
+                    "delete": {
+                        "confirm": "¿Estás seguro de querer borrar esta asignatura?",
+                        "cancel": "Cancelar",
+                        "delete": "Borrar",
+                        "title": "Borrar Asignatura"
+                    },
+                    "add": "Agregar Asignatura"
+                },
+                "table": {
+                    "columns": {
+                        "name": "Nombre"
+                    }
+                }
             }
         },
         "course": {
             "management": {
                 "title": "Gestión de Cursos",
                 "actions": {
-                    "add": "Agregar Curso"
+                    "add": "Agregar Curso",
+                    "delete": {
+                        "title": "Borrar Curso",
+                        "confirm": "¿Estás seguro de querer borrar este curso?",
+                        "cancel": "Cancelar",
+                        "delete": "Borrar"
+                    }
                 },
                 "table": {
                     "columns": {
                         "name": "Nombre",
                         "subjects": "Asignaturas"
+                    }
+                }
+            }
+        },
+        "teacher": {
+            "management": {
+                "title": "Gestión de Profesores",
+                "actions": {
+                    "add": "Agregar Profesor",
+                    "delete": {
+                        "title": "Borrar Profesor",
+                        "confirm": "¿Estás seguro de querer borrar este profesor?",
+                        "cancel": "Cancelar",
+                        "delete": "Borrar"
+                    }
+                },
+                "table": {
+                    "columns": {
+                        "name": "Nombre"
                     }
                 }
             }

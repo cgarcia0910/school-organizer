@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>{{'config.subject.management.actions.delete.title' | transloco}}</h2>
+<mat-dialog-content>
+  <p>{{'config.subject.management.actions.delete.confirm' | transloco}}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton (click)="cancel()">{{'config.subject.management.actions.delete.cancel' | transloco}}</button>
+  <button data-testid="confirm-delete-button" matButton (click)="deleteSubject()">{{'config.subject.management.actions.delete.delete' | transloco}}</button>
+</mat-dialog-actions>

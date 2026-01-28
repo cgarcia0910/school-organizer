@@ -12,10 +12,4 @@ import { MATERIAL_IMPORTS } from '@organizer/ui-material';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarMenu {
-  // private groupService = inject(GroupService);
-  // ngOnInit() {
-  //   this.groupService.groupGet(1, 10).subscribe(response => {
-  //     console.log(response);
-  //   });
-  // }
 }

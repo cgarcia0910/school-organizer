@@ -1,16 +1,16 @@
 import { Directive, HostListener, inject, Injector, Input } from '@angular/core';
-import { SubjectService } from '@organizer/subject-api';
+import { Subject, SubjectService } from '@organizer/subject-api';
 import { MatDialog } from '@angular/material/dialog';
-import { Teacher } from '@organizer/generated-server-teacher';
-import { ConfirmDeleteTeacherDialogComponent } from '../components/confirm-delete-teacher-dialog/confirm-delete-teacher-dialog.component';
-import { DELETE_TEACHER } from '../../domain/tokens/delete-teacher.token';
+
+import { DELETE_SUBJECT } from '../../domain/tokens/delete-teacher.token';
 import { SubjectDataSource } from '../../application';
+import { ConfirmDeleteSubjectDialogComponent } from '../components/confirm-delete-subject-dialog/confirm-delete-subject-dialog.component';
 
 @Directive({
-  selector: '[libDeleteTeacher]',
+  selector: '[libDeleteSubject]',
 })
-export class DeleteTeacherDirective {
-  @Input({ alias: 'libDeleteTeacher', required: true }) teacher!: Teacher;
+export class DeleteSubjectDirective {
+  @Input({ alias: 'libDeleteSubject', required: true }) subject!: Subject;
   private dialog = inject(MatDialog);
   private injector = inject(Injector);
   private dataSource = inject(SubjectDataSource);
@@ -20,14 +20,14 @@ export class DeleteTeacherDirective {
     // this.teacherService.teacherIdDelete(this.teacher.id).subscribe((result) => {
     //     this.dataSource.refresh();
     // })
-    this.dialog.open(ConfirmDeleteTeacherDialogComponent, {
+    this.dialog.open(ConfirmDeleteSubjectDialogComponent, {
       width: '600px',
       injector: Injector.create({
         parent: this.injector,
         providers: [
           {
-            provide: DELETE_TEACHER,
-            useValue: this.teacher,
+            provide: DELETE_SUBJECT,
+            useValue: this.subject,
           },
         ],
       }),

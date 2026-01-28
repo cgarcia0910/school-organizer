@@ -4,32 +4,34 @@ import { MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/mat
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { FormComponent, FormController } from '@organizer/devkit/forms';
-import { AddTeacherFormController, UpdateTeacherFormController } from '../../../application';
-import { UPDATE_TEACHER } from '../../../domain';
+import { UpdateSubjectFormController, AddSubjectFormController } from '../../../application';
+
+import { UPDATE_SUBJECT } from '../../../domain';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 function provideFormController(): FormController {
-  console.log('provideFormController', inject(UPDATE_TEACHER, { optional: true }));
-  return inject(UPDATE_TEACHER, { optional: true })
-    ? inject(UpdateTeacherFormController)
-    : inject(AddTeacherFormController)
+  console.log('provideFormController', inject(UPDATE_SUBJECT, { optional: true }));
+  return inject(UPDATE_SUBJECT, { optional: true })
+    ? inject(UpdateSubjectFormController)
+    : inject(AddSubjectFormController)
 }
 
 @Component({
-  selector: 'lib-add-update-teacher-dialog',
+  selector: 'lib-add-update-subject-dialog',
   imports: [ReactiveFormsModule, FormsModule,   MatDialogTitle, MatDialogActions,
-    MatDialogContent, MatFormFieldModule, MatButtonModule, FormComponent],
-  templateUrl: './add-update-teacher-dialog.html',
-  styleUrl: './add-update-teacher-dialog.scss',
+    MatDialogContent, MatFormFieldModule, MatButtonModule, FormComponent, TranslocoPipe],
+  templateUrl: './add-update-subject-dialog.html',
+  styleUrl: './add-update-subject-dialog.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    UpdateTeacherFormController,
-    AddTeacherFormController,
+    UpdateSubjectFormController,
+    AddSubjectFormController,
     {
       provide: FormController, 
       useFactory: provideFormController,
     },
   ]
 })
-export class AddUpdateTeacherDialog {
+export class AddUpdateSubjectDialog {
   protected readonly formController = inject(FormController);
 }

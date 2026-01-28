@@ -1,8 +1,8 @@
-<h2 mat-dialog-title>Borrar curso</h2>
+<h2 mat-dialog-title>{{'config.course.management.actions.delete.title' | transloco}}</h2>
 <mat-dialog-content>
-  <p>¿Estás seguro de querer borrar este curso?</p>
+  <p>{{'config.course.management.actions.delete.confirm' | transloco}}</p>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button matButton (click)="cancel()">Cancelar</button>
-  <button data-testid="confirm-delete-button" matButton (click)="deleteCourse()">Borrar</button>
+  <button matButton (click)="cancel()">{{'config.course.management.actions.delete.cancel' | transloco}}</button>
+  <button data-testid="confirm-delete-button" matButton (click)="deleteCourse()">{{'config.course.management.actions.delete.delete' | transloco}}</button>
 </mat-dialog-actions>

@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormComponent, FormController } from '@organizer/devkit/forms';
 import { AddCourseFormController, UpdateCourseFormController } from '../../../application';
 import { UPDATE_COURSE } from '../../../domain';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 function provideFormController(): FormController {
   console.log('provideFormController', inject(UPDATE_COURSE, { optional: true }));
@@ -17,7 +18,7 @@ function provideFormController(): FormController {
 @Component({
   selector: 'lib-add-update-course-dialog',
   imports: [ReactiveFormsModule, FormsModule,   MatDialogTitle, MatDialogActions,
-    MatDialogContent, MatFormFieldModule, MatButtonModule, FormComponent],
+    MatDialogContent, MatFormFieldModule, MatButtonModule, FormComponent, TranslocoPipe],
   templateUrl: './add-update-course-dialog.html',
   styleUrl: './add-update-course-dialog.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
