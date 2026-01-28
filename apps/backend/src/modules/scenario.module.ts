@@ -6,9 +6,19 @@ import { ScenarioDataSeederService } from '../services/scenario-data-seeder.serv
 import { ScenarioCourseEntity } from '../entities/scenario-course.entity';
 import { ScenarioCourseGroupEntity } from '../entities/scenario-course-group.entity';
 import { ScenarioCourseGroupSubjectTeacherEntity } from '../entities/scenario-course-group-subject-teacher';
+import { HttpModule } from '@nestjs/axios';
+import { CourseSubjectEntity } from '../entities/course-subject.entity';
 @Global()
 @Module({
-  imports: [TypeOrmModule.forFeature([ScenarioEntity, ScenarioCourseEntity, ScenarioCourseGroupEntity, ScenarioCourseGroupSubjectTeacherEntity])],
+  imports: [
+    TypeOrmModule.forFeature([
+      ScenarioEntity,
+      ScenarioCourseEntity,
+      ScenarioCourseGroupEntity,
+      ScenarioCourseGroupSubjectTeacherEntity,
+      CourseSubjectEntity]),
+    HttpModule,
+  ],
   providers: [ScenarioService, ScenarioDataSeederService],
   exports: [ScenarioService],
 })

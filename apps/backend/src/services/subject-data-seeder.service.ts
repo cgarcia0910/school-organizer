@@ -20,14 +20,38 @@ export class SubjectDataSeederService implements OnModuleInit {
     if (userCount === 0) {
       const users = [
         {
-          name: 'Maths',
+          name: 'Lengua',
         },
         {
-          name: 'Science',
+          name: 'Matemáticas',
         },
         {
-          name: 'Language',
+          name: 'Religión',
         },
+        {
+          name: 'Educación Física',
+        },
+        {
+          name: 'Inglés',
+        },
+        {
+          name: 'Ciencias Sociales',
+        },
+        {
+          name: 'Ciencias Naturales',
+        },
+        {
+          name: 'Arte',
+        },
+        {
+          name: 'Música',
+        },
+        {
+          name: 'Robotica',
+        },
+        {
+          name: 'Etica',
+        }
       ];
 
       for (const userData of users) {

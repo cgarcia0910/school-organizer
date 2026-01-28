@@ -36,7 +36,7 @@ export class CourseService {
     const courseIds = courses.map(course => course.id);
     const courseSubjects = await this.courseSubjectService.courseSubjectGetByCourseIds(courseIds, request);
     const subjects = await this.subjectService.subjectIdsGet(courseSubjects.map(cs => cs.subject.id), request);
-  
+
     return {
       data: courses.map(course => this.entityToModel(course, courseSubjects.filter(courseSubject => courseSubject.course.id === course.id), subjects)),
       meta: {
@@ -93,7 +93,7 @@ export class CourseService {
     return this.entityToModel(course as CourseEntity, courseSubjects, subjects);
   }
 
-  async coursePost(createCourseDto: CreateCourseDto, request: Request): Promise<Course> {
+  async coursePost(createCourseDto: CreateCourseDto, request?: Request): Promise<Course> {
     const course = await this.courseRepository.save(createCourseDto);
     const subjectWorkLoads = createCourseDto.subjectWorkLoads || [];
     const courseSubjects: CourseSubjectEntity[] = subjectWorkLoads.map((swl: any) => ({ 

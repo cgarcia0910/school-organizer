@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { CreateScenarioDto, PaginatedScenarioResponse, Scenario, UpdateScenarioDto,  } from '../models';
+import { CreateScenarioDto, PaginatedScenarioResponse, Scenario, Timetable, UpdateScenarioDto,  } from '../models';
 
 
 @Injectable()
@@ -16,6 +16,9 @@ export abstract class ScenarioApi {
 
 
   abstract scenarioIdPut(id: number, updateScenarioDto: UpdateScenarioDto,  request: Request): Scenario | Promise<Scenario> | Observable<Scenario>;
+
+
+  abstract scenarioIdTimetableGet(id: number,  request: Request): Timetable | Promise<Timetable> | Observable<Timetable>;
 
 
   abstract scenarioPost(createScenarioDto: CreateScenarioDto,  request: Request): Scenario | Promise<Scenario> | Observable<Scenario>;

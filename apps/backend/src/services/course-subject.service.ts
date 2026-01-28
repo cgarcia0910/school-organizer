@@ -16,12 +16,12 @@ export class CourseSubjectService {
     });
   }
 
-  courseSubjectPost(courseSubject: Array<CourseSubjectEntity>, request: Request): Promise<Array<CourseSubjectEntity>> {
+  courseSubjectPost(courseSubject: Array<CourseSubjectEntity>, request?: Request): Promise<Array<CourseSubjectEntity>> {
     return this.courseSubjectRepository.save(courseSubject)
   }
 
   courseSubjectGetByCourseIds(courseIds: Array<number>, request: Request): Promise<CourseSubjectEntity[]> {
-    return this.courseSubjectRepository.find({ where: { course: {id: In(courseIds)} }, relations: ['course', 'subject'] }).then(courseSubjects => {
+    return this.courseSubjectRepository.find({  relations: ['course', 'subject'] }).then(courseSubjects => {
       return courseSubjects;
     });
   }

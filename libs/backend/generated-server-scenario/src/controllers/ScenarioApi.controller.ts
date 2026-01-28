@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Post, Put, Param, Query, Req } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { ScenarioApi } from '../api';
-import { CreateScenarioDto, PaginatedScenarioResponse, Scenario, UpdateScenarioDto,  } from '../models';
+import { CreateScenarioDto, PaginatedScenarioResponse, Scenario, Timetable, UpdateScenarioDto,  } from '../models';
 
 @Controller()
 export class ScenarioApiController {
@@ -25,6 +25,11 @@ export class ScenarioApiController {
   @Put('/scenario/:id')
   scenarioIdPut(@Param('id') id: number, @Body() updateScenarioDto: UpdateScenarioDto, @Req() request: Request): Scenario | Promise<Scenario> | Observable<Scenario> {
     return this.scenarioApi.scenarioIdPut(id, updateScenarioDto, request);
+  }
+
+  @Get('/scenario/:id/timetable')
+  scenarioIdTimetableGet(@Param('id') id: number, @Req() request: Request): Timetable | Promise<Timetable> | Observable<Timetable> {
+    return this.scenarioApi.scenarioIdTimetableGet(id, request);
   }
 
   @Post('/scenario')

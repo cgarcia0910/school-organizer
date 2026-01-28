@@ -5,6 +5,7 @@ import {
   UpdateScenarioDto,
   CreateScenarioDto,
   Scenario,
+  Timetable,
 } from "@organizer/generated-server-scenario"; 
 import { Observable } from "rxjs";
 import { ScenarioService } from "../services/scenario.service";
@@ -25,6 +26,9 @@ export class ScenarioApiService extends ScenarioApi {
   }
   override scenarioPost(createScenarioDto: CreateScenarioDto, request: Request): Scenario | Promise<Scenario> | Observable<Scenario> {
     return this.scenarioService.scenarioPost(createScenarioDto, request);
+  }
+  override scenarioIdTimetableGet(id: number, request: Request): Timetable | Promise<Timetable> | Observable<Timetable> {
+    return this.scenarioService.scenarioIdTimetableGet(id, request);
   }
   constructor(private readonly scenarioService: ScenarioService) {
     super();

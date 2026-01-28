@@ -1,21 +1,54 @@
 import { FormControl } from '@angular/forms';
-import { FormController, FormModel } from '@organizer/devkit/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { FormArrayType, FormController, FormInputType, FormModel, FormSelectType } from '@organizer/devkit/forms';
 import { inject, Injectable } from '@angular/core';
-import { SubjectService } from '@organizer/subject-api';
 import { from, map, Observable, of } from 'rxjs';
 import { CourseService } from '@organizer/course-api';
 import { DynamicOption } from '@organizer/devkit/forms';
+import { TeacherService } from '@organizer/teacher-api';
 
 @Injectable()
 export class ScenarioFormController extends FormController {
-  // protected readonly courseService = inject(CourseService);
-  // protected readonly dialogRef = inject(MatDialogRef<AddUpdateCourseDialog>);
-  // private readonly subjectService = inject(SubjectService);
-  // private readonly availableSubjects$: Observable<Array<{ value: number; label: string }>> = from(this.subjectService.subjectGet(1, 100)).pipe(
-  //   map(subjects => subjects.data),
-  //   map((response) => response.map((subject) => ({ value: subject.id, label: subject.name }))),
-  // );
+  protected readonly courseService = inject(CourseService);
+  private readonly teacherService = inject(TeacherService);
+  private allTeachers$: Observable<Array<{ value: number; label: string }>> = from(this.teacherService.teacherGet(1, 100)).pipe(
+    map(teachers => teachers.data),
+    map(teachers => teachers.map(teacher => ({
+      value: teacher.id,
+      label: teacher.name
+    })))
+  )
+  private allCourses$: Observable<Array<DynamicOption>> = from(this.courseService.courseGet(1, 100)).pipe(
+    map(courses => courses.data),
+    map(courses => courses.map(course => ({ 
+      label: course.name,
+      value: course.id.toString(),
+      fields: [{
+        key: 'groups',
+        label: 'Groups',
+        type: 'array',
+        required: true,
+        formControl: new FormControl(''),
+        children: [
+          {
+            key: 'groupName',
+            label: 'Group Name',
+            type: 'text',
+            required: true,
+            formControl: new FormControl(''),
+          } as FormInputType,
+          ...(course.subjects?.map(subject => ({
+            key: subject.subject?.id?.toString() ?? '',
+            label: subject.subject?.name ?? '',
+            type: 'select' as const,
+            required: true,
+            formControl: new FormControl(''),
+            options: this.allTeachers$
+          } as FormSelectType)) ?? [])
+        ]
+      } as FormArrayType]
+    } as DynamicOption)))
+  );
+    
   private formModel: FormModel[] = [
     {
       key: 'name',
@@ -26,151 +59,20 @@ export class ScenarioFormController extends FormController {
     },
     {
       key: 'courses',
-      label: 'Subjects',
+      label: 'Courses',
       type: 'array',
       required: true,
       formControl: new FormControl(''),
-      // children: [
-      //   {
-      //     key: 'course',
-      //     label: 'Course',
-      //     type: 'select',
-      //     required: true,
-      //     formControl: new FormControl(''),
-      //     options: of([{ label: 'Course 1', value: 1 }, { label: 'Course 2', value: 2 }]),
-      //   },
-      //   {
-      //     key: 'groups',
-      //     label: 'Groups',
-      //     type: 'array',
-      //     required: true,
-      //     formControl: new FormControl(''),
-      //     children: [
-      //       {
-      //         key: 'groupName',
-      //         label: 'Group Name',
-      //         type: 'text',
-      //         required: true,
-      //         formControl: new FormControl(''),
-      //       },
-      //       {
-      //         key: 'teacherAssignments',
-      //         label: 'Teacher Assignments',
-      //         type: 'select',
-      //         required: true,
-      //         formControl: new FormControl(''),
-      //         options: of([{ label: 'Teacher 1', value: 1 }, { label: 'Teacher 2', value: 2 }]),
-      //       }
-      //     ]
-      //   }
-      // ]
       children: [
-        {
+                {
           key: 'Course',
           label: 'Course',
           type: 'filter',
           required: true,
           formControl: new FormControl(''),
-          options: of([
-            { label: 'Course1', value: '1', fields: [
-                {
-                  key: 'groups',
-                  type: 'array',
-                  required: true, formControl: new FormControl(''),
-                  children: [
-                    {
-                      key: 'groupName',
-                      label: 'Group Name',
-                      type: 'text',
-                      required: true,
-                      formControl: new FormControl(''),
-                    },
-                    { 
-                      key: '1', label: 'Maths', type: 'select', formControl: new FormControl(''), options: of([
-                        { label: 'Teacher 1', value: 1 },
-                        { label: 'Teacher 2', value: 2 },
-                      ]) 
-                    },
-                    { 
-                      key: '2', label: 'Science', type: 'select', formControl: new FormControl(''), options: of([
-                        { label: 'Teacher 1', value: 1 },
-                        { label: 'Teacher 2', value: 2 },
-                      ]) 
-                    },
-                    {
-                      key: 'Course',
-                      label: 'Course',
-                      type: 'filter',
-                      required: true,
-                      formControl: new FormControl(''),
-                      options: of([
-                        { label: 'Course1', value: '1', fields: [
-                          {
-                            key: 'groups',
-                            type: 'array',
-                            required: true, formControl: new FormControl(''),
-                            children: [
-                              {
-                                key: 'groupName',
-                                label: 'Group Name',
-                                type: 'text',
-                                required: true,
-                                formControl: new FormControl(''),
-                              }
-                            ]
-                          }
-                        ]
-                      }])
-                    }
-                  ]
-                },
-              ] 
-            },
-            { label: 'Course2', value: '2', fields: [
-              { key: 'teacher', label: 'prueba', type: 'select', formControl: new FormControl(''), options: of([
-                { label: 'Teacher 1', value: 1 },
-                { label: 'Teacher 2', value: 2 },
-              ]) },
-            ] 
-            },
-          ] as DynamicOption[]
-        ),
-        },
+          options: this.allCourses$,
+        } 
       ],
-      // children: [
-      //   {
-      //     key: 'Course',
-      //     label: 'Course',
-      //     type: 'filter',
-      //     required: true,
-      //     formControl: new FormControl(''),
-      //     options: of([
-      //       { label: 'Course1', value: '1', fields: [
-      //           { 
-      //             key: '1', label: 'Maths', type: 'select', formControl: new FormControl(''), options: of([
-      //               { label: 'Teacher 1', value: 1 },
-      //               { label: 'Teacher 2', value: 2 },
-      //             ]) 
-      //           },
-      //           { 
-      //             key: '2', label: 'Science', type: 'select', formControl: new FormControl(''), options: of([
-      //               { label: 'Teacher 1', value: 1 },
-      //               { label: 'Teacher 2', value: 2 },
-      //             ]) 
-      //           },
-      //         ] 
-      //       },
-      //       { label: 'Course2', value: '2', fields: [
-      //         { key: 'teacher', label: 'prueba', type: 'select', formControl: new FormControl(''), options: of([
-      //           { label: 'Teacher 1', value: 1 },
-      //           { label: 'Teacher 2', value: 2 },
-      //         ]) },
-      //       ] 
-      //       },
-      //     ] as DynamicOption[]
-      //   ),
-      //   },
-      // ],
     },
   ];
   public getFields(): FormModel[] {
