@@ -1,0 +1,39 @@
+@if (getFormArray(field.key); as formArray) {
+    <ng-container [formGroup]="getParentFormGroup()">
+        <div [formArrayName]="field.key" class="array-group">
+            <h2 class="array-group__title">{{ field.label || field.key }}</h2>
+            @for (group of formArray.controls; track $index; let i = $index) {
+                <div [formGroupName]="i" class="array-group__item-list">
+                    <div class="array-group__item-list__fields">
+                        @if (itemTemplate) {
+                            <!-- Renderizar el template con el contexto del item actual -->
+                            <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: group, index: i, field: field }"></ng-container>
+                        } @else {
+                            <p>No template provided for array items</p>
+                        }
+                    </div>
+                    <button
+                        matMiniFab
+                        color="warn"
+                        type="button"
+                        (click)="removeArrayElement(field.key, i)"
+                        class="array-group__item-list__remove-button"
+                    >
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            }
+            <button
+                matMiniFab
+                color="primary"
+                type="button"
+                (click)="addArrayElement(field.key)"
+                class="array-group__add-button"
+            >
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </ng-container>
+} @else {
+    <div class="error">Error: FormArray "{{ field.key }}" not found</div>
+}

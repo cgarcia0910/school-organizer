@@ -1,3 +1,4 @@
+import { provideApi as provideApiScenario } from '@organizer/scenario-api';
 import { provideApi as provideApiHabilitation } from '@organizer/habilitation-api';
 import { provideApi as provideApiCourse } from '@organizer/course-api';
 import { provideApi as provideApiSubject } from '@organizer/subject-api';
@@ -7,7 +8,9 @@ export const apiProviderConfig = [
   provideApiTeacher('api'),
   provideApiSubject('/api'),
   provideApiCourse('/api'),
-  provideApiHabilitation('/api')
+  provideApiHabilitation('/api'),
+  provideApiScenario('/api')
+
 
 
 

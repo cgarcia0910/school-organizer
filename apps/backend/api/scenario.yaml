@@ -1,0 +1,365 @@
+openapi: 3.0.3
+info:
+  title: My API
+  version: 1.0.0
+
+paths:
+  /scenario:
+    get:
+      tags:
+        - Scenario
+      summary: Obtener lista paginada de scenario
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+      responses:
+        '200':
+          description: Lista paginada de scenario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedScenarioResponse'
+
+    post:
+      tags:
+        - Scenario
+      summary: Crear un teacher
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateScenarioDto'
+      responses:
+        '201':
+          description: Scenario creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scenario'
+
+  /scenario/{id}:
+    get:
+      tags:
+        - Scenario
+      summary: Obtener un teacher por id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Scenario encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scenario'
+        '404':
+          description: Scenario no encontrado
+
+    put:
+      tags:
+        - Scenario
+      summary: Reemplazar un teacher
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateScenarioDto'
+      responses:
+        '200':
+          description: Scenario actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scenario'
+
+    delete:
+      tags:
+        - Scenario
+      summary: Eliminar un teacher
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Scenario eliminado correctamente
+
+  /scenario/{id}/timetable:
+    get:
+      tags:
+        - Scenario
+      summary: Obtener el horario de un scenario
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Horario obtenido correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Timetable'
+components:
+  schemas:
+    Scenario:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Juan Pérez
+        courses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioCourse'
+        
+    ScenarioCourse:
+      type: object
+      required:
+        - courses
+      properties:
+        course:
+          $ref: '#/components/schemas/Course'
+        groups: 
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioCourseGroup'
+
+    Course:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          example: 1
+
+    ScenarioCourseGroup:
+      type: object
+      required:
+        - id
+        - groupName
+      properties:
+        id:
+          type: integer
+          example: 1
+        groupName:
+          type: string
+          example: Grupo 1
+        teacherAssignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioCourseGroupTeacherAssignment'
+    ScenarioCourseGroupTeacherAssignment:
+      type: object
+      required:
+        - teacher
+        - subject
+      properties:
+        teacher:
+          $ref: '#/components/schemas/Teacher'
+        subject:
+          $ref: '#/components/schemas/Subject'
+
+    Teacher:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Juan Pérez
+    
+    Subject:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Matemáticas
+        hoursPerWeek:
+          type: integer
+          example: 10
+        maxDailyWorkload:
+          type: integer
+          example: 2
+
+    CreateScenarioDto:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: Escenario Primavera 2024
+        courses:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateScenarioCourse'
+
+    CreateScenarioCourse:
+      type: object
+      required:
+        - courseId
+      properties:
+        courseId:
+          type: integer
+          example: 1
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateScenarioCourseGroup'
+
+    CreateScenarioCourseGroup:
+      type: object
+      required:
+        - groupName
+      properties:
+        groupName:
+          type: string
+          example: Grupo A
+        teacherAssignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateScenarioCourseGroupTeacherAssignment'
+
+    CreateScenarioCourseGroupTeacherAssignment:
+      type: object
+      required:
+        - teacherId
+        - subjectId
+      properties:
+        teacherId:
+          type: integer
+          example: 1
+        subjectId:
+          type: integer
+          example: 1
+
+    UpdateScenarioDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Escenario actualizado
+        courses:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateScenarioCourse'
+
+    PaginationMeta:
+      type: object
+      required:
+        - page
+        - limit
+        - total
+      properties:
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          example: 42
+
+    PaginatedScenarioResponse:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Scenario'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+
+    Timetable:
+      type: object
+      required:
+        - hours
+      properties:
+        courseId:
+          type: integer
+        groupId:
+          type: integer
+        hours:
+          type: array
+          items:
+            $ref: '#/components/schemas/TimetableHourEntry'
+    TimetableHourEntry:
+      type: object
+      required:
+        - days
+      properties:
+        days:
+          type: array
+          items:
+            $ref: '#/components/schemas/TimetableDayEntry'
+    TimetableDayEntry:
+      type: object
+      required:
+        - day
+        - hour
+        - subjectId
+        - teacherId
+      properties:
+        day:
+          type: integer
+          example: 1
+        hour:
+          type: integer
+          example: 1
+        subjectId:
+          type: integer
+          example: 1
+        teacherId:
+          type: integer
+          example: 1

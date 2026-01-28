@@ -1,43 +1,77 @@
 <form [formGroup]="formController.form" (ngSubmit)="formController.onSubmit()">
-    @for (field of formController.getFields(); track field.key) {
-        @if (field.type === 'array') {
-            <div [formArrayName]="field.key">
-                @for (group of getFormArray(field.key).controls; track $index; let i = $index) {
-                    <div [formGroupName]="i" class="array-group">
-                        <div class="array-group-items">
-                            @for (child of field.children; track child.key) {
-                                <mat-form-field>
-                                    @if (child.type === 'select') {
-                                        <mat-select [formControlName]="child.key" [placeholder]="child.label">
-                                            @for (option of child.options | async; track option.value) {
-                                            <mat-option [value]="option.value">{{option.label}}</mat-option>
-                                            }
-                                        </mat-select>
-                                    } @else {
-                                        <input matInput [type]="child.type" [formControlName]="child.key" [placeholder]="child.label">
-                                    }
-                                </mat-form-field>
+  @for (field of formController.getFields(); track field.key) {
+    <ng-container *ngTemplateOutlet="formControl; context: { field }"></ng-container>
+  }
+</form>
+
+<ng-template #formControl let-field="field" let-formGroup="formGroup">
+    @switch (field.type) { 
+        @case ('select') {
+            <mat-form-field class="full-width">
+                <mat-select [formControl]="formGroup ? formGroup.get(field.key) : field.formControl" [placeholder]="field.label">
+                    @for (option of asSelectType(field).options | async; track option.value) {
+                        <mat-option [value]="option.value">{{option.label}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        } 
+        @case ('filter') { 
+            <lib-filter-control 
+                #filterCtrl
+                [formControl]="formGroup ? formGroup.get(field.key) : field.formControl" 
+                [options]="(asFilterType(field).options | async) || []">
+                
+                <!-- Renderizar cada campo dinámico recursivamente -->
+                @for (dynamicField of filterCtrl.selectedFields; track dynamicField.key) {
+                    @if (dynamicField.type === 'array') {
+                        <!-- Para arrays, pasar el FormGroup values del FilterControl como parentControl -->
+                        <lib-array-control 
+                            [field]="dynamicField" 
+                            [formController]="formController"
+                            [parentControl]="filterCtrl.form.get('values')"
+                            [itemTemplate]="arrayItemTemplate">
+                        </lib-array-control>
+                        
+                        <!-- Definir el template para los items del array -->
+                        <ng-template #arrayItemTemplate let-group let-index="index" let-arrayField="field">
+                            @for(child of dynamicField.children; track child.key) {
+                                <ng-container *ngTemplateOutlet="formControl; context: { field: child, formGroup: group }"></ng-container>
                             }
-                        </div>
-                        <button 
-                            matMiniFab
-                            color="warn" 
-                            type="button"
-                            (click)="removeArrayElement(field.key, i)">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </div>
+                        </ng-template>
+                    } @else {
+                        <ng-container *ngTemplateOutlet="formControl; context: { field: dynamicField }"></ng-container>
+                    }
                 }
-                <button 
-                    matMiniFab
-                    color="primary" 
-                    type="button"
-                    (click)="addArrayElement(field.key)">
-                    <mat-icon>add</mat-icon>
-                </button>
-            </div>
-        } @else {
-            <lib-form-control [field]="field"></lib-form-control>
+            </lib-filter-control>
+        } 
+        @case ('array') {
+            <lib-array-control 
+                [field]="field" 
+                [formController]="formController"
+                [itemTemplate]="mainArrayItemTemplate">
+            </lib-array-control>
+            
+            <!-- Definir el template para los items del array principal -->
+            <ng-template #mainArrayItemTemplate let-group let-index="index" let-arrayField="field">
+                @for(child of field.children; track child.key) {
+                    <ng-container *ngTemplateOutlet="formControl; context: { field: child, formGroup: group }"></ng-container>
+                }
+            </ng-template>
+        } 
+        @default {
+            <mat-form-field class="full-width">
+                <input
+                    matInput
+                    [type]="field.type"
+                    [formControl]="formGroup ? formGroup.get(field.key) : field.formControl"
+                    [placeholder]="field.label"
+                    
+                />
+            </mat-form-field>
         }
     }
-</form>
+</ng-template>
+
+<ng-template #prueba let-field="field">
+    {{print(field)}}
+</ng-template>

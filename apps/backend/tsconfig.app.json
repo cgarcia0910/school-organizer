@@ -20,9 +20,4 @@
     "src/**/*.spec.ts",
     "src/**/*.test.ts"
   ],
-  "references": [
-    {
-      "path": "../../libs/backend/generated-server-teacher"
-    }
-  ]
 }

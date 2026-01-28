@@ -1,11 +1,62 @@
-<mat-form-field >
-    @if (field.type === 'select') {
-        <mat-select [formControl]="formControl">
-            @for (option of field.options | async; track option.value) {
-              <mat-option [value]="option.value">{{option.label}}</mat-option>
+@switch (field.type) { 
+    @case ('select') {
+        <mat-form-field>
+            <mat-select [formControl]="formControl" [placeholder]="field.label">
+                @for (option of asSelectType(field).options | async; track option.value) {
+                    <mat-option [value]="option.value">{{option.label}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    } 
+    @case ('filter') { 
+        @if (asFilterType(field).options | async; as options) {
+            <lib-filter-control
+            [formControl]="formControl"
+            [options]="options"
+            ></lib-filter-control>
+        }
+    } 
+    @case ('array') {
+        <div [formGroup]="form">
+        <div [formArrayName]="field.key" class="array-group">
+            <h2>Array: {{ field.key }}</h2>
+            @for (group of getFormArray(field.key).controls; track $index; let i =
+            $index) {
+            <div [formGroupName]="i" class="array-item">
+            <div class="array-group-items" class="array-group-items">
+                @for (child of field.children; track child.key) {
+                <lib-form-control [field]="child"></lib-form-control>
+                }
+            </div>
+            <button
+                matMiniFab
+                color="warn"
+                type="button"
+                (click)="removeArrayElement(field.key, i)"
+            >
+                <mat-icon>delete</mat-icon>
+            </button>
+            </div>
             }
-        </mat-select>
-    } @else {
-        <input matInput [type]="field.type" [formControl]="formControl" [placeholder]="field.label" [attr.data-testid]="'input-' + field.key">
+            <button
+            matMiniFab
+            color="primary"
+            type="button"
+            (click)="addArrayElement(field.key)"
+            >
+            <mat-icon>add</mat-icon>
+            </button>
+        </div>
+        </div>
+    } 
+    @default {
+        <mat-form-field>
+            <input
+                matInput
+                [type]="field.type"
+                [formControl]="formControl"
+                [placeholder]="field.label"
+            />
+        </mat-form-field>
     }
-</mat-form-field>
+}

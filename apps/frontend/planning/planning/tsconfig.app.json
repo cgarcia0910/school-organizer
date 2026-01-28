@@ -16,6 +16,12 @@
   "files": ["src/app/remote-entry/entry.routes.ts"],
   "references": [
     {
+      "path": "../../../../libs/frontend/domain/planning/scenario-timetable-feature"
+    },
+    {
+      "path": "../../../../libs/frontend/domain/planning/scenario-management-feature"
+    },
+    {
       "path": "../../../../libs/frontend/infrastructure/api/api-config"
     }
   ]

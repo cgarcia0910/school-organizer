@@ -25,7 +25,6 @@ export class HabilitationService {
       },
       relations: ['course'],
     }).then(([habilitations, total]) => {
-      console.log(habilitations);
       return {
         // data: [],
         data: habilitations.map(this.entityToModel),

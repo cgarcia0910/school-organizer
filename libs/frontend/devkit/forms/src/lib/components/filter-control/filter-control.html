@@ -1,0 +1,16 @@
+<form [formGroup]="form">
+  <mat-form-field class="full-width">
+    <mat-label>Seleccione una opción</mat-label>
+    <mat-select formControlName="type">
+      @for (option of options; track option.value) {
+        <mat-option [value]="option.value">
+          {{ option.label }}
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  
+  <div formGroupName="values" *ngIf="selectedFields.length">
+    <ng-content></ng-content>
+  </div>
+</form>

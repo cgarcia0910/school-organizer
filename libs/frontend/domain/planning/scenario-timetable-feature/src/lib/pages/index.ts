@@ -1,0 +1,1 @@
+export * from './scenario-timetable-course-page/scenario-timetable-course-page';

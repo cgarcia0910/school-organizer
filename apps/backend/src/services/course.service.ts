@@ -35,9 +35,8 @@ export class CourseService {
 
     const courseIds = courses.map(course => course.id);
     const courseSubjects = await this.courseSubjectService.courseSubjectGetByCourseIds(courseIds, request);
-    console.log(courseSubjects)
     const subjects = await this.subjectService.subjectIdsGet(courseSubjects.map(cs => cs.subject.id), request);
-  
+
     return {
       data: courses.map(course => this.entityToModel(course, courseSubjects.filter(courseSubject => courseSubject.course.id === course.id), subjects)),
       meta: {
@@ -69,7 +68,6 @@ export class CourseService {
     await this.courseRepository.update(id, {
       name: updateCourseDto.name
     });
-    console.log(updateCourseDto);
     // Si se enviaron subjects, actualizar las relaciones
     if (updateCourseDto.subjectWorkLoads && updateCourseDto.subjectWorkLoads.length > 0) {
       // Eliminar todas las relaciones anteriores
@@ -95,8 +93,7 @@ export class CourseService {
     return this.entityToModel(course as CourseEntity, courseSubjects, subjects);
   }
 
-  async coursePost(createCourseDto: CreateCourseDto, request: Request): Promise<Course> {
-    console.log(createCourseDto)
+  async coursePost(createCourseDto: CreateCourseDto, request?: Request): Promise<Course> {
     const course = await this.courseRepository.save(createCourseDto);
     const subjectWorkLoads = createCourseDto.subjectWorkLoads || [];
     const courseSubjects: CourseSubjectEntity[] = subjectWorkLoads.map((swl: any) => ({ 
@@ -105,7 +102,6 @@ export class CourseService {
       hoursPerWeek: swl.workload?.hoursPerWeek,
       maxDailyWorkload: swl.workload?.maxDailyWorkload
     })) as CourseSubjectEntity[];
-    console.log(courseSubjects)
     await this.courseSubjectService.courseSubjectPost(courseSubjects, request);
     return this.entityToModel(course as CourseEntity);
   }

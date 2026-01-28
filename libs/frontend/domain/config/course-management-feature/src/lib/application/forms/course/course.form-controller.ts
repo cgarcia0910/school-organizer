@@ -6,6 +6,7 @@ import { SubjectService } from "@organizer/subject-api";
 import { from, map, Observable } from "rxjs";
 import { CourseService } from "@organizer/course-api";
 import { AddUpdateCourseDialog } from "../../../delivery/components";
+import { FormSelectType } from "@organizer/devkit/forms";
 
 @Injectable()
 export class CourseFormController extends FormController {
@@ -38,7 +39,7 @@ export class CourseFormController extends FormController {
           required: true,
           formControl: new FormControl(''),
           options: this.availableSubjects$,
-          },
+        },
           {
             key: 'hoursPerWeek',
             label: 'Hours per week',

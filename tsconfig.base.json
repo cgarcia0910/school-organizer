@@ -62,6 +62,18 @@
       ],
       "@school-organizer/course-management-feature": [
         "libs/frontend/domain/config/course-management-feature/src/index.ts"
+      ],
+      "@organizer/generated-server-scenario": [
+        "libs/backend/generated-server-scenario/src/index.ts"
+      ],
+      "@organizer/scenario-api": [
+        "libs/frontend/infrastructure/api/scenario-api/src/index.ts"
+      ],
+      "@school-organizer/planning/scenario-management-feature": [
+        "libs/frontend/domain/planning/scenario-management-feature/src/index.ts"
+      ],
+      "@school-organizer/planning/scenario-timetable-feature": [
+        "libs/frontend/domain/planning/scenario-timetable-feature/src/index.ts"
       ]
     }
   }

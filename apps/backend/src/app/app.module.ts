@@ -13,6 +13,9 @@ import { ApiModule as CourseApiModule } from "@organizer/generated-server-course
 import { HabilitationModule } from "../modules/habilitation.module";
 import { HabilitationApiService } from "./habilitation-api.service";
 import { ApiModule as HabilitationApiModule } from "@organizer/generated-server-habilitation";
+import { ScenarioModule } from "../modules/scenario.module";
+import { ScenarioApiService } from "./scenario-api.service";
+import { ApiModule as ScenarioApiModule } from "@organizer/generated-server-scenario";
 
 @Module({
   imports: [
@@ -32,8 +35,12 @@ import { ApiModule as HabilitationApiModule } from "@organizer/generated-server-
         HabilitationModule,
         HabilitationApiModule.forRoot({
               habilitationApi: HabilitationApiService,
+            }),
+        ScenarioModule,
+        ScenarioApiModule.forRoot({
+              scenarioApi: ScenarioApiService,
             })
     ],
-  providers: [TeacherApiService, SubjectApiService, CourseApiService, HabilitationApiService],
+  providers: [TeacherApiService, SubjectApiService, CourseApiService, HabilitationApiService, ScenarioApiService],
 })
 export class AppModule {}
