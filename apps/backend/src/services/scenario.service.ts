@@ -14,6 +14,7 @@ import { ScenarioCourseGroupEntity } from '../entities/scenario-course-group.ent
 import { ScenarioCourseGroupSubjectTeacherEntity } from '../entities/scenario-course-group-subject-teacher';
 import { HttpService } from '@nestjs/axios';
 import { CourseSubjectEntity } from '../entities/course-subject.entity';
+import { TimetableEntity } from '../entities/timetable.entity';
 
 @Injectable()
 export class ScenarioService {
@@ -28,6 +29,8 @@ export class ScenarioService {
     private scenarioCourseGroupSubjectTeacherRepository: Repository<ScenarioCourseGroupSubjectTeacherEntity>,
     @InjectRepository(CourseSubjectEntity)
     private courseSubjectRepository: Repository<CourseSubjectEntity>,
+    @InjectRepository(TimetableEntity)
+    private timetableRepository: Repository<TimetableEntity>,
     @Inject(HttpService)
     private httpService: HttpService,
   ) {}
@@ -172,11 +175,23 @@ export class ScenarioService {
     };
   }
 
-  async scenarioIdTimetableGet(id: number, request: Request): Promise<Timetable> {
+  async scenarioIdCalculateGet(id: number, request: Request): Promise<Timetable> {
     const scenarioInfo = await this.scenarioRepository.findOne({ where: { id } });
     const scenarioModel = await this.entityToModel(scenarioInfo as ScenarioEntity);
     const engineResponse = await this.httpService.post(`http://localhost:8000`, scenarioModel.courses).toPromise();
-    return engineResponse?.data
+    await this.timetableRepository.delete({ scenario_id: id });
+    await Promise.all(engineResponse?.data.map((entry: any) => 
+      this.timetableRepository.save({
+        scenario_id: id,
+        course_id: entry.course_id,
+        group_id: entry.group_id,
+        day: entry.day,
+        hour: entry.hour,
+        subject: { id: entry.subject_id },
+        teacher_id: entry.teacher_id,
+      })))
+    const timetable = await this.timetableRepository.find({ where: { scenario_id: id } });
+    return timetable
       .reduce((courses: any, assignment: any) => {
           const course = courses.find((course: any) => course.course_id === assignment.course_id && course.group_id === assignment.group_id)
           if(course) {
@@ -187,7 +202,7 @@ export class ScenarioService {
           return courses
       }, [])
       .map((course: any) => ({
-          course_id: course.course_id,
+            course_id: course.course_id,
           group_id: course.group_id,
           hours: course.assignments.reduce((hours: any, assignment: any) => {
               hours[assignment.hour] = [...(hours[assignment.hour] || []), assignment].sort((a,b) => a.day - b.day)
@@ -195,4 +210,29 @@ export class ScenarioService {
           }, [])
       }))
   }
+  
+
+  async scenarioIdTimetableGet(id: number, request: Request): Promise<Timetable[]> {
+    const timetable = await this.timetableRepository.find({ where: { scenario_id: id }, relations: ['subject'] });
+    console.log(timetable);
+    return timetable
+      .reduce((courses: any, assignment: any) => {
+          const course = courses.find((course: any) => course.course_id === assignment.course_id && course.group_id === assignment.group_id)
+          if(course) {
+              course.assignments = [...course.assignments, assignment]
+          } else {
+              courses = [...courses, {course_id: assignment.course_id, group_id: assignment.group_id, assignments: [assignment]}]
+          }
+          return courses
+      }, [])
+      .map((course: any) => ({
+            course_id: course.course_id,
+          group_id: course.group_id,
+          hours: course.assignments.reduce((hours: any, assignment: any) => {
+              hours[assignment.hour] = [...(hours[assignment.hour] || []), assignment].sort((a,b) => a.day - b.day)
+              return hours
+          }, [])
+      }))
+  }
+
 }

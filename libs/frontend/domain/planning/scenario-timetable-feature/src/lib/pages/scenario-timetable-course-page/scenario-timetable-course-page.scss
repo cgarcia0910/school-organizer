@@ -1,0 +1,27 @@
+:host {
+    display: block;
+    max-width: 60rem;
+    margin: 0 auto;
+    .timetable {
+        width: 100%;
+        table-layout: fixed;
+      }
+      
+      .fixed-width-column {
+        width: 150px;
+        min-width: 150px;
+        max-width: 150px;
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        // background-color: #7fba9c;
+        border: 1px solid #ccc !important;
+        // border-radius: 5px;
+      }
+      .mat-mdc-row .mat-mdc-cell {
+        border-bottom: 1px solid transparent;
+        border-top: 1px solid transparent;
+        cursor: pointer;
+      }
+}

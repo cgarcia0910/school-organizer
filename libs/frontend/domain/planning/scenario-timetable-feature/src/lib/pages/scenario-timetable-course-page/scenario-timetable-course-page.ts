@@ -1,16 +1,32 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { map } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { ScenarioService, TimetableDayEntry } from '@organizer/scenario-api';
+import { TimetableDataSource } from '../../application/datasources/timetable.datasource';
+import { MatTableModule } from '@angular/material/table';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
   selector: 'lib-scenario-timetable-course-page',
-  imports: [],
+  imports: [MatTableModule, TranslocoPipe],
   templateUrl: './scenario-timetable-course-page.html',
   styleUrl: './scenario-timetable-course-page.scss',
 })
 export class ScenarioTimetableCoursePage {
+  private scenarioService = inject(ScenarioService);
   ar = inject(ActivatedRoute);
+  timetableDataSources: Array<{
+    datasource: TimetableDataSource
+    displayedColumns: string[]
+  }> = [];
   ngOnInit(): void {
     console.log(this.ar.snapshot.params['scenarioId']);
+    this.scenarioService.scenarioIdTimetableGet(this.ar.snapshot.params['scenarioId']).subscribe((timetable) => {
+      console.log(timetable);
+      this.timetableDataSources = timetable.map((tt) => ({
+        datasource: new TimetableDataSource(new BehaviorSubject<readonly Array<TimetableDayEntry>[]>(tt.hours)),
+        displayedColumns: tt.hours[0].map((day: any) => `day-${day.day}`),
+      }))
+  })
   }
 }

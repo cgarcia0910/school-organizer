@@ -11,4 +11,6 @@ export * from './scenarioCourseGroup';
 export * from './scenarioCourseGroupTeacherAssignment';
 export * from './subject';
 export * from './teacher';
+export * from './timetable';
+export * from './timetableDayEntry';
 export * from './updateScenarioDto';

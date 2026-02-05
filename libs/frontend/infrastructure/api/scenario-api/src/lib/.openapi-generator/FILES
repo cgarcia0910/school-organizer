@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 README.md
 api.base.service.ts
 api.module.ts
@@ -23,6 +22,8 @@ model/scenarioCourseGroup.ts
 model/scenarioCourseGroupTeacherAssignment.ts
 model/subject.ts
 model/teacher.ts
+model/timetable.ts
+model/timetableDayEntry.ts
 model/updateScenarioDto.ts
 param.ts
 provide-api.ts
