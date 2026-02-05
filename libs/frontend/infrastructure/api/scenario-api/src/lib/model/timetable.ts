@@ -7,12 +7,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { TimetableDayEntry } from './timetableDayEntry';
 
 
-export interface Subject { 
-    id: number;
-    name: string;
-    hoursPerWeek?: number;
-    maxDailyWorkload?: number;
+export interface Timetable { 
+    courseId?: number;
+    groupId?: number;
+    hours: Array<Array<TimetableDayEntry>>;
 }
 

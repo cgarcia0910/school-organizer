@@ -12,6 +12,9 @@ import { ScenarioService } from "../services/scenario.service";
 
 @Injectable()
 export class ScenarioApiService extends ScenarioApi {
+  override scenarioIdCalculateGet(id: number, request: Request): Timetable | Promise<Timetable> | Observable<Timetable> {
+    return this.scenarioService.scenarioIdCalculateGet(id, request);
+  }
   override scenarioGet(page: number, limit: number, request: Request): PaginatedScenarioResponse | Promise<PaginatedScenarioResponse> | Observable<PaginatedScenarioResponse> {
     return this.scenarioService.scenarioGet(page, limit);
   }
@@ -27,7 +30,7 @@ export class ScenarioApiService extends ScenarioApi {
   override scenarioPost(createScenarioDto: CreateScenarioDto, request: Request): Scenario | Promise<Scenario> | Observable<Scenario> {
     return this.scenarioService.scenarioPost(createScenarioDto, request);
   }
-  override scenarioIdTimetableGet(id: number, request: Request): Timetable | Promise<Timetable> | Observable<Timetable> {
+  override scenarioIdTimetableGet(id: number, request: Request): Timetable[] | Promise<Timetable[]> | Observable<Timetable[]> {
     return this.scenarioService.scenarioIdTimetableGet(id, request);
   }
   constructor(private readonly scenarioService: ScenarioService) {

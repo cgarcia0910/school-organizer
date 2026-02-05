@@ -9,10 +9,10 @@
  */
 
 
-export interface Subject { 
-    id: number;
-    name: string;
-    hoursPerWeek?: number;
-    maxDailyWorkload?: number;
+export interface TimetableDayEntry { 
+    day: number;
+    hour: number;
+    subjectId: number;
+    teacherId: number;
 }
 

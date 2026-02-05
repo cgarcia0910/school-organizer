@@ -12,6 +12,11 @@ export class ScenarioApiController {
     return this.scenarioApi.scenarioGet(page, limit, request);
   }
 
+  @Get('/scenario/:id/calculate')
+  scenarioIdCalculateGet(@Param('id') id: number, @Req() request: Request): Timetable | Promise<Timetable> | Observable<Timetable> {
+    return this.scenarioApi.scenarioIdCalculateGet(id, request);
+  }
+
   @Delete('/scenario/:id')
   scenarioIdDelete(@Param('id') id: number, @Req() request: Request): void | Promise<void> | Observable<void> {
     return this.scenarioApi.scenarioIdDelete(id, request);
@@ -28,7 +33,7 @@ export class ScenarioApiController {
   }
 
   @Get('/scenario/:id/timetable')
-  scenarioIdTimetableGet(@Param('id') id: number, @Req() request: Request): Timetable | Promise<Timetable> | Observable<Timetable> {
+  scenarioIdTimetableGet(@Param('id') id: number, @Req() request: Request): Array<Timetable> | Promise<Array<Timetable>> | Observable<Array<Timetable>> {
     return this.scenarioApi.scenarioIdTimetableGet(id, request);
   }
 
