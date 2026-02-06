@@ -8,7 +8,7 @@ import { CourseSubjectService } from '../services/course-subject.service';
 @Global()
 @Module({
   imports: [TypeOrmModule.forFeature([CourseEntity, CourseSubjectEntity])],
-  providers: [CourseService, CourseDataSeederService, CourseSubjectService],
+  providers: [CourseService, CourseSubjectService],
   exports: [CourseService],
 })
 export class CourseModule {}

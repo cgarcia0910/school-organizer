@@ -9,6 +9,7 @@ import { UpdateTeacherDirective } from '../delivery/directives/updateTeacher.dir
 import { DeleteTeacherDirective } from '../delivery/directives/deleteTeacher.directive';
 import { TeacherDataSource } from '../application';
 import { TranslocoPipe } from '@ngneat/transloco';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'lib-teacher-management-feature',
@@ -22,6 +23,7 @@ import { TranslocoPipe } from '@ngneat/transloco';
     UpdateTeacherDirective,
     DeleteTeacherDirective,
     TranslocoPipe,
+    RouterLink,
   ],
   templateUrl: './teacher-management-feature.html',
   styleUrl: './teacher-management-feature.scss',

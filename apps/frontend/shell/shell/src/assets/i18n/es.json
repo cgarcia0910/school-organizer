@@ -79,5 +79,13 @@
                 }
             }
         }
+    },
+    "breadcrumbs": {
+        "config": "Configuración",
+        "teacher": "Profesor",
+        "subject": "Asignatura",
+        "course": "Curso",
+        "planning": "Planificación",
+        "scenario": "Escenario"
     }
 }

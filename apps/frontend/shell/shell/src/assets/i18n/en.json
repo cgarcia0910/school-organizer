@@ -78,5 +78,14 @@
                     }
                 }
             }
+    },
+    "breadcrumbs": {
+        "config": "Config",
+        "teacher": "Teacher",
+        "subject": "Subject",
+        "course": "Course",
+        "planning": "Planning",
+        "scenario": "Scenario"
     }
+}
 }

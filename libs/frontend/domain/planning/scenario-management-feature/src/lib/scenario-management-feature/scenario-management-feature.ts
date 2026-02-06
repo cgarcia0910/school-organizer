@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AddScenarioDirective } from '../delivery/directives/add-scenario.directive';
 import { TranslocoPipe } from '@ngneat/transloco';
+import { CalculateScenarioDirective, NavigateTimetableCourseDirective } from '@school-organizer/planning/scenario-actions';
 
 
 @Component({
@@ -22,6 +23,8 @@ import { TranslocoPipe } from '@ngneat/transloco';
     AddScenarioDirective,
     TranslocoPipe,
     JsonPipe,
+    CalculateScenarioDirective,
+    NavigateTimetableCourseDirective,
   ],
   templateUrl: './scenario-management-feature.html',
   styleUrl: './scenario-management-feature.scss',
@@ -29,6 +32,6 @@ import { TranslocoPipe } from '@ngneat/transloco';
   providers: [ScenarioDataSource, {provide: FormController, useClass: AddScenarioFormController}],
 })
 export class ScenarioManagementFeature {
-  displayedColumns: string[] = ['name'];
+  displayedColumns: string[] = ['name', 'actions'];
   dataSource = inject(ScenarioDataSource);
 }

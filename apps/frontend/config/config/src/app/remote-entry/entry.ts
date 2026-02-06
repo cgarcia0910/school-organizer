@@ -5,13 +5,10 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   imports: [SidebarMenu, RouterOutlet],
   selector: 'app-config-entry',
-  template: `<app-sidebar-menu></app-sidebar-menu><router-outlet></router-outlet>`,
+  template: `<router-outlet></router-outlet>`,
   standalone: true,
-  styles: [ `
-    :host {
-      display: flex;
-      gap: 1rem;
-    }
-  ` ]
+  styles: []
 })
-export class RemoteEntry {}
+export class RemoteEntry {
+  
+}

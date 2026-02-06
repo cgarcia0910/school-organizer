@@ -1,32 +1,34 @@
+<div class="table-container">
 <div class="toolbar">
   <h2>{{'config.teacher.management.title' | transloco}}</h2>
-  <button data-testid="add-teacher-button" matButton aria-label="Add teacher" class="toolbar__action-button" libAddTeacher>
+  <button data-testid="add-teacher-button" matButton="tonal" color="primary" aria-label="Add teacher" class="toolbar__action-button" libAddTeacher>
     <mat-icon>add</mat-icon>{{'config.teacher.management.actions.add' | transloco}}
   </button>
 </div>
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  <!-- Name Column -->
-  <ng-container matColumnDef="name" width="100%">
-    <th mat-header-cell *matHeaderCellDef>{{'config.teacher.management.table.columns.name' | transloco}} </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-  </ng-container>
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef></th>
-    <td mat-cell *matCellDef="let element" class=>
-      <div class="actions-column">
-        <button mat-icon-button [libUpdateTeacher]="element">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button [attr.data-testid]="'delete-button-'+ element.name" mat-icon-button [libDeleteTeacher]="element">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-    </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-<mat-paginator [length]="dataSource.total$ | async" [pageSize]="5" aria-label="Select page"
-  (page)="dataSource.fetch($event.pageIndex)">
-</mat-paginator>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Name Column -->
+    <ng-container matColumnDef="name" width="100%">
+      <th mat-header-cell *matHeaderCellDef>{{'config.teacher.management.table.columns.name' | transloco}} </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element" class=>
+        <div class="actions-column">
+          <button mat-icon-button [libUpdateTeacher]="element">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button [attr.data-testid]="'delete-button-'+ element.name" mat-icon-button [libDeleteTeacher]="element">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [length]="dataSource.total$ | async" [pageSize]="5" aria-label="Select page"
+    (page)="dataSource.fetch($event.pageIndex)">
+  </mat-paginator>
+</div>

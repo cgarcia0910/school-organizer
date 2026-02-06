@@ -16,6 +16,12 @@ import { HttpService } from '@nestjs/axios';
 import { CourseSubjectEntity } from '../entities/course-subject.entity';
 import { TimetableEntity } from '../entities/timetable.entity';
 
+export enum ScenarioStatus {
+  SOLUTION_PENDING = 'SOLUTION_PENDING',
+  SOLUTION_READY = 'SOLUTION_READY',
+  PUBLISHED = 'PUBLISHED',
+}
+
 @Injectable()
 export class ScenarioService {
   constructor(
@@ -81,6 +87,7 @@ export class ScenarioService {
   async scenarioPost(createScenarioDto: CreateScenarioDto, request: Request): Promise<Scenario> {
     const scenario = await this.scenarioRepository.save({
       name: createScenarioDto.name,
+      status: ScenarioStatus.SOLUTION_PENDING,
     });
     const scenarioCourses = await Promise.all((createScenarioDto.courses as any)?.map(async (course: any) => {
       return this.scenarioCourseRepository.save({
@@ -138,6 +145,7 @@ export class ScenarioService {
     return {
       id: entity.id,
       name: entity.name,
+      status: entity.status as Scenario.StatusEnum,
       courses: await Promise.all(
         scenarioCourseGroups.map(async (scenarioCourse, index) => {
           const groupsWithAssignments = await Promise.all(
@@ -190,6 +198,7 @@ export class ScenarioService {
         subject: { id: entry.subject_id },
         teacher_id: entry.teacher_id,
       })))
+    await this.scenarioRepository.update(id, { status: ScenarioStatus.SOLUTION_READY });
     const timetable = await this.timetableRepository.find({ where: { scenario_id: id } });
     return timetable
       .reduce((courses: any, assignment: any) => {

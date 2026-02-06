@@ -167,7 +167,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ScenarioCourse'
-        
+        status:
+          type: string
+          example: SOLUTION_PENDING
+          enum:
+            - SOLUTION_PENDING
+            - SOLUTION_READY
+            - PUBLISHED
+
     ScenarioCourse:
       type: object
       required:

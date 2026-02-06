@@ -6,7 +6,7 @@ import { HabilitationDataSeederService } from '../services/habilitation-data-see
 @Global()
 @Module({
   imports: [TypeOrmModule.forFeature([HabilitationEntity])],
-  providers: [HabilitationService, HabilitationDataSeederService],
+  providers: [HabilitationService],
   exports: [HabilitationService],
 })
 export class HabilitationModule {}

@@ -6,7 +6,7 @@ import { SubjectDataSeederService } from '../services/subject-data-seeder.servic
 @Global()
 @Module({
   imports: [TypeOrmModule.forFeature([SubjectEntity])],
-  providers: [SubjectService, SubjectDataSeederService],
+  providers: [SubjectService],
   exports: [SubjectService],
 })
 export class SubjectModule {}

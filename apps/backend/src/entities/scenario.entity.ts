@@ -7,4 +7,7 @@ export class ScenarioEntity {
 
   @Column({ type: 'varchar', length: 255 })
   name!: string;
+
+  @Column({ type: 'varchar', length: 255 })
+  status!: string;
 }
