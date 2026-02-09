@@ -358,6 +358,8 @@ components:
           type: integer
         course:
           $ref: '#/components/schemas/Course'
+        group:
+          $ref: '#/components/schemas/ScenarioCourseGroup'
         groupId:
           type: integer
         hours:

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { ScenarioService, TimetableDayEntry } from '@organizer/scenario-api';
+import { Course, ScenarioCourseGroup, ScenarioService, TimetableDayEntry } from '@organizer/scenario-api';
 import { TimetableDataSource } from '../../application/datasources/timetable.datasource';
 import { MatTableModule } from '@angular/material/table';
 import { TranslocoPipe } from '@ngneat/transloco';
@@ -18,6 +18,8 @@ export class ScenarioTimetableCoursePage {
   timetableDataSources: Array<{
     datasource: TimetableDataSource
     displayedColumns: string[]
+    course: Course
+    group: ScenarioCourseGroup
   }> = [];
   ngOnInit(): void {
     console.log(this.ar.snapshot.params['scenarioId']);
@@ -25,6 +27,8 @@ export class ScenarioTimetableCoursePage {
       console.log(timetable);
       this.timetableDataSources = timetable.map((tt) => ({
         datasource: new TimetableDataSource(new BehaviorSubject<readonly Array<TimetableDayEntry>[]>(tt.hours)),
+        course: tt.course as Course,
+        group: tt.group as ScenarioCourseGroup,
         displayedColumns: tt.hours[0].map((day: any) => `day-${day.day}`),
       }))
   })

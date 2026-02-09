@@ -244,19 +244,44 @@ export class ScenarioService {
     }))
     await this.scenarioRepository.update(id, { status: ScenarioStatus.SOLUTION_READY });
     const timetable = await this.timetableRepository.find({ where: { scenario_id: id }, relations: ['course'] });
+    
+    // Cargar los grupos del escenario para obtener sus nombres
+    const scenarioCourseGroups = await this.scenarioCourseGroupRepository.find({ 
+      where: { scenario: { id } },
+      relations: ['course']
+    });
+    
+    // Crear un mapa para búsqueda rápida: "course_id-group_id" -> group info
+    const groupMapForTimetable = new Map();
+    scenarioCourseGroups.forEach(group => {
+      const key = `${group.course.id}-${group.id}`;
+      groupMapForTimetable.set(key, { id: group.id, groupName: group.groupName });
+    });
+    
     return timetable
       .reduce((courses: any, assignment: any) => {
           const course = courses.find((course: any) => course.course_id === assignment.course_id && course.group_id === assignment.group_id)
           if(course) {
               course.assignments = [...course.assignments, assignment]
           } else {
-              courses = [...courses, {course_id: assignment.course_id, group_id: assignment.group_id, assignments: [assignment]}]
+              const groupKey = `${assignment.course_id}-${assignment.group_id}`;
+              const groupInfo = groupMapForTimetable.get(groupKey);
+              
+              courses = [...courses, {
+                course_id: assignment.course_id,
+                course: assignment.course,
+                group_id: assignment.group_id,
+                group: groupInfo || { id: assignment.group_id },
+                assignments: [assignment]
+              }]
           }
           return courses
       }, [])
       .map((course: any) => ({
             course_id: course.course_id,
+            course: course.course ? {id: course.course.id, name: course.course.name} : {id: course.course_id},
           group_id: course.group_id,
+          group: course.group,
           hours: course.assignments.reduce((hours: any, assignment: any) => {
               hours[assignment.hour] = [...(hours[assignment.hour] || []), assignment].sort((a,b) => a.day - b.day)
               return hours
@@ -267,16 +292,34 @@ export class ScenarioService {
 
   async scenarioIdTimetableGet(id: number, request: Request): Promise<Timetable[]> {
     const timetable = await this.timetableRepository.find({ where: { scenario_id: id }, relations: ['subject', 'course'] });
+    
+    // Cargar los grupos del escenario para obtener sus nombres
+    const scenarioCourseGroups = await this.scenarioCourseGroupRepository.find({ 
+      where: { scenario: { id } },
+      relations: ['course']
+    });
+    
+    // Crear un mapa para búsqueda rápida: "course_id-group_id" -> group info
+    const groupMap = new Map();
+    scenarioCourseGroups.forEach(group => {
+      const key = `${group.course.id}-${group.id}`;
+      groupMap.set(key, { id: group.id, groupName: group.groupName });
+    });
+    
     return timetable
       .reduce((courses: any, assignment: any) => {
           const course = courses.find((course: any) => course.course_id === assignment.course_id && course.group_id === assignment.group_id)
           if(course) {
               course.assignments = [...course.assignments, assignment]
           } else {
+              const groupKey = `${assignment.course_id}-${assignment.group_id}`;
+              const groupInfo = groupMap.get(groupKey);
+              
               courses = [...courses, {
                 course_id: assignment.course_id, 
                 course: assignment.course,
-                group_id: assignment.group_id, 
+                group_id: assignment.group_id,
+                group: groupInfo || { id: assignment.group_id },
                 assignments: [assignment]
               }]
           }
@@ -286,6 +329,7 @@ export class ScenarioService {
             course_id: course.course_id,
             course: course.course ? {id: course.course.id, name: course.course.name} : {id: course.course_id},
           group_id: course.group_id,
+          group: course.group,
           hours: course.assignments.reduce((hours: any, assignment: any) => {
               hours[assignment.hour] = [...(hours[assignment.hour] || []), assignment].sort((a,b) => a.day - b.day)
               return hours

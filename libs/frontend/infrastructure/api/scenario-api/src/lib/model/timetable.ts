@@ -7,11 +7,15 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Course } from './course';
 import { TimetableDayEntry } from './timetableDayEntry';
+import { ScenarioCourseGroup } from './scenarioCourseGroup';
 
 
 export interface Timetable { 
     courseId?: number;
+    course?: Course;
+    group?: ScenarioCourseGroup;
     groupId?: number;
     hours: Array<Array<TimetableDayEntry>>;
 }

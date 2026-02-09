@@ -2,7 +2,7 @@
 <div class="courses-container">
   @for(datasource of timetableDataSources; track datasource) {
     <div class="timetable-container">
-      <h3>{{'planning.scenario.timetable.course.title' | transloco}}</h3>
+      <h3>Curso {{datasource.course.name}} Grupo {{datasource.group.groupName}}</h3>
       <table mat-table [dataSource]="datasource.datasource" class="timetable">      
         @for(day of datasource.displayedColumns; track day; let i = $index) {
           <ng-container matColumnDef="day-{{i}}">
