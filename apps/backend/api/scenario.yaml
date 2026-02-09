@@ -356,6 +356,8 @@ components:
       properties:
         courseId:
           type: integer
+        course:
+          $ref: '#/components/schemas/Course'
         groupId:
           type: integer
         hours:

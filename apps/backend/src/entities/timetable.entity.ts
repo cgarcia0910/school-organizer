@@ -1,5 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { SubjectEntity } from './subject.entity';
+import { CourseEntity } from './course.entity';
 @Entity('timetable')
 export class TimetableEntity {
   @PrimaryGeneratedColumn()
@@ -10,6 +11,9 @@ export class TimetableEntity {
 
   @Column({ type: 'integer' })
   course_id!: number;
+
+  @ManyToOne(() => CourseEntity, (course) => course.id)
+  course!: CourseEntity;
 
   @Column({ type: 'integer' })
   group_id!: number;

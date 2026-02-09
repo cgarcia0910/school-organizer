@@ -10,7 +10,7 @@ export class ScenarioCourseGroupEntity {
   @ManyToOne(() => ScenarioEntity, (scenario) => scenario.id)
   scenario!: ScenarioEntity;
 
-  @ManyToOne(() => CourseEntity, (course) => course.id)
+  @ManyToOne(() => CourseEntity, (course) => course.id, { eager: true })
   course!: CourseEntity;
 
   @Column({ type: 'varchar', length: 255 })

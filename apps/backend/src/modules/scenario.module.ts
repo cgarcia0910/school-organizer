@@ -9,6 +9,7 @@ import { ScenarioCourseGroupSubjectTeacherEntity } from '../entities/scenario-co
 import { HttpModule } from '@nestjs/axios';
 import { CourseSubjectEntity } from '../entities/course-subject.entity';
 import { TimetableEntity } from '../entities/timetable.entity';
+import { CourseEntity } from '../entities/course.entity';
 @Global()
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { TimetableEntity } from '../entities/timetable.entity';
       ScenarioCourseGroupEntity,
       ScenarioCourseGroupSubjectTeacherEntity,
       CourseSubjectEntity,
+      CourseEntity,
       TimetableEntity]),
     HttpModule,
   ],
