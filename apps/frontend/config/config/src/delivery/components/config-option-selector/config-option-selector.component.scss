@@ -1,10 +1,18 @@
 :host {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+    .config-option-selector-container {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+    .toolbar {
+        h2 {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+        }
+    }
     .config-option-selector {
         font-family: 'Roboto', sans-serif;
         mat-icon {

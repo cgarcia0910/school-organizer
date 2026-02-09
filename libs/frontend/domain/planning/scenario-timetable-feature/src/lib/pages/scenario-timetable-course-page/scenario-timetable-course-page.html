@@ -1,17 +1,23 @@
-@for(datasource of timetableDataSources; track datasource) {
-  <table mat-table [dataSource]="datasource.datasource" class="timetable">      
-    @for(day of datasource.displayedColumns; track day; let i = $index) {
-      <ng-container matColumnDef="day-{{i}}">
-        <th mat-header-cell *matHeaderCellDef class="fixed-width-column">
-          {{'planning.scenario.timetable.course.day.'+i | transloco}}
-        </th>
-        <td mat-cell *matCellDef="let element" class="fixed-width-column"> 
-          {{element[i]?.subject.name || '-'}}
-        </td>
-      </ng-container>
-    }
-    <tr mat-header-row *matHeaderRowDef="datasource.displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: datasource.displayedColumns;"></tr>
-  </table>
-  <br><br>
-}
+<h2>Courses of Escenario 1</h2>
+<div class="courses-container">
+  @for(datasource of timetableDataSources; track datasource) {
+    <div class="timetable-container">
+      <h3>{{'planning.scenario.timetable.course.title' | transloco}}</h3>
+      <table mat-table [dataSource]="datasource.datasource" class="timetable">      
+        @for(day of datasource.displayedColumns; track day; let i = $index) {
+          <ng-container matColumnDef="day-{{i}}">
+            <th mat-header-cell *matHeaderCellDef class="fixed-width-column">
+              {{'planning.scenario.timetable.course.day.'+i | transloco}}
+            </th>
+            <td mat-cell *matCellDef="let element" class="fixed-width-column"> 
+              {{element[i]?.subject.name || '-'}}
+            </td>
+          </ng-container>
+        }
+        <tr mat-header-row *matHeaderRowDef="datasource.displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: datasource.displayedColumns;"></tr>
+      </table>
+    </div>
+
+  }
+</div>

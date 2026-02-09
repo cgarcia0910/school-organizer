@@ -6,7 +6,7 @@ import { TeacherDataSeederService } from '../services/teacher-data-seeder.servic
 @Global()
 @Module({
   imports: [TypeOrmModule.forFeature([TeacherEntity])],
-  providers: [TeacherService],
+  providers: [TeacherService, TeacherDataSeederService],
   exports: [TeacherService],
 })
 export class TeacherModule {}

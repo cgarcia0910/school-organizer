@@ -21,7 +21,7 @@ import { TimetableEntity } from '../entities/timetable.entity';
       TimetableEntity]),
     HttpModule,
   ],
-  providers: [ScenarioService],
+  providers: [ScenarioService, ScenarioDataSeederService],
   exports: [ScenarioService],
 })
 export class ScenarioModule {}
