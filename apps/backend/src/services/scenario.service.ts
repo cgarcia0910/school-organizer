@@ -195,7 +195,7 @@ export class ScenarioService {
                 id: group.id,
                 groupName: group.groupName,
                 teacherAssignments: assignments.map(assignment => ({
-                  teacher: assignment.teacher,
+                  teacher: {...assignment.teacher},
                   subject: {
                     ...assignment.subject,
                     hoursPerWeek: courseSubjects.find(courseSubject => courseSubject.subject.id === assignment.subject.id)?.hoursPerWeek || 0,
@@ -229,8 +229,21 @@ export class ScenarioService {
       courseMap.set(c.course.id, c.course);
     });
     
+    // Crear un mapa de teacher_id -> teacher para búsqueda rápida
+    const teacherMap = new Map();
+    (scenarioModel.courses || []).forEach((c: any) => {
+      c.groups?.forEach((g: any) => {
+        g.teacherAssignments?.forEach((ta: any) => {
+          if (ta.teacher && !teacherMap.has(ta.teacher.id)) {
+            teacherMap.set(ta.teacher.id, { id: ta.teacher.id, name: ta.teacher.name });
+          }
+        });
+      });
+    });
+    
     await Promise.all(engineResponse?.data.map((entry: any) => {
       const course = courseMap.get(entry.course_id);
+      const teacher = teacherMap.get(entry.teacher_id);
       return this.timetableRepository.save({
         scenario_id: id,
         course_id: entry.course_id,
@@ -240,10 +253,11 @@ export class ScenarioService {
         hour: entry.hour,
         subject: { id: entry.subject_id },
         teacher_id: entry.teacher_id,
+        teacher: teacher ? { id: teacher.id, name: teacher.name } : { id: entry.teacher_id },
       });
     }))
     await this.scenarioRepository.update(id, { status: ScenarioStatus.SOLUTION_READY });
-    const timetable = await this.timetableRepository.find({ where: { scenario_id: id }, relations: ['course'] });
+    const timetable = await this.timetableRepository.find({ where: { scenario_id: id }, relations: ['course', 'teacher'] });
     
     // Cargar los grupos del escenario para obtener sus nombres
     const scenarioCourseGroups = await this.scenarioCourseGroupRepository.find({ 
@@ -291,7 +305,7 @@ export class ScenarioService {
   
 
   async scenarioIdTimetableGet(id: number, request: Request): Promise<Timetable[]> {
-    const timetable = await this.timetableRepository.find({ where: { scenario_id: id }, relations: ['subject', 'course'] });
+    const timetable = await this.timetableRepository.find({ where: { scenario_id: id }, relations: ['subject', 'course', 'teacher'] });
     
     // Cargar los grupos del escenario para obtener sus nombres
     const scenarioCourseGroups = await this.scenarioCourseGroupRepository.find({ 

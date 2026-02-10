@@ -1,9 +1,9 @@
 <div class="breadcrumbs">
     @for (breadcrumb of breadcrumbs$ | async; track breadcrumb; let last = $last) {
         @if (!last) {
-            <a routerLink="/{{breadcrumb}}">{{'breadcrumbs.' + breadcrumb | transloco}}</a>&nbsp;>&nbsp;
+            <a routerLink="/{{breadcrumb.replace('breadcrumbs.', '')}}">{{breadcrumb | transloco}}</a>&nbsp;>&nbsp;
         } @else {
-            <span>{{'breadcrumbs.' + breadcrumb | transloco}}</span>
+            <span>{{breadcrumb | transloco}}</span>
         }
     }
   </div>

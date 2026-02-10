@@ -1,6 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { SubjectEntity } from './subject.entity';
 import { CourseEntity } from './course.entity';
+import { TeacherEntity } from './teacher.entity';
 @Entity('timetable')
 export class TimetableEntity {
   @PrimaryGeneratedColumn()
@@ -32,4 +33,7 @@ export class TimetableEntity {
 
   @Column({ type: 'integer' })
   teacher_id!: number;
+
+  @ManyToOne(() => TeacherEntity, (teacher) => teacher.id)
+  teacher!: TeacherEntity;
 }

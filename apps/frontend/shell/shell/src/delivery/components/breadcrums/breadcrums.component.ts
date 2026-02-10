@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
-import { filter, map } from 'rxjs';
+import { filter, map, of, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { JsonPipe } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
+import { ScenarioService } from '@organizer/scenario-api';
 
 @Component({
   selector: 'app-breadcrums',
@@ -15,11 +16,32 @@ import { TranslocoPipe } from '@ngneat/transloco';
 export class BreadcrumsComponent {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly scenarioService = inject(ScenarioService);
   public readonly breadcrumbs$ =  this.router.events.pipe(
     filter(event => event instanceof NavigationEnd),
-    map(() => {
-      return  this.router.url.split('/').filter(s => s)
-    })
+    switchMap((crumbs) => {
+      let crumbsString = this.router.url.split('/')
+        .filter(s => s)
+        .map(s => `breadcrumbs.${s}`)
+        .join('/');
+      // console.log({crumbsString});
+      // add all translation prefix
+      console.log({crumbsString});
+      const scenarioId = crumbsString.match(/\/breadcrumbs\.scenario\/breadcrumbs\.(\d+)\/breadcrumbs\.course/)?.[1];
+      console.log(scenarioId);
+      if(scenarioId) {
+        return this.scenarioService.scenarioIdGet(Number(scenarioId)).pipe(
+          map((scenario) => {
+            console.log(scenario);
+            crumbsString = crumbsString.replace(`breadcrumbs.scenario/breadcrumbs.${scenarioId}`, scenario.name);
+            return crumbsString.split('/').filter(s => s);
+            // console.log({crumbsString});
+          }));
+      }
+      console.log({crumbsString});
+      return of(crumbsString.split('/').filter(s => s));
+      // return JSON.parse(crumbsString);
+    }),
   )
 
   ngOnInit() {
