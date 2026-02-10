@@ -25,6 +25,11 @@
         "styles": ["apps/frontend/planning/planning/src/styles.scss"],
         "customWebpackConfig": {
           "path": "apps/frontend/planning/planning/webpack.config.ts"
+        },
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "libs/frontend/devkit/design-tokens"
+          ]
         }
       },
       "configurations": {

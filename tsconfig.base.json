@@ -77,6 +77,9 @@
       ],
       "@school-organizer/planning/scenario-actions": [
         "libs/frontend/domain/planning/scenario-actions/src/index.ts"
+      ],
+      "@devkit/design-tokens": [
+        "libs/frontend/devkit/design-tokens/src/index.ts"
       ]
     }
   }

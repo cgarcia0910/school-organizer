@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@use 'index.scss' as devkit;
+
 body {
     margin: 0;
     // height: 100vh;
@@ -9,4 +11,5 @@ body {
     width: 80%;
     margin: 0 auto;
     background-color: #f0f0f0;
+    @include devkit.fonts;
 }

@@ -1,0 +1,19 @@
+@use './primitives.scss' as primitives;
+
+$background-color: primitives.$gray-100;
+$card-background-color: primitives.$white;
+$card-gap-between-cards: primitives.$spacing-small;
+$card-padding: primitives.$spacing-small;
+$card-radius: primitives.$radius-small;
+
+
+$radius: primitives.$radius-small;
+$spacing: primitives.$spacing-small;
+
+$font-family: primitives.$font-family;
+$font-size-small: primitives.$font-size-small;
+$font-size-medium: primitives.$font-size-medium;
+$font-size-large: primitives.$font-size-large;
+$font-weight-small: primitives.$font-weight-small;
+$font-weight-medium: primitives.$font-weight-medium;
+$font-weight-large: primitives.$font-weight-large;
