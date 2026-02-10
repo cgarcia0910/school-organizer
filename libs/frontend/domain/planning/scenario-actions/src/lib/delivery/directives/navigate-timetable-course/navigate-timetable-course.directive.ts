@@ -9,7 +9,6 @@ export class NavigateTimetableCourseDirective {
   private readonly router = inject(Router);
   @Input() libNavigateTimetableCourse!: Scenario;
   @HostListener('click') navigateTimetableCourse() {
-    console.log('navigateTimetableCourse', this.libNavigateTimetableCourse);
     this.router.navigate(['/planning/scenario', this.libNavigateTimetableCourse.id, 'course']);
   }
 }

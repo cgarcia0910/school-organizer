@@ -1,6 +1,6 @@
+@use 'index.scss' as devkit;
+
 :host {
-    display: block;
-    width: 100%;
     .toolbar {
         display: flex;
         justify-content: space-between;
@@ -9,21 +9,10 @@
             display: flex;
             gap: 8px;
         }
-        h2 {
-            font-family: 'Roboto', sans-serif;
-            font-weight: 500;
-        }
     }
     .actions-column {
         display: flex;
         justify-content: end;
     }
-    .table-container {
-        width: 100%;
-        border-radius: 10px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
+    .table-container { @include devkit.table; }
 }

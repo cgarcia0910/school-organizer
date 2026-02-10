@@ -25,6 +25,11 @@
         "styles": ["apps/frontend/config/config/src/styles.scss"],
         "customWebpackConfig": {
           "path": "apps/frontend/config/config/webpack.config.ts"
+        },
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "libs/frontend/devkit/design-tokens"
+          ]
         }
       },
       "configurations": {

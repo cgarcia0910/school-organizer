@@ -34,6 +34,11 @@
         ],
         "customWebpackConfig": {
           "path": "apps/frontend/shell/shell/webpack.config.ts"
+        },
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "libs/frontend/devkit/design-tokens"
+          ]
         }
       },
       "configurations": {

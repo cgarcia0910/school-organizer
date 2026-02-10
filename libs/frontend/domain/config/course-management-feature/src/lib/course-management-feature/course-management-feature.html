@@ -1,9 +1,10 @@
 <div class="toolbar">
     <h2>{{'config.course.management.title' | transloco}}</h2>
-    <button data-testid="add-course-button" matButton aria-label="Add course" class="toolbar__action-button" libAddCourse>
+    <button data-testid="add-course-button" matButton="tonal" color="primary" aria-label="Add course" class="toolbar__action-button" libAddCourse>
       <mat-icon>add</mat-icon>{{'config.course.management.actions.add' | transloco}}
     </button>
   </div>
+  <div class="table-container">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- Name Column -->
     <ng-container matColumnDef="name">
@@ -34,3 +35,4 @@
   <mat-paginator [length]="dataSource.total$ | async" [pageSize]="5" aria-label="Select page"
     (page)="dataSource.fetch($event.pageIndex)">
   </mat-paginator>
+</div>

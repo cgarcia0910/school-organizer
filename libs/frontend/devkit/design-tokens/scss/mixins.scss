@@ -1,0 +1,56 @@
+@use './token.scss' as token;
+
+@mixin shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+}
+@mixin card {
+    background-color: token.$card-background-color;
+    border-radius: token.$card-radius;
+    padding: token.$card-padding;
+    gap: token.$card-gap-between-cards;
+    @include shadow;
+}
+
+@mixin table {
+    display: flex;
+    flex-direction: column;
+    gap: token.$spacing;
+    table {
+        @include shadow;
+        border-radius: token.$radius;
+        padding: token.$spacing;
+    }
+    mat-paginator {
+        @include shadow;
+        border-radius: token.$radius;
+        padding: 0 token.$spacing;
+    }
+}
+
+@mixin fonts {
+    h1 {
+        font-family: token.$font-family;
+        font-size: token.$font-size-large;
+        font-weight: token.$font-weight-large;
+    }
+    h2 {
+        font-family: token.$font-family;
+        font-size: token.$font-size-medium;
+        font-weight: token.$font-weight-medium;
+    }
+    h3 {
+        font-family: token.$font-family;
+        font-size: token.$font-size-small;
+        font-weight: token.$font-weight-small;
+    }
+    h4 {
+        font-family: token.$font-family;
+        font-size: token.$font-size-small;
+        font-weight: token.$font-weight-small;
+    }
+    p {
+        font-family: token.$font-family;
+        font-size: token.$font-size-small;
+        font-weight: token.$font-weight-small;
+    }
+}

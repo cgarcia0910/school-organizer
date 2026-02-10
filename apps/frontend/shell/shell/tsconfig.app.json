@@ -18,6 +18,9 @@
       "path": "../../ui/ui-material"
     },
     {
+      "path": "../../../../libs/frontend/infrastructure/api/scenario-api"
+    },
+    {
       "path": "../../../../libs/frontend/infrastructure/api/api-config"
     }
   ]

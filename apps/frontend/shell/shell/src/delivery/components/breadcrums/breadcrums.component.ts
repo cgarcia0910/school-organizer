@@ -12,6 +12,7 @@ import { ScenarioService } from '@organizer/scenario-api';
   templateUrl: './breadcrums.component.html',
   styleUrl: './breadcrums.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class BreadcrumsComponent {
   private readonly router = inject(Router);

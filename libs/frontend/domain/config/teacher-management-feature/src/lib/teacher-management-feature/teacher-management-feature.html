@@ -1,10 +1,10 @@
-<div class="table-container">
 <div class="toolbar">
   <h2>{{'config.teacher.management.title' | transloco}}</h2>
   <button data-testid="add-teacher-button" matButton="tonal" color="primary" aria-label="Add teacher" class="toolbar__action-button" libAddTeacher>
     <mat-icon>add</mat-icon>{{'config.teacher.management.actions.add' | transloco}}
   </button>
 </div>
+<div class="table-container">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- Name Column -->
     <ng-container matColumnDef="name" width="100%">
