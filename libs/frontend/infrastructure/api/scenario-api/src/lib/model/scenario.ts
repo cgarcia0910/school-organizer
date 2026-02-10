@@ -14,5 +14,13 @@ export interface Scenario {
     id: number;
     name: string;
     courses?: Array<ScenarioCourse>;
+    status?: ScenarioStatusEnum;
 }
+export enum ScenarioStatusEnum {
+    SolutionPending = 'SOLUTION_PENDING',
+    SolutionReady = 'SOLUTION_READY',
+    Published = 'PUBLISHED'
+};
+
+
 

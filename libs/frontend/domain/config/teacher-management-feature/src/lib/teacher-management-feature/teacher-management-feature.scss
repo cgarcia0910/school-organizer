@@ -18,4 +18,12 @@
         display: flex;
         justify-content: end;
     }
+    .table-container {
+        width: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
 }

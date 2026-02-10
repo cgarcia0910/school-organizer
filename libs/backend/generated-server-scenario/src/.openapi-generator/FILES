@@ -22,7 +22,6 @@ models/scenario.ts
 models/subject.ts
 models/teacher.ts
 models/timetable-day-entry.ts
-models/timetable-hour-entry.ts
 models/timetable.ts
 models/update-scenario-dto.ts
 tsconfig.json

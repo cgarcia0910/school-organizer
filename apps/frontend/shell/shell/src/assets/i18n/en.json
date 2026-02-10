@@ -62,5 +62,30 @@
                 }
             }
         }
+    },
+    "planning": {
+        "scenario": {
+            "timetable": {
+                "course": {
+                    "day": {
+                        "0": "Monday",
+                        "1": "Tuesday",
+                        "2": "Wednesday",
+                        "3": "Thursday",
+                        "4": "Friday",
+                        "5": "Saturday",
+                        "6": "Sunday"
+                    }
+                }
+            }
+    },
+    "breadcrumbs": {
+        "config": "Config",
+        "teacher": "Teacher",
+        "subject": "Subject",
+        "course": "Course",
+        "planning": "Planning",
+        "scenario": "Scenario"
     }
+}
 }

@@ -14,6 +14,14 @@ import { ScenarioCourseGroupEntity } from '../entities/scenario-course-group.ent
 import { ScenarioCourseGroupSubjectTeacherEntity } from '../entities/scenario-course-group-subject-teacher';
 import { HttpService } from '@nestjs/axios';
 import { CourseSubjectEntity } from '../entities/course-subject.entity';
+import { TimetableEntity } from '../entities/timetable.entity';
+import { CourseEntity } from '../entities/course.entity';
+
+export enum ScenarioStatus {
+  SOLUTION_PENDING = 'SOLUTION_PENDING',
+  SOLUTION_READY = 'SOLUTION_READY',
+  PUBLISHED = 'PUBLISHED',
+}
 
 @Injectable()
 export class ScenarioService {
@@ -28,8 +36,12 @@ export class ScenarioService {
     private scenarioCourseGroupSubjectTeacherRepository: Repository<ScenarioCourseGroupSubjectTeacherEntity>,
     @InjectRepository(CourseSubjectEntity)
     private courseSubjectRepository: Repository<CourseSubjectEntity>,
+    @InjectRepository(TimetableEntity)
+    private timetableRepository: Repository<TimetableEntity>,
     @Inject(HttpService)
     private httpService: HttpService,
+    @InjectRepository(CourseEntity)
+    private courseRepository: Repository<CourseEntity>,
   ) {}
 
   async scenarioGet(page: number, limit: number): Promise<PaginatedScenarioResponse> {
@@ -78,38 +90,71 @@ export class ScenarioService {
   async scenarioPost(createScenarioDto: CreateScenarioDto, request: Request): Promise<Scenario> {
     const scenario = await this.scenarioRepository.save({
       name: createScenarioDto.name,
+      status: ScenarioStatus.SOLUTION_PENDING,
     });
+    
+    // Cargar las entidades completas de los cursos antes de guardar
     const scenarioCourses = await Promise.all((createScenarioDto.courses as any)?.map(async (course: any) => {
+      const courseEntity = await this.courseRepository.findOne({ 
+        where: { id: course.courseId } 
+      });
+      
+      if (!courseEntity) {
+        throw new Error(`Course with id ${course.courseId} not found`);
+      }
+      
       return this.scenarioCourseRepository.save({
         scenario: { id: scenario.id },
-        course: { id: course.courseId },
+        course: courseEntity,
       });
     }));
-    const scenarioCourseGroups = await Promise.all(
+    
+    const scenarioCourseGroupsTemp = await Promise.all(
       (createScenarioDto.courses as any)?.flatMap(async (course: any, index: number) => {
         const savedScenarioCourse = scenarioCourses[index];
-        // console.log({savedScenarioCourse});
+        
         return Promise.all(course.groups?.map((group: any) => {
           return this.scenarioCourseGroupRepository.save({
             scenario: { id: savedScenarioCourse.scenario.id },
-            course: { id: savedScenarioCourse.course.id },
+            course: savedScenarioCourse.course,
             groupName: group.groupName,
           });
         }) || []);
       }) || []
     ).then(results => results.flat());
+    
+    // Recargar los grupos con las relaciones completas
+    const scenarioCourseGroups = await Promise.all(
+      scenarioCourseGroupsTemp.map(group => 
+        this.scenarioCourseGroupRepository.findOne({
+          where: { id: group.id },
+          relations: ['course', 'scenario']
+        })
+      )
+    ).then(results => results.filter(g => g !== null));
+    
     const prueba = ((createScenarioDto.courses as any) || []).map((course: any) => 
       course.groups?.map((group: any) =>
-        group.teacherAssignments?.map((teacherAssignment: any) => ({
-          subject: {id: teacherAssignment.subjectId},
-          // course: {id: course.courseId},
-          scenarioCourseGroup: scenarioCourseGroups.find(scenario => scenario.course.id === course.courseId && scenario.groupName === group.groupName),
-          // scenarioCourseGroup: scenarioCourseGroups.find(scenario => scenario)
-          teacher: { id: teacherAssignment.teacherId}
-        }))
+        group.teacherAssignments?.map((teacherAssignment: any) => {
+          const foundGroup = scenarioCourseGroups.find(scg => {
+            // Convertir ambos a number para asegurar comparación correcta
+            const scgCourseId = Number(scg.course?.id);
+            const inputCourseId = Number(course.courseId);
+            return scgCourseId === inputCourseId && scg.groupName === group.groupName;
+          });
+          
+          return {
+            subject: {id: teacherAssignment.subjectId},
+            scenarioCourseGroup: foundGroup,
+            teacher: { id: teacherAssignment.teacherId}
+          };
+        })
       )
-    )
-    await Promise.all(prueba.flat(2).map((scgst: any) => this.scenarioCourseGroupSubjectTeacherRepository.save(scgst)))
+    );
+    
+    const assignmentsToSave = prueba.flat(2).filter((assignment: any) => assignment.scenarioCourseGroup);
+    
+    await Promise.all(assignmentsToSave.map((scgst: any) => this.scenarioCourseGroupSubjectTeacherRepository.save(scgst)))
     return this.entityToModel(scenario as ScenarioEntity);
   }
 
@@ -119,7 +164,6 @@ export class ScenarioService {
     const scenarioCourseGroups = await Promise.all(
       scenarioCourses.map(scenarioCourse => this.scenarioCourseGroupRepository.find({ where: { scenario: { id: scenarioCourse.scenario.id }, course: { id: scenarioCourse.course.id } }, relations: ['course', 'scenario'] }))
     );
-
     const courseGroupsSubjectTeachers = await Promise.all(
       scenarioCourseGroups.flatMap(courseGroup => 
         courseGroup.map(group => 
@@ -135,6 +179,7 @@ export class ScenarioService {
     return {
       id: entity.id,
       name: entity.name,
+      status: entity.status as Scenario.StatusEnum,
       courses: await Promise.all(
         scenarioCourseGroups.map(async (scenarioCourse, index) => {
           const groupsWithAssignments = await Promise.all(
@@ -150,7 +195,7 @@ export class ScenarioService {
                 id: group.id,
                 groupName: group.groupName,
                 teacherAssignments: assignments.map(assignment => ({
-                  teacher: assignment.teacher,
+                  teacher: {...assignment.teacher},
                   subject: {
                     ...assignment.subject,
                     hoursPerWeek: courseSubjects.find(courseSubject => courseSubject.subject.id === assignment.subject.id)?.hoursPerWeek || 0,
@@ -172,27 +217,138 @@ export class ScenarioService {
     };
   }
 
-  async scenarioIdTimetableGet(id: number, request: Request): Promise<Timetable> {
+  async scenarioIdCalculateGet(id: number, request: Request): Promise<Timetable> {
     const scenarioInfo = await this.scenarioRepository.findOne({ where: { id } });
     const scenarioModel = await this.entityToModel(scenarioInfo as ScenarioEntity);
     const engineResponse = await this.httpService.post(`http://localhost:8000`, scenarioModel.courses).toPromise();
-    return engineResponse?.data
+    await this.timetableRepository.delete({ scenario_id: id });
+    
+    // Crear un mapa de course_id -> course para búsqueda rápida
+    const courseMap = new Map();
+    (scenarioModel.courses || []).forEach((c: any) => {
+      courseMap.set(c.course.id, c.course);
+    });
+    
+    // Crear un mapa de teacher_id -> teacher para búsqueda rápida
+    const teacherMap = new Map();
+    (scenarioModel.courses || []).forEach((c: any) => {
+      c.groups?.forEach((g: any) => {
+        g.teacherAssignments?.forEach((ta: any) => {
+          if (ta.teacher && !teacherMap.has(ta.teacher.id)) {
+            teacherMap.set(ta.teacher.id, { id: ta.teacher.id, name: ta.teacher.name });
+          }
+        });
+      });
+    });
+    
+    await Promise.all(engineResponse?.data.map((entry: any) => {
+      const course = courseMap.get(entry.course_id);
+      const teacher = teacherMap.get(entry.teacher_id);
+      return this.timetableRepository.save({
+        scenario_id: id,
+        course_id: entry.course_id,
+        course: course ? { id: course.id, name: course.name } : { id: entry.course_id },
+        group_id: entry.group_id,
+        day: entry.day,
+        hour: entry.hour,
+        subject: { id: entry.subject_id },
+        teacher_id: entry.teacher_id,
+        teacher: teacher ? { id: teacher.id, name: teacher.name } : { id: entry.teacher_id },
+      });
+    }))
+    await this.scenarioRepository.update(id, { status: ScenarioStatus.SOLUTION_READY });
+    const timetable = await this.timetableRepository.find({ where: { scenario_id: id }, relations: ['course', 'teacher'] });
+    
+    // Cargar los grupos del escenario para obtener sus nombres
+    const scenarioCourseGroups = await this.scenarioCourseGroupRepository.find({ 
+      where: { scenario: { id } },
+      relations: ['course']
+    });
+    
+    // Crear un mapa para búsqueda rápida: "course_id-group_id" -> group info
+    const groupMapForTimetable = new Map();
+    scenarioCourseGroups.forEach(group => {
+      const key = `${group.course.id}-${group.id}`;
+      groupMapForTimetable.set(key, { id: group.id, groupName: group.groupName });
+    });
+    
+    return timetable
       .reduce((courses: any, assignment: any) => {
           const course = courses.find((course: any) => course.course_id === assignment.course_id && course.group_id === assignment.group_id)
           if(course) {
               course.assignments = [...course.assignments, assignment]
           } else {
-              courses = [...courses, {course_id: assignment.course_id, group_id: assignment.group_id, assignments: [assignment]}]
+              const groupKey = `${assignment.course_id}-${assignment.group_id}`;
+              const groupInfo = groupMapForTimetable.get(groupKey);
+              
+              courses = [...courses, {
+                course_id: assignment.course_id,
+                course: assignment.course,
+                group_id: assignment.group_id,
+                group: groupInfo || { id: assignment.group_id },
+                assignments: [assignment]
+              }]
           }
           return courses
       }, [])
       .map((course: any) => ({
-          course_id: course.course_id,
+            course_id: course.course_id,
+            course: course.course ? {id: course.course.id, name: course.course.name} : {id: course.course_id},
           group_id: course.group_id,
+          group: course.group,
           hours: course.assignments.reduce((hours: any, assignment: any) => {
               hours[assignment.hour] = [...(hours[assignment.hour] || []), assignment].sort((a,b) => a.day - b.day)
               return hours
           }, [])
       }))
   }
+  
+
+  async scenarioIdTimetableGet(id: number, request: Request): Promise<Timetable[]> {
+    const timetable = await this.timetableRepository.find({ where: { scenario_id: id }, relations: ['subject', 'course', 'teacher'] });
+    
+    // Cargar los grupos del escenario para obtener sus nombres
+    const scenarioCourseGroups = await this.scenarioCourseGroupRepository.find({ 
+      where: { scenario: { id } },
+      relations: ['course']
+    });
+    
+    // Crear un mapa para búsqueda rápida: "course_id-group_id" -> group info
+    const groupMap = new Map();
+    scenarioCourseGroups.forEach(group => {
+      const key = `${group.course.id}-${group.id}`;
+      groupMap.set(key, { id: group.id, groupName: group.groupName });
+    });
+    
+    return timetable
+      .reduce((courses: any, assignment: any) => {
+          const course = courses.find((course: any) => course.course_id === assignment.course_id && course.group_id === assignment.group_id)
+          if(course) {
+              course.assignments = [...course.assignments, assignment]
+          } else {
+              const groupKey = `${assignment.course_id}-${assignment.group_id}`;
+              const groupInfo = groupMap.get(groupKey);
+              
+              courses = [...courses, {
+                course_id: assignment.course_id, 
+                course: assignment.course,
+                group_id: assignment.group_id,
+                group: groupInfo || { id: assignment.group_id },
+                assignments: [assignment]
+              }]
+          }
+          return courses
+      }, [])
+      .map((course: any) => ({
+            course_id: course.course_id,
+            course: course.course ? {id: course.course.id, name: course.course.name} : {id: course.course_id},
+          group_id: course.group_id,
+          group: course.group,
+          hours: course.assignments.reduce((hours: any, assignment: any) => {
+              hours[assignment.hour] = [...(hours[assignment.hour] || []), assignment].sort((a,b) => a.day - b.day)
+              return hours
+          }, [])
+      }))
+  }
+
 }

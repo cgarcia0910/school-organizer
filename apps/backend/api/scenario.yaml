@@ -127,6 +127,27 @@ paths:
           content:
             application/json:
               schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Timetable'
+
+  /scenario/{id}/calculate:
+    get:
+      tags:
+        - Scenario
+      summary: Calcular el horario de un scenario
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Horario obtenido correctamente
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/Timetable'
 components:
   schemas:
@@ -146,7 +167,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ScenarioCourse'
-        
+        status:
+          type: string
+          example: SOLUTION_PENDING
+          enum:
+            - SOLUTION_PENDING
+            - SOLUTION_READY
+            - PUBLISHED
+
     ScenarioCourse:
       type: object
       required:
@@ -328,21 +356,27 @@ components:
       properties:
         courseId:
           type: integer
+        course:
+          $ref: '#/components/schemas/Course'
+        group:
+          $ref: '#/components/schemas/ScenarioCourseGroup'
         groupId:
           type: integer
         hours:
           type: array
           items:
-            $ref: '#/components/schemas/TimetableHourEntry'
-    TimetableHourEntry:
-      type: object
-      required:
-        - days
-      properties:
-        days:
-          type: array
-          items:
-            $ref: '#/components/schemas/TimetableDayEntry'
+            type: array
+            items:
+              $ref: '#/components/schemas/TimetableDayEntry'
+    # TimetableHourEntry:
+    #   type: object
+    #   required:
+    #     - days
+    #   properties:
+    #     days:
+    #       type: array
+    #       items:
+    #         $ref: '#/components/schemas/TimetableDayEntry'
     TimetableDayEntry:
       type: object
       required:

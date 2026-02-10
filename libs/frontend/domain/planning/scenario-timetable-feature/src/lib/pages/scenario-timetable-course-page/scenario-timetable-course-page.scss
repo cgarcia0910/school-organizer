@@ -1,0 +1,49 @@
+:host {
+  h2 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .courses-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 1rem;
+    .timetable-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+        
+        // max-width: calc(var(--column-width) * 5);
+        h3 {
+          font-family: 'Roboto', sans-serif;
+          font-weight: 500;
+          font-size: 1rem;
+          margin-bottom: 1rem;
+        }
+    }
+    .timetable {
+        width: 100%;
+        table-layout: fixed;
+      }
+      
+      .fixed-width-column {
+        width: var(--column-width);
+        min-width: var(--column-width);
+        max-width: var(--column-width);
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        border: 1px solid #ccc !important;
+      }
+      .mat-mdc-row .mat-mdc-cell {
+        border-bottom: 1px solid transparent;
+        border-top: 1px solid transparent;
+        cursor: pointer;
+      }
+    }
+}

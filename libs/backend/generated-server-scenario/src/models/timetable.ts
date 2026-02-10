@@ -1,9 +1,13 @@
-import { TimetableHourEntry } from './timetable-hour-entry';
+import { Course } from './course';
+import { TimetableDayEntry } from './timetable-day-entry';
+import { ScenarioCourseGroup } from './scenario-course-group';
 
 
 export interface Timetable { 
   courseId?: number;
+  course?: Course;
+  group?: ScenarioCourseGroup;
   groupId?: number;
-  hours: Array<TimetableHourEntry>;
+  hours: Array<Array<TimetableDayEntry>>;
 }
 

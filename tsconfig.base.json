@@ -74,6 +74,9 @@
       ],
       "@school-organizer/planning/scenario-timetable-feature": [
         "libs/frontend/domain/planning/scenario-timetable-feature/src/index.ts"
+      ],
+      "@school-organizer/planning/scenario-actions": [
+        "libs/frontend/domain/planning/scenario-actions/src/index.ts"
       ]
     }
   }

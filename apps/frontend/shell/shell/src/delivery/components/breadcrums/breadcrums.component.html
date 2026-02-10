@@ -1,0 +1,11 @@
+<div class="breadcrumbs">
+    @for (breadcrumb of breadcrumbs$ | async; track breadcrumb; let last = $last) {
+        @if (!last) {
+            <a routerLink="/{{breadcrumb.replace('breadcrumbs.', '')}}">{{breadcrumb | transloco}}</a>&nbsp;>&nbsp;
+        } @else {
+            <span>{{breadcrumb | transloco}}</span>
+        }
+    }
+  </div>
+
+ 
