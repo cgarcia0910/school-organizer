@@ -8,7 +8,9 @@
     "generate:subject": "openapi-generator-cli generate -g typescript-nestjs-server -i apps/backend/api/subject.yaml -o libs/backend/generated-server-subject/src --additional-properties=supportsES6=true",
     "generate:course": "openapi-generator-cli generate -g typescript-nestjs-server -i apps/backend/api/course.yaml -o libs/backend/generated-server-course/src --additional-properties=supportsES6=true",
     "generate:habilitation": "openapi-generator-cli generate -g typescript-nestjs-server -i apps/backend/api/habilitation.yaml -o libs/backend/generated-server-habilitation/src --additional-properties=supportsES6=true",
-    "generate:scenario": "openapi-generator-cli generate -g typescript-nestjs-server -i apps/backend/api/scenario.yaml -o libs/backend/generated-server-scenario/src --additional-properties=supportsES6=true"
+    "generate:scenario": "openapi-generator-cli generate -g typescript-nestjs-server -i apps/backend/api/scenario.yaml -o libs/backend/generated-server-scenario/src --additional-properties=supportsES6=true",
+    "build:backend": "nx build api",
+    "build:frontend": "nx build frontend"
   },
   "private": true,
   "overrides": {
