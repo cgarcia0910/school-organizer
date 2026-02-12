@@ -1,11 +1,16 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../../../dist/out-tsc",
+    "outDir": "../../../../../dist/out-tsc",
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": []
+    "sourceMap": true,
+    "types": [],
+    "lib": ["es2015", "dom"],
+    "target": "es2015",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "exclude": [
     "src/**/*.spec.ts",
@@ -14,10 +19,5 @@
     "src/**/*.test.ts",
     "jest.config.cts"
   ],
-  "include": ["src/**/*.ts"],
-  "references": [
-    {
-      "path": "src/lib"
-    }
-  ]
+  "include": ["src/**/*.ts"]
 }
