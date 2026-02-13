@@ -10,7 +10,7 @@
     "generate:habilitation": "openapi-generator-cli generate -g typescript-nestjs-server -i apps/backend/api/habilitation.yaml -o libs/backend/generated-server-habilitation/src --additional-properties=supportsES6=true",
     "generate:scenario": "openapi-generator-cli generate -g typescript-nestjs-server -i apps/backend/api/scenario.yaml -o libs/backend/generated-server-scenario/src --additional-properties=supportsES6=true",
     "build:backend": "nx build api",
-    "build:frontend:shell": "nx build shell",
+    "build:frontend:shell": "nx build shell --configuration production",
     "build:frontend:config": "nx build config",
     "build:frontend:planning": "nx build planning"
   },
