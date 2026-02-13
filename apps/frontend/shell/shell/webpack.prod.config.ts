@@ -17,7 +17,7 @@ export default async function (webpackConfig: Configuration, options: any) {
        * Each entry is a pair of a unique name and the URL where it is deployed.
        */
       remotes: [
-        ['config', 'https://school-organizer-config.onrender.com'],
+        ['config', 'https://school-organizer-config-qewg.onrender.com'],
         ['planning', 'https://school-organizer-planning.onrender.com'],
       ],
     },
