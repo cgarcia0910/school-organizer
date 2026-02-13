@@ -6,6 +6,16 @@ const config: ModuleFederationConfig = {
     './Routes':
       'apps/frontend/config/config/src/app/remote-entry/entry.routes.ts',
   },
+  shared: (libraryName, defaultConfig) => {
+    if (libraryName === '@ngneat/transloco') {
+      return {
+        singleton: true,
+        strictVersion: false,
+        requiredVersion: 'auto'
+      };
+    }
+    return defaultConfig;
+  }
 };
 
 /**

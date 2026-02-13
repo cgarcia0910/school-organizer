@@ -19,7 +19,7 @@ const config: ModuleFederationConfig = {
     if (libraryName === '@ngneat/transloco') {
       return {
         singleton: true,
-        strictVersion: true,
+        strictVersion: false,
         requiredVersion: 'auto'
       };
     }
