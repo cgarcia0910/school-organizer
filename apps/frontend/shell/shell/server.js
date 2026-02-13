@@ -37,7 +37,7 @@ app.use('/api', createProxyMiddleware({
   target: API_URL,
   changeOrigin: true,
   pathRewrite: {
-    '^/api': '',
+    '^/api': '/api',
   },
   onProxyReq: (proxyReq, req, res) => {
     console.log(`🔀 Proxying: ${req.method} ${req.url} -> ${API_URL}${req.url.replace('/api', '')}`);
