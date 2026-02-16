@@ -220,7 +220,7 @@ export class ScenarioService {
   async scenarioIdCalculateGet(id: number, request: Request): Promise<Timetable> {
     const scenarioInfo = await this.scenarioRepository.findOne({ where: { id } });
     const scenarioModel = await this.entityToModel(scenarioInfo as ScenarioEntity);
-    const engineResponse = await this.httpService.post(`http://localhost:8000`, scenarioModel.courses).toPromise();
+    const engineResponse = await this.httpService.post(process.env.MF_ENGINE_URL || 'http://localhost:8000', scenarioModel.courses).toPromise();
     await this.timetableRepository.delete({ scenario_id: id });
     
     // Crear un mapa de course_id -> course para búsqueda rápida
