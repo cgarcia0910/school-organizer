@@ -15,13 +15,11 @@ export default async function (webpackConfig: Configuration, options: any) {
       /*
        * Remote overrides for production.
        * Each entry is a pair of a unique name and the URL where it is deployed.
-       *
-       * e.g.
-       * remotes: [
-       *   ['app1', 'https://app1.example.com'],
-       *   ['app2', 'https://app2.example.com'],
-       * ]
        */
+      remotes: [
+        ['config', process.env.MF_CONFIG_URL || ''],
+        ['planning', process.env.MF_PLANNING_URL || ''],
+      ],
     },
     { dts: false }
   );
