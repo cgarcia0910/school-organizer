@@ -9,7 +9,6 @@ import { UPDATE_COURSE } from '../../../domain';
 import { TranslocoPipe } from '@ngneat/transloco';
 
 function provideFormController(): FormController {
-  console.log('provideFormController', inject(UPDATE_COURSE, { optional: true }));
   return inject(UPDATE_COURSE, { optional: true })
     ? inject(UpdateCourseFormController)
     : inject(AddCourseFormController)

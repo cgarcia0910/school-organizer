@@ -17,29 +17,29 @@ export class TeacherFormController extends FormController {
         required: true,
         formControl: new FormControl(''),
     },
-    {
-        key: 'habilitations',
-        label: 'Habilitations',
-        type: 'array',
-        required: true,
-        formControl: new FormControl(''),
-        children: [
-            {
-                key: 'name',
-                label: 'Name',
-                type: 'text',
-                required: true,
-                formControl: new FormControl(''),
-            },
-            {
-                key: 'prueba',
-                label: 'Prueba',
-                type: 'text',
-                required: true,
-                formControl: new FormControl(''),
-            },
-        ],
-    }
+    // {
+    //     key: 'habilitations',
+    //     label: 'Habilitations',
+    //     type: 'array',
+    //     required: true,
+    //     formControl: new FormControl(''),
+    //     children: [
+    //         {
+    //             key: 'name',
+    //             label: 'Name',
+    //             type: 'text',
+    //             required: true,
+    //             formControl: new FormControl(''),
+    //         },
+    //         {
+    //             key: 'prueba',
+    //             label: 'Prueba',
+    //             type: 'text',
+    //             required: true,
+    //             formControl: new FormControl(''),
+    //         },
+    //     ],
+    // }
     ];
     public getFields(): FormModel[] {
         return this.formModel;

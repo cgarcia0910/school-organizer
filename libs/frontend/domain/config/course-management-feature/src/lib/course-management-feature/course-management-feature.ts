@@ -7,7 +7,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { AddCourseDirective, DeleteCourseDirective, UpdateCourseDirective } from '../delivery/directives';
-import { SubjectWorkLoad } from '@organizer/course-api';
 
 @Component({
   selector: 'lib-course-management-feature',
@@ -30,8 +29,4 @@ import { SubjectWorkLoad } from '@organizer/course-api';
 export class CourseManagementFeature {
   displayedColumns: string[] = ['name', 'habilities', 'actions'];
   dataSource = inject(CourseDataSource);
-
-  getSubjects(subjects: SubjectWorkLoad[]): string {
-    return subjects.map((subject: SubjectWorkLoad) => `${subject.subject?.name} (${subject.workload?.hoursPerWeek} hours per week, ${subject.workload?.maxDailyWorkload} max daily workload)`).join(', ');
-  }
 }

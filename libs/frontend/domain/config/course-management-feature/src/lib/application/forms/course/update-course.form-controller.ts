@@ -22,14 +22,6 @@ export class UpdateCourseFormController extends CourseFormController {
           });
     }
     protected override getModel(): { [key: string]: unknown } {
-      console.log({
-        name: this.course.name,
-        subjects: this.course.subjects?.map((subject) => ({
-          subject: subject.subject?.id,
-          hoursPerWeek: subject.workload?.hoursPerWeek,
-          maxDailyWorkload: subject.workload?.maxDailyWorkload,
-        })),
-      });
       return {
         name: this.course.name,
         subjects: this.course.subjects?.map((subject) => ({
@@ -38,7 +30,5 @@ export class UpdateCourseFormController extends CourseFormController {
           maxDailyWorkload: subject.workload?.maxDailyWorkload,
         })),
       }
-      // return inject(UPDATE_COURSE, { optional: true }) as unknown as { [key: string]: unknown };
-      // return this.course as unknown as { [key: string]: unknown };
     }
 }
