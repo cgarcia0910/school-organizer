@@ -6,7 +6,6 @@ import { CourseFormController } from './course.form-controller';
 @Injectable()
 export class AddCourseFormController extends CourseFormController {
     public override onSubmit(): void {
-      console.log(this.form.value);
       const createCourseDto: CreateCourseDto = {
         name: this.form.value['name'],
         subjectWorkLoads: this.form.value['subjects'].map((subject: any) => ({
