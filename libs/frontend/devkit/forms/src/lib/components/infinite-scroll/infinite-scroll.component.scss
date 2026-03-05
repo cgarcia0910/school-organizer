@@ -1,0 +1,39 @@
+.viewport {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px; // margen interno del grid
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), 200px);
+  column-gap: 14px;
+
+  /* gap vertical entre filas (esto cuenta dentro del itemSize) */
+  padding-bottom: 14px;
+  box-sizing: border-box;
+}
+
+.card {
+  width: 200px;
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+}
+
+.card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.title {
+  flex: 1;
+  padding: 8px;
+  font-weight: 500;
+  overflow: hidden;
+}

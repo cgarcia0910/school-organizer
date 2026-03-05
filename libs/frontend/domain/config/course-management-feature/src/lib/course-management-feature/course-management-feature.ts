@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { AddCourseDirective, DeleteCourseDirective, UpdateCourseDirective } from '../delivery/directives';
 import { SubjectWorkLoad } from '@organizer/course-api';
+import { infiniteScrollComponent } from '@organizer/devkit/forms';
 
 @Component({
   selector: 'lib-course-management-feature',
@@ -22,6 +23,7 @@ import { SubjectWorkLoad } from '@organizer/course-api';
     DeleteCourseDirective,
     TranslocoPipe,
     JsonPipe,
+    infiniteScrollComponent,
   ],
   templateUrl: './course-management-feature.html',
   styleUrl: './course-management-feature.scss',
